@@ -1,0 +1,415 @@
+<div class="help-center-section">
+  <div class="page-width">
+    <div class="breadcrumbs">
+      <a href="/">Home</a> > <span>Help Center</span>
+    </div>
+    
+    <h1 class="page-title">
+      <span class="title-part-1">HELP</span>
+      <span class="title-part-2">CENTER</span>
+    </h1>
+    
+    <div class="help-content-wrapper">
+      <div class="contact-section">
+        <h2 class="section-title">{{ section.settings.contact_title | default: 'How Can We Help You Today?' }}</h2>
+        <p class="section-description">{{ section.settings.contact_description | default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit. Mauris cursus eros sem, quis vehicula leo hendrerit.' }}</p>
+        
+        <div class="contact-buttons">
+          <a href="{{ section.settings.whatsapp_link | default: '#' }}" class="contact-btn whatsapp-btn">
+            <img src="{{ 'whatsapp-btn.png' | asset_url }}" alt="WhatsApp" class="btn-icon">
+            <span>WHATSAPP</span>
+          </a>
+          <a href="{{ section.settings.email_link | default: 'mailto:support@example.com' }}" class="contact-btn email-btn">
+            <img src="{{ 'mail-btn.png' | asset_url }}" alt="Email" class="btn-icon">
+            <span>E-MAIL</span>
+          </a>
+          <a href="{{ section.settings.chat_link | default: '#' }}" class="contact-btn chat-btn">
+            <img src="{{ 'chat-btn.png' | asset_url }}" alt="Chat" class="btn-icon">
+            <span>CHAT 24/7</span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="faq-section">
+        <h2 class="section-title">{{ section.settings.faq_title | default: 'FAQ' }}</h2>
+        <p class="section-description">{{ section.settings.faq_description | default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit.' }}</p>
+        
+        <div class="faq-accordion">
+          {% for block in section.blocks %}
+            <div class="faq-item" {{ block.shopify_attributes }}>
+              <button class="faq-question" onclick="toggleFaq({{ forloop.index0 }})" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+                <span>{{ block.settings.question | default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit?' }}</span>
+                <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M6 9l6 6 6-6"/>
+                </svg>
+              </button>
+              <div class="faq-answer" id="faq-answer-{{ forloop.index0 }}" style="display: {% if forloop.first %}block{% else %}none{% endif %};">
+                <div class="faq-answer-content">
+                  {{ block.settings.answer | default: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit. Mauris cursus eros sem, quis vehicula leo hendrerit eu. Sed maximus volutpat sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>' }}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.help-center-section {
+  background: #050505;
+  min-height: 100vh;
+  padding: 120px 0 80px 0;
+  margin-top: 40px;
+}
+
+.breadcrumbs {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: #FFFFFF;
+  margin-bottom: 24px;
+}
+
+.breadcrumbs a {
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.breadcrumbs a:hover {
+  color: #B0B0B0;
+}
+
+.breadcrumbs span {
+  color: #767676;
+}
+
+.page-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 60px;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 60px 0;
+}
+
+.title-part-1 {
+  color: #FFFFFF;
+}
+
+.title-part-2 {
+  color: #767676;
+}
+
+.help-content-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.contact-section,
+.faq-section {
+  margin-bottom: 80px;
+}
+
+.section-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  color: #FFFFFF;
+  margin: 0 0 16px 0;
+  text-transform: uppercase;
+}
+
+.section-description {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  color: #B0B0B0;
+  margin: 0 0 32px 0;
+}
+
+.contact-buttons {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.contact-btn {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 24px;
+  background: rgba(124, 124, 124, 0.27);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(140, 140, 140, 0.4);
+  border-radius: 100px;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.contact-btn:hover {
+  background: rgba(124, 124, 124, 0.4);
+  border-color: rgba(140, 140, 140, 0.6);
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.faq-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(140, 140, 140, 0.2);
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0;
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.faq-question:hover {
+  color: #B0B0B0;
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  margin-left: 16px;
+  transition: transform 0.3s;
+  color: #FFFFFF;
+}
+
+.faq-question[aria-expanded="true"] .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  padding-bottom: 24px;
+  overflow: hidden;
+}
+
+.faq-answer-content {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  color: #B0B0B0;
+}
+
+.faq-answer-content p {
+  margin: 0 0 16px 0;
+}
+
+.faq-answer-content p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .help-center-section {
+    padding: 100px 0 60px 0;
+    margin-top: 60px;
+  }
+
+  .page-title {
+    font-size: 36px;
+    line-height: 44px;
+    margin-bottom: 40px;
+  }
+
+  .section-title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .contact-buttons {
+    flex-direction: column;
+  }
+
+  .contact-btn {
+    width: 100%;
+  }
+
+  .faq-question {
+    font-size: 16px;
+    padding: 20px 0;
+  }
+}
+</style>
+
+<script>
+function toggleFaq(index) {
+  const answer = document.getElementById('faq-answer-' + index);
+  const question = event.currentTarget;
+  const isExpanded = question.getAttribute('aria-expanded') === 'true';
+  
+  if (isExpanded) {
+    answer.style.display = 'none';
+    question.setAttribute('aria-expanded', 'false');
+  } else {
+    answer.style.display = 'block';
+    question.setAttribute('aria-expanded', 'true');
+  }
+}
+</script>
+
+{% schema %}
+{
+  "name": "Help Center Content",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contact Section"
+    },
+    {
+      "type": "text",
+      "id": "contact_title",
+      "label": "Contact Section Title",
+      "default": "How Can We Help You Today?"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_description",
+      "label": "Contact Section Description",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit. Mauris cursus eros sem, quis vehicula leo hendrerit."
+    },
+    {
+      "type": "url",
+      "id": "whatsapp_link",
+      "label": "WhatsApp Link"
+    },
+    {
+      "type": "url",
+      "id": "email_link",
+      "label": "Email Link",
+      "info": "Use mailto:email@example.com for email links"
+    },
+    {
+      "type": "url",
+      "id": "chat_link",
+      "label": "Chat Link"
+    },
+    {
+      "type": "header",
+      "content": "FAQ Section"
+    },
+    {
+      "type": "text",
+      "id": "faq_title",
+      "label": "FAQ Section Title",
+      "default": "FAQ"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_description",
+      "label": "FAQ Section Description",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit. Mauris cursus eros sem, quis vehicula leo hendrerit eu. Sed maximus volutpat sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+          "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit. Mauris cursus eros sem, quis vehicula leo hendrerit eu. Sed maximus volutpat sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>"
+        }
+      },
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+          "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit. Mauris cursus eros sem, quis vehicula leo hendrerit eu. Sed maximus volutpat sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>"
+        }
+      },
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+          "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit. Mauris cursus eros sem, quis vehicula leo hendrerit eu. Sed maximus volutpat sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>"
+        }
+      },
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+          "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit. Mauris cursus eros sem, quis vehicula leo hendrerit eu. Sed maximus volutpat sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>"
+        }
+      },
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+          "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit. Mauris cursus eros sem, quis vehicula leo hendrerit eu. Sed maximus volutpat sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>"
+        }
+      },
+      {
+        "type": "faq_item",
+        "settings": {
+          "question": "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+          "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit. Mauris cursus eros sem, quis vehicula leo hendrerit eu. Sed maximus volutpat sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}
+
