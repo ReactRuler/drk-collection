@@ -1,0 +1,200 @@
+<div class="refund-policy-content-section">
+  <div class="page-width">
+    <div class="breadcrumbs">
+      <a href="/">Home</a> > <span>Return & Refund Policy</span>
+    </div>
+    
+    <h1 class="page-title">{{ section.settings.page_title | default: 'RETURN & REFUND POLICY' }}</h1>
+    
+    <div class="policy-content">
+      {% for block in section.blocks %}
+        <div class="policy-block" {{ block.shopify_attributes }}>
+          {% if block.settings.title != blank %}
+            <h2 class="policy-block-title">{{ block.settings.title }}</h2>
+          {% endif %}
+          {% if block.settings.content != blank %}
+            <div class="policy-block-content">
+              {{ block.settings.content }}
+            </div>
+          {% endif %}
+          {% unless forloop.last %}
+            <div class="policy-block-divider"></div>
+          {% endunless %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+.refund-policy-content-section {
+  background: #050505;
+  min-height: 100vh;
+  padding: 120px 0 80px 0;
+  margin-top: 80px;
+}
+
+.breadcrumbs {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: #FFFFFF;
+  margin-bottom: 24px;
+}
+
+.breadcrumbs a {
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.breadcrumbs a:hover {
+  color: #B0B0B0;
+}
+
+.breadcrumbs span {
+  color: #767676;
+}
+
+.page-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 60px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  text-align: center;
+  margin: 0 0 60px 0;
+}
+
+.policy-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.policy-block {
+  margin-bottom: 48px;
+}
+
+.policy-block-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  color: #FFFFFF;
+  margin: 0 0 24px 0;
+  text-transform: uppercase;
+}
+
+.policy-block-content {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  color: #B0B0B0;
+  text-align: justify;
+}
+
+.policy-block-content p {
+  margin: 0 0 16px 0;
+}
+
+.policy-block-content p:last-child {
+  margin-bottom: 0;
+}
+
+.policy-block-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(140, 140, 140, 0.2);
+  margin: 48px 0;
+}
+
+@media (max-width: 768px) {
+  .refund-policy-content-section {
+    padding: 100px 0 60px 0;
+    margin-top: 60px;
+  }
+
+  .page-title {
+    font-size: 36px;
+    line-height: 44px;
+    margin-bottom: 40px;
+  }
+
+  .policy-block-title {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .policy-block-content {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .policy-block-divider {
+    margin: 32px 0;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Refund Policy Content",
+  "settings": [
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page Title",
+      "default": "RETURN & REFUND POLICY"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "policy_section",
+      "name": "Policy Section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Section Title",
+          "default": "Title Here"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "policy_section",
+        "settings": {
+          "title": "Returns",
+          "content": "<p>We want you to be completely satisfied with your purchase. If you are not happy with your order, you may return it within 30 days of delivery for a full refund or exchange.</p><p>Items must be in their original condition, unworn, unwashed, and with all tags attached. Please include the original packaging if possible.</p>"
+        }
+      },
+      {
+        "type": "policy_section",
+        "settings": {
+          "title": "Refunds",
+          "content": "<p>Once we receive your returned item, we will inspect it and notify you of the status of your refund. If approved, your refund will be processed to your original payment method within 5-10 business days.</p><p>Shipping costs are non-refundable unless the return is due to our error. If you received a damaged or incorrect item, please contact us immediately and we will cover all return shipping costs.</p>"
+        }
+      },
+      {
+        "type": "policy_section",
+        "settings": {
+          "title": "Exchanges",
+          "content": "<p>We currently do not offer direct exchanges. If you wish to exchange an item, please return the original item for a refund and place a new order for the desired item.</p><p>This ensures you receive the correct item quickly and allows us to process your return more efficiently.</p>"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}
+
