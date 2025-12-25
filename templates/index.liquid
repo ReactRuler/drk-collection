@@ -1,27 +1,9 @@
-<script>
-  window.SHOPIFY_ASSETS = {
-    video: "{{ 'DRK_video.mp4' | asset_url }}",
-    logo: "{{ 'drk-logo.png' | asset_url }}",
-    button1: "{{ 'DRK_button1.gif' | asset_url }}",
-    button2: "{{ 'DRK_button2.gif' | asset_url }}",
-    fastDispatch: "{{ 'fast-dispatch.svg' | asset_url }}",
-    easyReturns: "{{ 'easy-returns.svg' | asset_url }}",
-    secureCheckout: "{{ 'secure-checkout.svg' | asset_url }}",
-    customerSupport: "{{ '247-customer-support.svg' | asset_url }}",
-    ctaBg: "{{ 'cta-bg.png' | asset_url }}",
-    yogaWaterRipples: "{{ 'bottom-horizontal-no-text.png' | asset_url }}",
-    yogaProducts: "{{ 'yoga-products.png' | asset_url }}",
-    yogaModel: "{{ 'yoga-lady.png' | asset_url }}",
-    logoRepeated: "{{ 'logo_repeated.png' | asset_url }}",
-    footerLogo: "{{ 'logo-footer.png' | asset_url }}",
-    footerBackground: "{{ 'footerbanner.jpg' | asset_url }}",
-    facebookIcon: "{{ '_Facebook.png' | asset_url }}",
-    instagramIcon: "{{ '_Instagram.png' | asset_url }}",
-    whatsappIcon: "{{ '_WhatsApp.png' | asset_url }}",
-    linkedinIcon: "{{ '_Linkedin.png' | asset_url }}"
-  };
-  console.log('Shopify Assets:', window.SHOPIFY_ASSETS);
-</script>
-<div id="react-root"></div>
-<link rel="stylesheet" href="{{ 'react-asset-index.css' | asset_url }}">
-<script src="{{ 'react-app.js' | asset_url }}" defer></script>
+{% section 'header' %}
+{% section 'top-video' %}
+{% section 'hero' %}
+{% section 'featured-products' %}
+{% section 'travel-cta' %}
+{% section 'yoga-highlight' %}
+{% section 'latest-blogs' %}
+{% section 'logo-repeated' %}
+{% section 'footer' %}

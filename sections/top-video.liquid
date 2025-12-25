@@ -1,0 +1,21 @@
+<div class="top-video-section">
+  <video autoplay muted loop playsinline>
+    <source src="{{ 'DRK_video.mp4' | asset_url }}" type="video/mp4">
+  </video>
+  <div class="video-overlay-content">
+    <a href="#">
+      <img src="{{ 'DRK_button1.gif' | asset_url }}" alt="Button 1">
+    </a>
+    <a href="#">
+      <img src="{{ 'DRK_button2.gif' | asset_url }}" alt="Button 2">
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Top Video",
+  "settings": []
+}
+{% endschema %}
+

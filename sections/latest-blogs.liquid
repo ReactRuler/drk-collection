@@ -1,0 +1,81 @@
+<section class="latest-blogs-section">
+  <div class="latest-blogs-container">
+    <h2 class="latest-blogs-title">LATEST BLOGS</h2>
+    <div class="latest-blogs-grid">
+      {% assign blog_articles = blogs.news.articles | default: blogs.all.articles %}
+      {% if blog_articles.size > 0 %}
+        {% for article in blog_articles limit: 3 %}
+          <article class="blog-post">
+            <div class="blog-post-image">
+              {% if article.image %}
+                <img src="{{ article.image | img_url: '500x300' }}" alt="{{ article.title }}">
+              {% endif %}
+            </div>
+            <div class="blog-post-content">
+              <div class="blog-post-date">{{ article.published_at | date: "%B %d, %Y" }}</div>
+              <h3 class="blog-post-title">{{ article.title }}</h3>
+              <p class="blog-post-description">{{ article.excerpt | strip_html | truncate: 150 }}</p>
+              <a href="{{ article.url }}" class="blog-post-read-more">
+                <span>READ MORE</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 12L10 8L6 4" stroke="#7D7D7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+        {% endfor %}
+      {% else %}
+        <article class="blog-post">
+          <div class="blog-post-image"></div>
+          <div class="blog-post-content">
+            <div class="blog-post-date">April 02, 2025</div>
+            <h3 class="blog-post-title">Black Takes Flight</h3>
+            <p class="blog-post-description">From airports to boardrooms, the DRK Travel Collection turns every departure into a statement. Black-on-black design, engineered for presence and performance.</p>
+            <a href="#" class="blog-post-read-more">
+              <span>READ MORE</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 12L10 8L6 4" stroke="#7D7D7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+        <article class="blog-post">
+          <div class="blog-post-image"></div>
+          <div class="blog-post-content">
+            <div class="blog-post-date">April 02, 2025</div>
+            <h3 class="blog-post-title">The Art of Minimalism</h3>
+            <p class="blog-post-description">Discover how simplicity meets sophistication in our latest collection. Every piece designed with intention, crafted for those who value quality over quantity.</p>
+            <a href="#" class="blog-post-read-more">
+              <span>READ MORE</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 12L10 8L6 4" stroke="#7D7D7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+        <article class="blog-post">
+          <div class="blog-post-image"></div>
+          <div class="blog-post-content">
+            <div class="blog-post-date">April 02, 2025</div>
+            <h3 class="blog-post-title">Design Philosophy</h3>
+            <p class="blog-post-description">Exploring the principles behind DRK Collection's black-on-black aesthetic. How we transform everyday objects into icons of style and functionality.</p>
+            <a href="#" class="blog-post-read-more">
+              <span>READ MORE</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 12L10 8L6 4" stroke="#7D7D7D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Latest Blogs",
+  "settings": []
+}
+{% endschema %}
+
