@@ -1426,11 +1426,6 @@ body {
   display: none;
 }
 
-.cart-drawer.active ~ .cart-drawer-overlay,
-.cart-drawer.active .cart-drawer-overlay {
-  display: block;
-}
-
 .cart-drawer-content {
   display: flex;
   flex-direction: column;
