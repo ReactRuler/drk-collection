@@ -7,7 +7,7 @@ function Header({ onSearchClick }) {
         <div className="header-wrapper">
           <div className="header-logo">
             <a href="/">
-              <img src="/drk-logo.png" alt="DRK Collection" />
+              <img src={window.SHOPIFY_ASSETS?.logo || "/drk-logo.png"} alt="DRK Collection" />
             </a>
           </div>
           <nav className="header-nav">
