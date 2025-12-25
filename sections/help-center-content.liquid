@@ -10,31 +10,31 @@
     </h1>
     
     <div class="help-content-wrapper">
-      <div class="contact-section">
-        <h2 class="section-title">{{ section.settings.contact_title | default: 'How Can We Help You Today?' }}</h2>
-        <p class="section-description">{{ section.settings.contact_description | default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit. Mauris cursus eros sem, quis vehicula leo hendrerit.' }}</p>
-        
-        <div class="contact-buttons">
-          <a href="{{ section.settings.whatsapp_link | default: '#' }}" class="contact-btn whatsapp-btn">
-            <img src="{{ 'whatsapp-btn.png' | asset_url }}" alt="WhatsApp" class="btn-icon">
-            <span>WHATSAPP</span>
-          </a>
-          <a href="{{ section.settings.email_link | default: 'mailto:support@example.com' }}" class="contact-btn email-btn">
-            <img src="{{ 'mail-btn.png' | asset_url }}" alt="Email" class="btn-icon">
-            <span>E-MAIL</span>
-          </a>
-          <a href="{{ section.settings.chat_link | default: '#' }}" class="contact-btn chat-btn">
-            <img src="{{ 'chat-btn.png' | asset_url }}" alt="Chat" class="btn-icon">
-            <span>CHAT 24/7</span>
-          </a>
+      <div class="contact-section-wrapper">
+        <div class="contact-section">
+          <h2 class="section-title">{{ section.settings.contact_title | default: 'How Can We Help You Today?' }}</h2>
+          <p class="section-description">{{ section.settings.contact_description | default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit. Mauris cursus eros sem, quis vehicula leo hendrerit.' }}</p>
+          
+          <div class="contact-buttons">
+            <a href="{{ section.settings.whatsapp_link | default: '#' }}" class="contact-btn-link">
+              <img src="{{ 'whatsapp-btn.png' | asset_url }}" alt="WhatsApp">
+            </a>
+            <a href="{{ section.settings.email_link | default: 'mailto:support@example.com' }}" class="contact-btn-link">
+              <img src="{{ 'mail-btn.png' | asset_url }}" alt="Email">
+            </a>
+            <a href="{{ section.settings.chat_link | default: '#' }}" class="contact-btn-link">
+              <img src="{{ 'chat-btn.png' | asset_url }}" alt="Chat">
+            </a>
+          </div>
         </div>
       </div>
       
-      <div class="faq-section">
-        <h2 class="section-title">{{ section.settings.faq_title | default: 'FAQ' }}</h2>
-        <p class="section-description">{{ section.settings.faq_description | default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit.' }}</p>
-        
-        <div class="faq-accordion">
+      <div class="faq-section-wrapper">
+        <div class="faq-section">
+          <h2 class="section-title">{{ section.settings.faq_title | default: 'FAQ' }}</h2>
+          <p class="section-description">{{ section.settings.faq_description | default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta nulla nec libero pulvinar hendrerit.' }}</p>
+          
+          <div class="faq-accordion">
           {% for block in section.blocks %}
             <div class="faq-item" {{ block.shopify_attributes }}>
               <button class="faq-question" onclick="toggleFaq({{ forloop.index0 }})" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
@@ -50,6 +50,7 @@
               </div>
             </div>
           {% endfor %}
+        </div>
         </div>
       </div>
     </div>
@@ -110,9 +111,16 @@
   padding: 0 20px;
 }
 
+.contact-section-wrapper,
+.faq-section-wrapper {
+  margin-bottom: 40px;
+}
+
 .contact-section,
 .faq-section {
-  margin-bottom: 80px;
+  background: #0B0B0B;
+  border-radius: 10px;
+  padding: 40px;
 }
 
 .section-title {
@@ -140,38 +148,22 @@
   flex-wrap: wrap;
 }
 
-.contact-btn {
+.contact-btn-link {
   flex: 1;
   min-width: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 20px 24px;
-  background: rgba(124, 124, 124, 0.27);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(140, 140, 140, 0.4);
-  border-radius: 100px;
-  color: #FFFFFF;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  transition: all 0.3s;
-  cursor: pointer;
+  display: block;
+  transition: transform 0.3s, opacity 0.3s;
 }
 
-.contact-btn:hover {
-  background: rgba(124, 124, 124, 0.4);
-  border-color: rgba(140, 140, 140, 0.6);
+.contact-btn-link:hover {
   transform: translateY(-2px);
+  opacity: 0.9;
 }
 
-.btn-icon {
-  width: 24px;
-  height: 24px;
+.contact-btn-link img {
+  width: 100%;
+  height: auto;
+  display: block;
   object-fit: contain;
 }
 
@@ -260,11 +252,16 @@
     line-height: 32px;
   }
 
+  .contact-section,
+  .faq-section {
+    padding: 24px;
+  }
+
   .contact-buttons {
     flex-direction: column;
   }
 
-  .contact-btn {
+  .contact-btn-link {
     width: 100%;
   }
 
