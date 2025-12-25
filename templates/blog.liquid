@@ -1,0 +1,89 @@
+{% comment %}
+  Blog Template
+{% endcomment %}
+
+<div class="blog-page" style="background-color: #050505; padding: 80px 20px;">
+  <div class="page-width">
+    
+    <div class="blog-header" style="text-align: center; margin-bottom: 80px;">
+      <h1 style="color: #D2D2D2; font-size: 72px; font-weight: 300; margin: 0 0 30px; text-transform: uppercase; letter-spacing: 4px; line-height: 1.1;">
+        {{ blog.title }}
+      </h1>
+      {% if blog.description != blank %}
+        <p style="color: #767676; font-size: 20px; line-height: 1.8; margin: 0; max-width: 800px; margin-left: auto; margin-right: auto;">
+          {{ blog.description }}
+        </p>
+      {% endif %}
+    </div>
+
+    {% if blog.articles_count > 0 %}
+      <div class="blog-articles" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; max-width: 1400px; margin: 0 auto;">
+        {% for article in blog.articles %}
+          <article class="blog-article-card" style="background: rgba(255,255,255,0.02); border-radius: 10px; overflow: hidden; border: 1px solid rgba(125,125,125,0.5);">
+            <a href="{{ article.url }}" style="text-decoration: none; color: inherit;">
+              <div class="article-image" style="position: relative; background: #141414; aspect-ratio: 16/9; overflow: hidden;">
+                {% if article.image %}
+                  <img src="{{ article.image | img_url: '800x450' }}" 
+                       alt="{{ article.title }}" 
+                       style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;">
+                {% else %}
+                  <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #767676;">
+                    No Image
+                  </div>
+                {% endif %}
+              </div>
+              <div class="article-content" style="padding: 40px;">
+                <div class="article-date" style="color: #767676; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;">
+                  {{ article.published_at | date: "%B %d, %Y" | upcase }}
+                </div>
+                <h2 class="article-title" style="color: #D2D2D2; font-size: 28px; font-weight: 300; margin: 0 0 20px; text-transform: uppercase; letter-spacing: 1px; line-height: 1.3;">
+                  {{ article.title }}
+                </h2>
+                <p class="article-excerpt" style="color: #767676; font-size: 16px; line-height: 1.8; margin: 0 0 25px;">
+                  {{ article.excerpt | strip_html | truncate: 150 }}
+                </p>
+                <div class="read-more" style="color: #D2D2D2; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 10px;">
+                  Read More
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div style="text-align: center; padding: 80px 20px;">
+        <p style="color: #767676; font-size: 18px;">
+          No articles found.
+        </p>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<style>
+  .blog-article-card:hover .article-image img {
+    transform: scale(1.05);
+  }
+  
+  .blog-article-card:hover .read-more {
+    color: #D2D2D2;
+  }
+  
+  .blog-article-card:hover {
+    border-color: rgba(125,125,125,0.8) !important;
+  }
+  
+  @media (max-width: 768px) {
+    .blog-header h1 {
+      font-size: 48px !important;
+    }
+    .blog-articles {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
+

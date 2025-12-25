@@ -1,0 +1,22 @@
+{
+  "current": {
+    "type_body_font": {
+      "family": "Assistant",
+      "styles": ["400", "500", "600", "700"]
+    },
+    "type_header_font": {
+      "family": "Assistant",
+      "styles": ["400", "500", "600", "700"]
+    },
+    "colors_text": "#ffffff",
+    "colors_background_1": "#000000",
+    "colors_background_2": "#1a1a1a",
+    "colors_solid_button_labels": "#ffffff",
+    "colors_outline_button_labels": "#ffffff",
+    "colors_accent_1": "#ffffff",
+    "colors_accent_2": "#e0e0e0",
+    "page_width": 1400,
+    "favicon": null
+  }
+}
+

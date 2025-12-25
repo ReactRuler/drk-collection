@@ -1,0 +1,214 @@
+{% comment %}
+  Hero Section with Video Support
+{% endcomment %}
+
+<section class="hero-section" id="shopify-section-{{ section.id }}" style="background-color: #050505; min-height: 90vh; display: flex; align-items: center; position: relative; overflow: hidden;">
+  
+  {% comment %} Background Video or Image {% endcomment %}
+  <div class="hero-background" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;">
+    {% if section.settings.hero_video != blank %}
+      <video 
+        autoplay 
+        muted 
+        loop 
+        playsinline
+        style="width: 100%; height: 100%; object-fit: cover; opacity: {{ section.settings.video_opacity | divided_by: 100.0 }};"
+        {% if section.settings.hero_video_poster != blank %}
+          poster="{{ section.settings.hero_video_poster | image_url: width: 1920 }}"
+        {% endif %}>
+        <source src="{{ section.settings.hero_video }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    {% elsif section.settings.hero_image != blank %}
+      <img 
+        src="{{ section.settings.hero_image | image_url: width: 1920 }}" 
+        alt="{{ section.settings.hero_image.alt | escape }}"
+        style="width: 100%; height: 100%; object-fit: cover; opacity: {{ section.settings.image_opacity | divided_by: 100.0 }};">
+    {% endif %}
+    <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }}); z-index: 1;"></div>
+  </div>
+
+  <div class="page-width" style="position: relative; z-index: 2; width: 100%;">
+    <div class="hero-content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1400px; margin: 0 auto; padding: 80px 20px;">
+      
+      {% comment %} Left Side - Text Content {% endcomment %}
+      <div class="hero-text">
+        <h1 class="hero-title" style="color: #D2D2D2; font-size: 72px; font-weight: 300; margin: 0 0 30px; text-transform: uppercase; letter-spacing: 4px; line-height: 1.1;">
+          {{ section.settings.hero_title | default: "THE DRK SIDE OF COOL" }}
+        </h1>
+        <p class="hero-description" style="color: #767676; font-size: 20px; margin: 0 0 40px; line-height: 1.6;">
+          {{ section.settings.hero_description | default: "Everyday objects transformed into icons. Black on black, always." }}
+        </p>
+        <div class="hero-buttons" style="display: flex; gap: 20px; flex-wrap: wrap;">
+          <a href="{{ section.settings.button_1_link | default: '/collections/all' }}" 
+             class="btn-primary"
+             style="display: inline-block; padding: 15px 40px; background: rgba(124,124,124,0.27); border: 1px solid rgba(113,113,113,0.4); border-radius: 29.5px; color: #D2D2D2; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; transition: all 0.3s;">
+            {{ section.settings.button_1_text | default: "SHOP ENDRYDAY ESSENTIALS" }}
+          </a>
+          <a href="{{ section.settings.button_2_link | default: '/collections/all' }}" 
+             class="btn-secondary"
+             style="display: inline-block; padding: 15px 40px; background: #fff; border: none; border-radius: 25px; color: #000; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; font-weight: 500; transition: all 0.3s;">
+            {{ section.settings.button_2_text | default: "EXPLORE NEW COLLECTION" }}
+          </a>
+        </div>
+      </div>
+
+      {% comment %} Right Side - Image {% endcomment %}
+      <div class="hero-image" style="text-align: center;">
+        {% if section.settings.hero_right_image != blank %}
+          <img 
+            src="{{ section.settings.hero_right_image | image_url: width: 800 }}" 
+            alt="{{ section.settings.hero_right_image.alt | escape }}"
+            style="width: 100%; height: auto; max-width: 600px; margin: 0 auto; display: block;">
+        {% else %}
+          <div style="width: 100%; aspect-ratio: 3/4; background: #141414; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #767676;">
+            Hero Image
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section .btn-primary:hover {
+    background: rgba(124,124,124,0.4) !important;
+    border-color: rgba(113,113,113,0.6) !important;
+  }
+  .hero-section .btn-secondary:hover {
+    background: #D2D2D2 !important;
+  }
+  
+  @media (max-width: 1024px) {
+    .hero-content {
+      grid-template-columns: 1fr !important;
+      text-align: center;
+    }
+    .hero-title {
+      font-size: 48px !important;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 36px !important;
+    }
+    .hero-description {
+      font-size: 16px !important;
+    }
+    .hero-buttons {
+      flex-direction: column;
+    }
+    .hero-buttons a {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "THE DRK SIDE OF COOL"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_description",
+      "label": "Hero Description",
+      "default": "Everyday objects transformed into icons. Black on black, always."
+    },
+    {
+      "type": "text",
+      "id": "button_1_text",
+      "label": "Button 1 Text",
+      "default": "SHOP ENDRYDAY ESSENTIALS"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Button 2 Text",
+      "default": "EXPLORE NEW COLLECTION"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 Link"
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "range",
+      "id": "image_opacity",
+      "label": "Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "video",
+      "id": "hero_video",
+      "label": "Background Video"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_video_poster",
+      "label": "Video Poster Image"
+    },
+    {
+      "type": "range",
+      "id": "video_opacity",
+      "label": "Video Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_right_image",
+      "label": "Right Side Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}
+

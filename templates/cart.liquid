@@ -1,0 +1,242 @@
+{% comment %}
+  Cart Page Template - Based on Figma Design
+{% endcomment %}
+
+<div class="cart-page" style="background-color: #050505; padding: 80px 20px; min-height: 80vh;">
+  <div class="page-width">
+    <h1 style="color: #D2D2D2; font-size: 48px; font-weight: 300; text-transform: uppercase; letter-spacing: 4px; margin: 0 0 60px; text-align: center;">
+      Shopping Cart
+    </h1>
+
+    {% if cart.item_count > 0 %}
+      <form action="{{ routes.cart_url }}" method="post" id="cart-form">
+        <div class="cart-container" style="display: grid; grid-template-columns: 2fr 1fr; gap: 60px; max-width: 1400px; margin: 0 auto;">
+          
+          {% comment %} Cart Items {% endcomment %}
+          <div class="cart-items">
+            {% comment %} Cart Table Header {% endcomment %}
+            <div class="cart-header" style="display: grid; grid-template-columns: 350px 110px 231px 110px 117px; gap: 20px; padding: 20px 0; border-bottom: 1px solid rgba(125,125,125,0.5); margin-bottom: 20px;">
+              <div style="color: #767676; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Product</div>
+              <div style="color: #767676; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; text-align: center;">Quantity</div>
+              <div style="color: #767676; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; text-align: center;">Price</div>
+              <div style="color: #767676; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; text-align: center;">Total</div>
+              <div style="color: #767676; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; text-align: center;">Remove</div>
+            </div>
+            
+            <div class="cart-items-list" style="display: flex; flex-direction: column; gap: 0;">
+              {% for item in cart.items %}
+                <div class="cart-item" style="display: grid; grid-template-columns: 350px 110px 231px 110px 117px; gap: 20px; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 10px; margin-bottom: 20px; align-items: center;">
+                  
+                  {% comment %} Product Info with Image {% endcomment %}
+                  <div class="cart-item-product" style="display: flex; gap: 20px; align-items: center;">
+                    <div class="cart-item-image" style="width: 100px; height: 100px; background: #141414; border-radius: 10px; overflow: hidden; flex-shrink: 0;">
+                      <a href="{{ item.url }}">
+                        <img src="{{ item.image | img_url: '200x200' }}" 
+                             alt="{{ item.title }}"
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                      </a>
+                    </div>
+                    <div class="cart-item-info">
+                      <h3 style="color: #D2D2D2; font-size: 16px; font-weight: 300; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 1px;">
+                        <a href="{{ item.url }}" style="color: inherit; text-decoration: none;">
+                          {{ item.product.title }}
+                        </a>
+                      </h3>
+                      {% unless item.product.has_only_default_variant %}
+                        <p style="color: #767676; font-size: 14px; margin: 0;">
+                          {{ item.variant.title }}
+                        </p>
+                      {% endunless %}
+                    </div>
+                  </div>
+
+                  {% comment %} Quantity {% endcomment %}
+                  <div class="cart-item-quantity" style="display: flex; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 8px; border: 1px solid rgba(113,113,113,0.4); border-radius: 24.5px; padding: 8px 12px; background: rgba(255,255,255,0.05);">
+                      <button type="button" 
+                              class="quantity-decrease"
+                              data-line="{{ forloop.index }}"
+                              style="width: 30px; height: 30px; background: none; border: none; color: #767676; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <path d="M3 6h6"/>
+                        </svg>
+                      </button>
+                      <input type="number" 
+                             name="updates[]" 
+                             value="{{ item.quantity }}" 
+                             min="0"
+                             data-line="{{ forloop.index }}"
+                             style="width: 40px; background: none; border: none; color: #D2D2D2; text-align: center; font-size: 14px; padding: 0;">
+                      <button type="button" 
+                              class="quantity-increase"
+                              data-line="{{ forloop.index }}"
+                              style="width: 30px; height: 30px; background: none; border: none; color: #767676; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+                          <path d="M6 3v6M3 6h6"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  {% comment %} Unit Price {% endcomment %}
+                  <div class="cart-item-price" style="color: #D2D2D2; font-size: 16px; text-align: center;">
+                    {{ item.final_price | money }}
+                  </div>
+
+                  {% comment %} Line Total {% endcomment %}
+                  <div class="cart-item-total" style="color: #D2D2D2; font-size: 16px; text-align: center;">
+                    {{ item.final_line_price | money }}
+                  </div>
+
+                  {% comment %} Remove {% endcomment %}
+                  <div class="cart-item-remove" style="text-align: center;">
+                    <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" 
+                       style="width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.02); border: 1px solid rgba(125,125,125,0.5); display: inline-flex; align-items: center; justify-content: center; color: #767676; text-decoration: none; transition: all 0.3s;">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                      </svg>
+                    </a>
+                  </div>
+
+                </div>
+              {% endfor %}
+            </div>
+
+            <div class="cart-actions" style="margin-top: 40px; display: flex; justify-content: space-between; align-items: center;">
+              <a href="{{ routes.collections_url }}" 
+                 style="color: #767676; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s;">
+                ← Continue Shopping
+              </a>
+              <button type="submit" 
+                      name="update"
+                      style="padding: 12px 30px; background: rgba(255,255,255,0.05); border: 1px solid rgba(113,113,113,0.4); border-radius: 10px; color: #767676; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; cursor: pointer; transition: all 0.3s;">
+                Update Cart
+              </button>
+            </div>
+          </div>
+
+          {% comment %} Cart Summary {% endcomment %}
+          <div class="cart-summary" style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 10px; height: fit-content; position: sticky; top: 100px;">
+            <h2 style="color: #D2D2D2; font-size: 24px; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 30px;">
+              Order Summary
+            </h2>
+            
+            <div class="summary-line" style="display: flex; justify-content: space-between; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(125,125,125,0.5);">
+              <span style="color: #767676; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Subtotal</span>
+              <span style="color: #D2D2D2; font-size: 18px;">{{ cart.total_price | money }}</span>
+            </div>
+
+            <div class="summary-line" style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+              <span style="color: #767676; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Total</span>
+              <span style="color: #D2D2D2; font-size: 24px; font-weight: 300;">{{ cart.total_price | money }}</span>
+            </div>
+
+            <button type="submit" 
+                    name="checkout"
+                    style="width: 100%; padding: 15px; background: #fff; border: none; color: #000; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.3s; margin-bottom: 20px; border-radius: 25px;">
+              Checkout
+            </button>
+
+            <p style="color: #767676; font-size: 12px; text-align: center; margin: 0; line-height: 1.6;">
+              Shipping, taxes, and discount codes calculated at checkout.
+            </p>
+          </div>
+
+        </div>
+      </form>
+    {% else %}
+      <div style="text-align: center; padding: 80px 20px;">
+        <h2 style="color: #D2D2D2; font-size: 32px; font-weight: 300; margin: 0 0 20px; text-transform: uppercase; letter-spacing: 2px;">
+          Your cart is empty
+        </h2>
+        <p style="color: #767676; font-size: 16px; margin: 0 0 40px;">
+          Continue browsing to add items to your cart.
+        </p>
+        <a href="{{ routes.collections_url }}" 
+           style="display: inline-block; padding: 15px 40px; border: 2px solid #D2D2D2; border-radius: 25px; color: #D2D2D2; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; transition: all 0.3s;">
+          Continue Shopping
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .cart-page a:hover {
+    color: #D2D2D2 !important;
+  }
+  
+  .cart-page .cart-summary button[type="submit"][name="checkout"]:hover {
+    background: #D2D2D2 !important;
+  }
+  
+  .cart-item-remove a:hover {
+    background: rgba(255,255,255,0.1) !important;
+    border-color: #767676 !important;
+  }
+  
+  .quantity-decrease:hover,
+  .quantity-increase:hover {
+    color: #D2D2D2 !important;
+  }
+  
+  @media (max-width: 1200px) {
+    .cart-header,
+    .cart-item {
+      grid-template-columns: 1fr !important;
+      gap: 15px !important;
+    }
+    .cart-header {
+      display: none !important;
+    }
+    .cart-item-product {
+      flex-direction: column;
+      text-align: center;
+    }
+    .cart-item-quantity,
+    .cart-item-price,
+    .cart-item-total,
+    .cart-item-remove {
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .cart-container {
+      grid-template-columns: 1fr !important;
+    }
+    .cart-summary {
+      position: static !important;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const decreaseButtons = document.querySelectorAll('.quantity-decrease');
+    const increaseButtons = document.querySelectorAll('.quantity-increase');
+    const quantityInputs = document.querySelectorAll('input[name="updates[]"]');
+
+    decreaseButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const line = this.dataset.line;
+        const input = document.querySelector(`input[data-line="${line}"]`);
+        if (input && parseInt(input.value) > 0) {
+          input.value = parseInt(input.value) - 1;
+        }
+      });
+    });
+
+    increaseButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const line = this.dataset.line;
+        const input = document.querySelector(`input[data-line="${line}"]`);
+        if (input) {
+          input.value = parseInt(input.value) + 1;
+        }
+      });
+    });
+  });
+</script>
+

@@ -1,0 +1,76 @@
+{% comment %}
+  Article Template
+{% endcomment %}
+
+<div class="article-page" style="background-color: #050505; padding: 80px 20px;">
+  <div class="page-width">
+    
+    <div class="article-header" style="text-align: center; margin-bottom: 60px; max-width: 900px; margin-left: auto; margin-right: auto;">
+      <div class="article-meta" style="color: #767676; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px;">
+        {{ article.published_at | date: "%B %d, %Y" | upcase }}
+      </div>
+      <h1 style="color: #D2D2D2; font-size: 56px; font-weight: 300; margin: 0 0 30px; text-transform: uppercase; letter-spacing: 3px; line-height: 1.2;">
+        {{ article.title }}
+      </h1>
+      {% if article.author != blank %}
+        <p style="color: #767676; font-size: 16px; margin: 0;">
+          By {{ article.author }}
+        </p>
+      {% endif %}
+    </div>
+
+    {% if article.image %}
+      <div class="article-featured-image" style="margin-bottom: 60px; background: #141414; border-radius: 10px; aspect-ratio: 16/9; overflow: hidden;">
+        <img src="{{ article.image | img_url: '1400x800' }}" 
+             alt="{{ article.title }}"
+             style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+    {% endif %}
+
+    <div class="article-content" style="max-width: 900px; margin: 0 auto;">
+      <div style="color: #767676; font-size: 18px; line-height: 1.9;">
+        {{ article.content }}
+      </div>
+    </div>
+
+    <div class="article-footer" style="max-width: 900px; margin: 60px auto 0; padding-top: 60px; border-top: 1px solid rgba(125,125,125,0.5);">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <a href="{{ blog.url }}" 
+           style="color: #767676; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 10px; transition: color 0.3s;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Back to Blog
+        </a>
+        
+        <div class="article-share" style="display: flex; gap: 15px; align-items: center;">
+          <span style="color: #767676; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Share:</span>
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url }}{{ article.url }}" 
+             target="_blank"
+             style="color: #767676; text-decoration: none; font-size: 14px; transition: color 0.3s;">
+            Facebook
+          </a>
+          <a href="https://twitter.com/intent/tweet?url={{ shop.url }}{{ article.url }}&text={{ article.title }}" 
+             target="_blank"
+             style="color: #767676; text-decoration: none; font-size: 14px; transition: color 0.3s;">
+            Twitter
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .article-page a:hover {
+    color: #D2D2D2 !important;
+  }
+  
+  @media (max-width: 768px) {
+    .article-header h1 {
+      font-size: 36px !important;
+    }
+  }
+</style>
+

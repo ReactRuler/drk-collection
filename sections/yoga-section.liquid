@@ -1,0 +1,109 @@
+{% comment %}
+  DRK Yoga Section
+{% endcomment %}
+
+<section class="yoga-section" style="background-color: #050505; padding: 100px 20px;">
+  <div class="page-width">
+    <div class="yoga-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1400px; margin: 0 auto;">
+      
+      <div class="yoga-content">
+        <h2 style="color: #D2D2D2; font-size: 56px; font-weight: 300; margin: 0 0 30px; text-transform: uppercase; letter-spacing: 4px;">
+          DRK YOGA
+        </h2>
+        <p style="color: #767676; font-size: 24px; margin: 0 0 30px; line-height: 1.6;">
+          The art of stillness, the power of black.
+        </p>
+        <a href="{{ section.settings.collection_url | default: '/collections/yoga' }}" 
+           style="display: inline-block; padding: 15px 40px; border: 1px solid rgba(124,124,124,0.27); border-radius: 23px; background: rgba(124,124,124,0.27); color: #D2D2D2; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; transition: all 0.3s; margin-bottom: 40px;">
+          EXPLORE COLLECTION
+        </a>
+        <div class="yoga-description" style="color: #767676; font-size: 16px; line-height: 1.8; margin-top: 40px;">
+          <p style="margin: 0 0 20px;">
+            DRK Yoga transforms silence into tranquility and elegance. Black sharpens focus and detail, creating a space where mindfulness meets minimalism.
+          </p>
+        </div>
+        {% if section.settings.abstract_image %}
+          <div class="abstract-image" style="margin-top: 40px;">
+            <img src="{{ section.settings.abstract_image | img_url: '800x400' }}" 
+                 alt="Abstract" 
+                 style="width: 100%; height: auto; opacity: 0.7;">
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="yoga-images" style="display: grid; grid-template-rows: 1fr 1fr; gap: 30px;">
+        {% if section.settings.top_image %}
+          <div class="yoga-image-top" style="background: #141414; border-radius: 10px; aspect-ratio: 4/3; overflow: hidden;">
+            <img src="{{ section.settings.top_image | img_url: '800x600' }}" 
+                 alt="Yoga Products" 
+                 style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        {% else %}
+          <div style="background: #141414; border-radius: 10px; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; color: #767676;">
+            Top Image
+          </div>
+        {% endif %}
+        
+        {% if section.settings.bottom_image %}
+          <div class="yoga-image-bottom" style="background: #141414; border-radius: 10px; aspect-ratio: 4/3; overflow: hidden;">
+            <img src="{{ section.settings.bottom_image | img_url: '800x600' }}" 
+                 alt="Yoga Practice" 
+                 style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        {% else %}
+          <div style="background: #141414; border-radius: 10px; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; color: #767676;">
+            Bottom Image
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .yoga-section a:hover {
+    background: rgba(124,124,124,0.4) !important;
+    border-color: rgba(124,124,124,0.4) !important;
+  }
+  
+  @media (max-width: 768px) {
+    .yoga-container {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "DRK Yoga",
+  "settings": [
+    {
+      "type": "url",
+      "id": "collection_url",
+      "label": "Collection URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "abstract_image",
+      "label": "Abstract Image (Left Side)"
+    },
+    {
+      "type": "image_picker",
+      "id": "top_image",
+      "label": "Top Image (Right Side)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bottom_image",
+      "label": "Bottom Image (Right Side)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DRK Yoga"
+    }
+  ]
+}
+{% endschema %}
+
