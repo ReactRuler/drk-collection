@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "../assets/react-build",
+    outDir: "../assets",
     rollupOptions: {
       output: {
         entryFileNames: "react-app.js",
@@ -15,7 +15,8 @@ export default defineConfig({
           return "react-asset-[name].[ext]";
         }
       }
-    }
+    },
+    emptyOutDir: false
   },
   publicDir: "../assets/media"
 });
