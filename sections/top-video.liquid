@@ -6,7 +6,7 @@
       <source src="{{ 'DRK_video.mp4' | asset_url }}" type="video/mp4">
     {% endif %}
   </video>
-  <div class="video-overlay-content">
+  <div class="video-overlay-content" style="{% if section.settings.buttons_left != blank %}left: {{ section.settings.buttons_left }};{% endif %} {% if section.settings.buttons_bottom != blank %}bottom: {{ section.settings.buttons_bottom }};{% endif %}">
     <a href="{{ section.settings.button1_link | default: '#' }}">
       {% if section.settings.button1_image %}
         <img src="{{ section.settings.button1_image | image_url: width: 400 }}" alt="{{ section.settings.button1_alt | default: 'Button 1' }}">
@@ -63,7 +63,25 @@
       "id": "video_aspect_ratio",
       "label": "Aspect Ratio",
       "info": "Enter aspect ratio (e.g., '16/9', '21/9', '4/3', '1/1'). This will override height.",
-      "default": "16/9"
+      "default": "21/9"
+    },
+    {
+      "type": "header",
+      "content": "Button Position"
+    },
+    {
+      "type": "text",
+      "id": "buttons_left",
+      "label": "Buttons Left Position",
+      "info": "Enter left position (e.g., '0', '10%', '50px', '20vw')",
+      "default": "0"
+    },
+    {
+      "type": "text",
+      "id": "buttons_bottom",
+      "label": "Buttons Bottom Position",
+      "info": "Enter bottom position (e.g., '40%', '100px', '10vh')",
+      "default": "40%"
     },
     {
       "type": "header",

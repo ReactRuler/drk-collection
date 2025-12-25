@@ -164,8 +164,6 @@ body {
 
 .video-overlay-content {
   position: absolute;
-  bottom: 40%;
-  left: 0;
   width: 50%;
   display: flex;
   align-items: center;
