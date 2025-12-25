@@ -1,5 +1,5 @@
-<div class="top-video-section">
-  <video autoplay muted loop playsinline>
+<div class="top-video-section" style="{% if section.settings.video_width != blank %}width: {{ section.settings.video_width }};{% endif %} {% if section.settings.video_max_width != blank %}max-width: {{ section.settings.video_max_width }};{% endif %} {% if section.settings.video_aspect_ratio != blank %}aspect-ratio: {{ section.settings.video_aspect_ratio }};{% endif %}">
+  <video autoplay muted loop playsinline style="{% if section.settings.video_height != blank %}height: {{ section.settings.video_height }};{% endif %} {% if section.settings.video_width != blank %}width: {{ section.settings.video_width }};{% endif %} {% if section.settings.video_aspect_ratio != blank %}aspect-ratio: {{ section.settings.video_aspect_ratio }}; object-fit: cover;{% endif %}">
     {% if section.settings.video_url != blank %}
       <source src="{{ section.settings.video_url }}" type="video/mp4">
     {% else %}
@@ -33,6 +33,37 @@
       "id": "video_url",
       "label": "Video URL",
       "info": "Enter video URL. For assets, use format: {{ 'DRK_video.mp4' | asset_url }} or upload to Files and paste the file URL"
+    },
+    {
+      "type": "header",
+      "content": "Video Size Settings"
+    },
+    {
+      "type": "text",
+      "id": "video_width",
+      "label": "Video Width",
+      "info": "Enter width (e.g., '100%', '800px', '50vw')",
+      "default": "100%"
+    },
+    {
+      "type": "text",
+      "id": "video_max_width",
+      "label": "Video Max Width",
+      "info": "Enter max width (e.g., '1920px', '100%')"
+    },
+    {
+      "type": "text",
+      "id": "video_height",
+      "label": "Video Height",
+      "info": "Enter height (e.g., '600px', '50vh', 'auto')",
+      "default": "auto"
+    },
+    {
+      "type": "text",
+      "id": "video_aspect_ratio",
+      "label": "Aspect Ratio",
+      "info": "Enter aspect ratio (e.g., '16/9', '21/9', '4/3', '1/1'). This will override height.",
+      "default": "16/9"
     },
     {
       "type": "header",

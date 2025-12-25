@@ -151,12 +151,15 @@ body {
   width: 100%;
   position: relative;
   background: #050505;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .top-video-section video {
   width: 100%;
   height: auto;
   display: block;
+  margin: 0 auto;
 }
 
 .video-overlay-content {
