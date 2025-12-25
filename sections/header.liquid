@@ -2,7 +2,7 @@
   <div class="page-width">
     <div class="header-wrapper">
       <div class="header-logo">
-        <a href="{{ section.settings.logo_link }}">
+        <a href="{{ section.settings.logo_link | default: '/' }}">
           {% if section.settings.logo %}
             <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ section.settings.logo.alt | default: 'DRK Collection' }}">
           {% else %}
@@ -14,16 +14,14 @@
         {% for block in section.blocks %}
           {% if block.type == 'menu_item' %}
             <div class="menu-item-wrapper">
-              <a href="{{ block.settings.link }}" class="menu-link">{{ block.settings.label }}</a>
+              <a href="{{ block.settings.link | default: '#' }}" class="menu-link">{{ block.settings.label }}</a>
               {% if block.settings.show_dropdown %}
                 <div class="menu-dropdown">
                   <div class="dropdown-content">
                     {% if block.settings.featured_product_image %}
                       <div class="dropdown-featured">
                         <div class="featured-product-image">
-                          {% if block.settings.featured_product_image %}
-                            <img src="{{ block.settings.featured_product_image | image_url: width: 300 }}" alt="{{ block.settings.featured_product_title }}">
-                          {% endif %}
+                          <img src="{{ block.settings.featured_product_image | image_url: width: 300 }}" alt="{{ block.settings.featured_product_title }}">
                         </div>
                         <div class="featured-product-info">
                           <h4>{{ block.settings.featured_product_title | default: 'PRODUCT NAME' }}</h4>
@@ -41,10 +39,8 @@
                       </div>
                     {% endif %}
                     <div class="dropdown-menu-columns">
-                      {% assign submenu_count = 0 %}
                       {% for subblock in section.blocks %}
                         {% if subblock.type == 'submenu' and subblock.settings.parent_menu_label == block.settings.label %}
-                          {% assign submenu_count = submenu_count | plus: 1 %}
                           <div class="dropdown-column">
                             {% for i in (1..8) %}
                               {% assign label_key = 'menu_item_' | append: i | append: '_label' %}
@@ -117,7 +113,7 @@
   </div>
 </div>
 
-<div id="cart-drawer-overlay" class="cart-drawer-overlay" onclick="document.getElementById('cart-drawer').classList.remove('active')" style="display: none;"></div>
+<div id="cart-drawer-overlay" class="cart-drawer-overlay" onclick="closeCartDrawer()" style="display: none;"></div>
 <div id="cart-drawer" class="cart-drawer">
   <div class="cart-drawer-content">
     <div class="cart-drawer-header">
@@ -192,7 +188,6 @@
         const total = (cart.total_price / 100) + shipping;
         if (cartTotal) cartTotal.textContent = '$ ' + total.toFixed(0);
         
-        // Update cart items
         const cartItemsContainer = document.getElementById('cart-items');
         if (cartItemsContainer) {
           if (cart.items && cart.items.length > 0) {
@@ -231,24 +226,13 @@
     updateCartCount();
   };
   
-  // Initialize when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
       updateCartCount();
-      
-      // Close cart when clicking overlay
       const overlay = document.getElementById('cart-drawer-overlay');
-      if (overlay) {
-        overlay.addEventListener('click', closeCartDrawer);
-      }
-      
-      // Close cart when clicking close button
+      if (overlay) overlay.addEventListener('click', closeCartDrawer);
       const closeBtn = document.querySelector('.cart-close');
-      if (closeBtn) {
-        closeBtn.addEventListener('click', closeCartDrawer);
-      }
-      
-      // Close account dropdown when clicking outside
+      if (closeBtn) closeBtn.addEventListener('click', closeCartDrawer);
       document.addEventListener('click', function(event) {
         const accountWrapper = document.querySelector('.account-menu-wrapper');
         const accountDropdown = document.getElementById('account-dropdown');
@@ -259,20 +243,10 @@
     });
   } else {
     updateCartCount();
-    
-    // Close cart when clicking overlay
     const overlay = document.getElementById('cart-drawer-overlay');
-    if (overlay) {
-      overlay.addEventListener('click', closeCartDrawer);
-    }
-    
-    // Close cart when clicking close button
+    if (overlay) overlay.addEventListener('click', closeCartDrawer);
     const closeBtn = document.querySelector('.cart-close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeCartDrawer);
-    }
-    
-    // Close account dropdown when clicking outside
+    if (closeBtn) closeBtn.addEventListener('click', closeCartDrawer);
     document.addEventListener('click', function(event) {
       const accountWrapper = document.querySelector('.account-menu-wrapper');
       const accountDropdown = document.getElementById('account-dropdown');
@@ -295,8 +269,7 @@
     {
       "type": "url",
       "id": "logo_link",
-      "label": "Logo Link",
-      "default": "/"
+      "label": "Logo Link"
     },
     {
       "type": "header",
@@ -316,8 +289,7 @@
     {
       "type": "url",
       "id": "login_link",
-      "label": "Login Link",
-      "default": "/account/login"
+      "label": "Login Link"
     },
     {
       "type": "text",
@@ -328,8 +300,7 @@
     {
       "type": "url",
       "id": "register_link",
-      "label": "Register Link",
-      "default": "/account/register"
+      "label": "Register Link"
     },
     {
       "type": "header",
@@ -346,6 +317,7 @@
     {
       "type": "menu_item",
       "name": "Menu Item",
+      "limit": 20,
       "settings": [
         {
           "type": "text",
@@ -517,10 +489,7 @@
         "settings": {
           "label": "FITNESS",
           "link": "#",
-          "show_dropdown": true,
-          "featured_product_title": "PRODUCT NAME",
-          "featured_product_original_price": "$200",
-          "featured_product_sale_price": "$150"
+          "show_dropdown": true
         }
       },
       {
