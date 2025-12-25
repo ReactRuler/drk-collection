@@ -1,21 +1,76 @@
 <div class="top-video-section">
   <video autoplay muted loop playsinline>
-    <source src="{{ 'DRK_video.mp4' | asset_url }}" type="video/mp4">
+    {% if section.settings.video_url != blank %}
+      <source src="{{ section.settings.video_url }}" type="video/mp4">
+    {% else %}
+      <source src="{{ 'DRK_video.mp4' | asset_url }}" type="video/mp4">
+    {% endif %}
   </video>
   <div class="video-overlay-content">
-    <a href="#">
-      <img src="{{ 'DRK_button1.gif' | asset_url }}" alt="Button 1">
-    </a>
-    <a href="#">
-      <img src="{{ 'DRK_button2.gif' | asset_url }}" alt="Button 2">
-    </a>
+    {% if section.settings.button1_image %}
+      <a href="{{ section.settings.button1_link }}">
+        <img src="{{ section.settings.button1_image | image_url: width: 400 }}" alt="{{ section.settings.button1_alt }}">
+      </a>
+    {% endif %}
+    {% if section.settings.button2_image %}
+      <a href="{{ section.settings.button2_link }}">
+        <img src="{{ section.settings.button2_image | image_url: width: 400 }}" alt="{{ section.settings.button2_alt }}">
+      </a>
+    {% endif %}
   </div>
 </div>
 
 {% schema %}
 {
   "name": "Top Video",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL",
+      "info": "Enter video URL. For assets, use format: {{ 'DRK_video.mp4' | asset_url }} or upload to Files and paste the file URL"
+    },
+    {
+      "type": "header",
+      "content": "Button 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "button1_image",
+      "label": "Button 1 Image"
+    },
+    {
+      "type": "url",
+      "id": "button1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "button1_alt",
+      "label": "Button 1 Alt Text",
+      "default": "Button 1"
+    },
+    {
+      "type": "header",
+      "content": "Button 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "button2_image",
+      "label": "Button 2 Image"
+    },
+    {
+      "type": "url",
+      "id": "button2_link",
+      "label": "Button 2 Link"
+    },
+    {
+      "type": "text",
+      "id": "button2_alt",
+      "label": "Button 2 Alt Text",
+      "default": "Button 2"
+    }
+  ]
 }
 {% endschema %}
 

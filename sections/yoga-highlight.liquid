@@ -2,24 +2,29 @@
   <div class="yoga-highlight-container">
     <div class="yoga-highlight-content">
       <div class="yoga-highlight-left">
-        <h2 class="yoga-highlight-title">DRK Yoga</h2>
+        <h2 class="yoga-highlight-title">{{ section.settings.title }}</h2>
         <p class="yoga-highlight-description">
-          The art of stillness, the power of black.
+          {{ section.settings.description }}
         </p>
-        <a href="#" class="yoga-highlight-button">EXPLORE COLLECTION</a>
+        <a href="{{ section.settings.button_link }}" class="yoga-highlight-button">{{ section.settings.button_text }}</a>
       </div>
       <div class="yoga-highlight-middle">
-        <img src="{{ 'yoga-products.png' | asset_url }}" alt="Yoga Products">
+        {% if section.settings.products_image %}
+          <img src="{{ section.settings.products_image | image_url: width: 800 }}" alt="{{ section.settings.products_image.alt }}">
+        {% endif %}
       </div>
       <div class="yoga-highlight-right">
-        <img src="{{ 'yoga-lady.png' | asset_url }}" alt="Yoga Model">
+        {% if section.settings.model_image %}
+          <img src="{{ section.settings.model_image | image_url: width: 800 }}" alt="{{ section.settings.model_image.alt }}">
+        {% endif %}
       </div>
       <div class="yoga-water-ripples">
-        <img src="{{ 'bottom-horizontal-no-text.png' | asset_url }}" alt="Water Ripples">
+        {% if section.settings.water_image %}
+          <img src="{{ section.settings.water_image | image_url: width: 1200 }}" alt="{{ section.settings.water_image.alt }}">
+        {% endif %}
         <div class="yoga-water-ripples-text">
           <p>
-            <b>DRK Yoga </b>transforms silence into motion and simplicity into elegance. Designed in black to sharpen focus, built with refined detail to follow every flow.<br><br>
-            Each product invites you to experience balance with intensity and grace.
+            {{ section.settings.text_content }}
           </p>
         </div>
       </div>
@@ -30,7 +35,52 @@
 {% schema %}
 {
   "name": "Yoga Highlight",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "DRK Yoga"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "The art of stillness, the power of black."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "EXPLORE COLLECTION"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "products_image",
+      "label": "Products Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "model_image",
+      "label": "Model Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "water_image",
+      "label": "Water Ripples Image"
+    },
+    {
+      "type": "richtext",
+      "id": "text_content",
+      "label": "Text Content",
+      "default": "<p><b>DRK Yoga </b>transforms silence into motion and simplicity into elegance. Designed in black to sharpen focus, built with refined detail to follow every flow.<br><br>Each product invites you to experience balance with intensity and grace.</p>"
+    }
+  ]
 }
 {% endschema %}
 

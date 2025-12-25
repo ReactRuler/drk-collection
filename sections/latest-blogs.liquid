@@ -1,10 +1,11 @@
 <section class="latest-blogs-section">
   <div class="latest-blogs-container">
-    <h2 class="latest-blogs-title">LATEST BLOGS</h2>
+    <h2 class="latest-blogs-title">{{ section.settings.title }}</h2>
     <div class="latest-blogs-grid">
-      {% assign blog_articles = blogs.news.articles | default: blogs.all.articles %}
+      {% assign selected_blog = blogs[section.settings.blog] %}
+      {% assign blog_articles = selected_blog.articles | default: blogs.all.articles %}
       {% if blog_articles.size > 0 %}
-        {% for article in blog_articles limit: 3 %}
+        {% for article in blog_articles limit: section.settings.posts_to_show %}
           <article class="blog-post">
             <div class="blog-post-image">
               {% if article.image %}
@@ -75,7 +76,28 @@
 {% schema %}
 {
   "name": "Latest Blogs",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "LATEST BLOGS"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "range",
+      "id": "posts_to_show",
+      "label": "Posts to show",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    }
+  ]
 }
 {% endschema %}
 

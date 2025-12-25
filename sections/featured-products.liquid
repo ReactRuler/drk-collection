@@ -1,28 +1,31 @@
 <section class="featured-products">
   <div class="page-width">
-    <h2>FEATURED PRODUCTS</h2>
+    <h2>{{ section.settings.title }}</h2>
     <div class="products-grid">
-      {% for product in collections.featured.products limit: 9 %}
-        <div class="product-card">
-          <a href="{{ product.url }}">
-            <div class="product-image">
-              {% if product.featured_image %}
-                <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title }}">
-              {% endif %}
-            </div>
-            <h3>{{ product.title }}</h3>
-            <div class="product-price">{{ product.price | money }}</div>
-          </a>
-        </div>
+      {% assign collection = collections[section.settings.collection] %}
+      {% if collection and collection.products.size > 0 %}
+        {% for product in collection.products limit: section.settings.products_to_show %}
+          <div class="product-card">
+            <a href="{{ product.url }}">
+              <div class="product-image">
+                {% if product.featured_image %}
+                  <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title }}">
+                {% endif %}
+              </div>
+              <h3>{{ product.title }}</h3>
+              <div class="product-price">{{ product.price | money }}</div>
+            </a>
+          </div>
+        {% endfor %}
       {% else %}
-        {% for i in (1..9) %}
+        {% for i in (1..section.settings.products_to_show) %}
           <div class="product-card">
             <div class="product-image"></div>
             <h3>PRODUCT NAME</h3>
             <div class="product-price">$200</div>
           </div>
         {% endfor %}
-      {% endfor %}
+      {% endif %}
     </div>
   </div>
 </section>
@@ -30,7 +33,28 @@
 {% schema %}
 {
   "name": "Featured Products",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "FEATURED PRODUCTS"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 9
+    }
+  ]
 }
 {% endschema %}
 

@@ -1,13 +1,21 @@
 <section class="logo-repeated-section">
   <div class="logo-repeated-container">
-    <img src="{{ 'logo_repeated.png' | asset_url }}" alt="DRK Collection" class="logo-repeated-image">
+    {% if section.settings.image %}
+      <img src="{{ section.settings.image | image_url: width: 2000 }}" alt="{{ section.settings.image.alt | default: 'DRK Collection' }}" class="logo-repeated-image">
+    {% endif %}
   </div>
 </section>
 
 {% schema %}
 {
   "name": "Logo Repeated",
-  "settings": []
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Logo Image"
+    }
+  ]
 }
 {% endschema %}
 

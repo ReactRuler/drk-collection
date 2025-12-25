@@ -2,18 +2,18 @@
   <div class="page-width">
     <div class="header-wrapper">
       <div class="header-logo">
-        <a href="/">
-          <img src="{{ 'drk-logo.png' | asset_url }}" alt="DRK Collection">
+        <a href="{{ section.settings.logo_link }}">
+          {% if section.settings.logo %}
+            <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ section.settings.logo.alt | default: 'DRK Collection' }}">
+          {% else %}
+            <img src="{{ 'drk-logo.png' | asset_url }}" alt="DRK Collection">
+          {% endif %}
         </a>
       </div>
       <nav class="header-nav">
-        <a href="#">DRINKWARE</a>
-        <a href="#">FITNESS</a>
-        <a href="#">HOME</a>
-        <a href="#">TRAVEL</a>
-        <a href="#">BASICS</a>
-        <a href="#">DIGITAL</a>
-        <a href="#">OFFICE</a>
+        {% for block in section.blocks %}
+          <a href="{{ block.settings.link }}">{{ block.settings.label }}</a>
+        {% endfor %}
       </nav>
       <div class="header-icons">
         <button class="search-icon" onclick="document.getElementById('search-popup').style.display='flex'">
@@ -53,7 +53,92 @@
 {% schema %}
 {
   "name": "Header",
-  "settings": []
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "default": "drk-logo.png"
+    },
+    {
+      "type": "url",
+      "id": "logo_link",
+      "label": "Logo Link",
+      "default": "/"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_item",
+      "name": "Menu Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "MENU ITEM"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "menu_item",
+        "settings": {
+          "label": "DRINKWARE",
+          "link": "#"
+        }
+      },
+      {
+        "type": "menu_item",
+        "settings": {
+          "label": "FITNESS",
+          "link": "#"
+        }
+      },
+      {
+        "type": "menu_item",
+        "settings": {
+          "label": "HOME",
+          "link": "#"
+        }
+      },
+      {
+        "type": "menu_item",
+        "settings": {
+          "label": "TRAVEL",
+          "link": "#"
+        }
+      },
+      {
+        "type": "menu_item",
+        "settings": {
+          "label": "BASICS",
+          "link": "#"
+        }
+      },
+      {
+        "type": "menu_item",
+        "settings": {
+          "label": "DIGITAL",
+          "link": "#"
+        }
+      },
+      {
+        "type": "menu_item",
+        "settings": {
+          "label": "OFFICE",
+          "link": "#"
+        }
+      }
+    ]
+  }
 }
 {% endschema %}
 

@@ -2,16 +2,32 @@
   <div class="hero-highlights">
     <div class="highlights-container">
       <div class="highlight-item">
-        <img src="{{ 'fast-dispatch.svg' | asset_url }}" alt="Fast Dispatch">
+        {% if section.settings.fast_dispatch %}
+          <img src="{{ section.settings.fast_dispatch | image_url: width: 100 }}" alt="Fast Dispatch">
+        {% else %}
+          <img src="{{ 'fast-dispatch.svg' | asset_url }}" alt="Fast Dispatch">
+        {% endif %}
       </div>
       <div class="highlight-item">
-        <img src="{{ 'easy-returns.svg' | asset_url }}" alt="Easy Returns">
+        {% if section.settings.easy_returns %}
+          <img src="{{ section.settings.easy_returns | image_url: width: 100 }}" alt="Easy Returns">
+        {% else %}
+          <img src="{{ 'easy-returns.svg' | asset_url }}" alt="Easy Returns">
+        {% endif %}
       </div>
       <div class="highlight-item">
-        <img src="{{ 'secure-checkout.svg' | asset_url }}" alt="Secure Checkout">
+        {% if section.settings.secure_checkout %}
+          <img src="{{ section.settings.secure_checkout | image_url: width: 100 }}" alt="Secure Checkout">
+        {% else %}
+          <img src="{{ 'secure-checkout.svg' | asset_url }}" alt="Secure Checkout">
+        {% endif %}
       </div>
       <div class="highlight-item">
-        <img src="{{ '247-customer-support.svg' | asset_url }}" alt="24/7 Support">
+        {% if section.settings.customer_support %}
+          <img src="{{ section.settings.customer_support | image_url: width: 100 }}" alt="24/7 Support">
+        {% else %}
+          <img src="{{ '247-customer-support.svg' | asset_url }}" alt="24/7 Support">
+        {% endif %}
       </div>
     </div>
   </div>
@@ -20,7 +36,28 @@
 {% schema %}
 {
   "name": "Hero",
-  "settings": []
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "fast_dispatch",
+      "label": "Fast Dispatch Icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "easy_returns",
+      "label": "Easy Returns Icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "secure_checkout",
+      "label": "Secure Checkout Icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "customer_support",
+      "label": "24/7 Customer Support Icon"
+    }
+  ]
 }
 {% endschema %}
 
