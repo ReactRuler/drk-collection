@@ -13,10 +13,10 @@
       <nav class="header-nav">
         {% for block in section.blocks %}
           {% if block.type == 'menu_item' %}
-            <div class="menu-item-wrapper" onmouseenter="showDropdown(this)" onmouseleave="hideDropdown(this)">
+            <div class="menu-item-wrapper" onmouseenter="showDropdown(this)" onmouseleave="hideDropdownDelayed(this)">
               <a href="{{ block.settings.link | default: '#' }}" class="menu-link">{{ block.settings.label }}</a>
               {% if block.settings.show_dropdown %}
-                <div class="menu-dropdown" style="display: none;">
+                <div class="menu-dropdown" style="display: none;" onmouseenter="showDropdown(this.closest('.menu-item-wrapper'))" onmouseleave="hideDropdownDelayed(this.closest('.menu-item-wrapper'))">
                   <div class="dropdown-content">
                     {% if block.settings.featured_product_image %}
                       <div class="dropdown-featured">
@@ -236,6 +236,19 @@
     const dropdown = element.querySelector('.menu-dropdown');
     if (dropdown) {
       dropdown.style.display = 'block';
+    }
+  };
+  
+  window.hideDropdownDelayed = function(element) {
+    if (!element) return;
+    const dropdown = element.querySelector('.menu-dropdown');
+    if (dropdown) {
+      // Add small delay to allow moving mouse to dropdown
+      setTimeout(function() {
+        if (dropdown && !dropdown.matches(':hover') && !element.querySelector('.menu-link').matches(':hover')) {
+          dropdown.style.display = 'none';
+        }
+      }, 100);
     }
   };
   
