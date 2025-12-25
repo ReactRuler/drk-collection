@@ -180,7 +180,6 @@ body {
 .hero-highlights {
   box-sizing: border-box;
   width: 100%;
-  margin-bottom: -200px;
   height: 150px;
   background: rgba(17, 17, 17, 0.8);
   border-top: 1px solid #1d1d1d;
@@ -203,12 +202,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .highlight-item img {
   width: 100%;
   height: auto;
-  max-width: 40px;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 .featured-products {
