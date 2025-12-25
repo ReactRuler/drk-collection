@@ -43,7 +43,7 @@
                     <div class="dropdown-menu-columns">
                       {% assign submenu_count = 0 %}
                       {% for subblock in section.blocks %}
-                        {% if subblock.type == 'submenu' and subblock.settings.parent_menu == block.id %}
+                        {% if subblock.type == 'submenu' and subblock.settings.parent_menu_label == block.settings.label %}
                           {% assign submenu_count = submenu_count | plus: 1 %}
                           <div class="dropdown-column">
                             {% for i in (1..8) %}
@@ -330,9 +330,9 @@
       "settings": [
         {
           "type": "text",
-          "id": "parent_menu",
-          "label": "Parent Menu Block ID",
-          "info": "Enter the block ID of the parent menu item (found in block settings)"
+          "id": "parent_menu_label",
+          "label": "Parent Menu Label",
+          "info": "Enter the exact label of the parent menu item (e.g., 'FITNESS', 'DRINKWARE')"
         },
         {
           "type": "text",
