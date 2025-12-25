@@ -6,22 +6,24 @@
     
     <h1 class="page-title">{{ section.settings.page_title | default: 'RETURN & REFUND POLICY' }}</h1>
     
-    <div class="policy-content">
-      {% for block in section.blocks %}
-        <div class="policy-block" {{ block.shopify_attributes }}>
-          {% if block.settings.title != blank %}
-            <h2 class="policy-block-title">{{ block.settings.title }}</h2>
-          {% endif %}
-          {% if block.settings.content != blank %}
-            <div class="policy-block-content">
-              {{ block.settings.content }}
-            </div>
-          {% endif %}
-          {% unless forloop.last %}
-            <div class="policy-block-divider"></div>
-          {% endunless %}
-        </div>
-      {% endfor %}
+    <div class="policy-content-wrapper">
+      <div class="policy-content">
+        {% for block in section.blocks %}
+          <div class="policy-block" {{ block.shopify_attributes }}>
+            {% if block.settings.title != blank %}
+              <h2 class="policy-block-title">{{ block.settings.title }}</h2>
+            {% endif %}
+            {% if block.settings.content != blank %}
+              <div class="policy-block-content">
+                {{ block.settings.content }}
+              </div>
+            {% endif %}
+            {% unless forloop.last %}
+              <div class="policy-block-divider"></div>
+            {% endunless %}
+          </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
@@ -67,17 +69,20 @@
   margin: 0 0 60px 0;
 }
 
-.policy-content {
+.policy-content-wrapper {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-.policy-block {
-  margin-bottom: 48px;
+.policy-content {
   background: #0B0B0B;
   border-radius: 10px;
   padding: 40px;
+}
+
+.policy-block {
+  margin-bottom: 0;
 }
 
 .policy-block-title {
@@ -111,7 +116,7 @@
   width: 100%;
   height: 1px;
   background: rgba(140, 140, 140, 0.2);
-  margin: 48px 0;
+  margin: 32px 0;
 }
 
 @media (max-width: 768px) {
@@ -126,7 +131,7 @@
     margin-bottom: 40px;
   }
 
-  .policy-block {
+  .policy-content {
     padding: 24px;
   }
 
