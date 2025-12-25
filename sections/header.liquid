@@ -149,58 +149,68 @@
 </div>
 
 <script>
-  function openCartDrawer() {
-    document.getElementById('cart-drawer').classList.add('active');
-    document.getElementById('cart-drawer-overlay').style.display = 'block';
-    updateCartCount();
-  }
-  
-  function closeCartDrawer() {
-    document.getElementById('cart-drawer').classList.remove('active');
-    document.getElementById('cart-drawer-overlay').style.display = 'none';
-  }
-  
-  function toggleAccountDropdown() {
-    document.getElementById('account-dropdown').classList.toggle('active');
-  }
-  
-  // Close account dropdown when clicking outside
-  document.addEventListener('click', function(event) {
-    const accountWrapper = document.querySelector('.account-menu-wrapper');
-    const accountDropdown = document.getElementById('account-dropdown');
-    if (accountWrapper && !accountWrapper.contains(event.target)) {
-      accountDropdown.classList.remove('active');
+  window.openCartDrawer = function() {
+    const drawer = document.getElementById('cart-drawer');
+    const overlay = document.getElementById('cart-drawer-overlay');
+    if (drawer && overlay) {
+      drawer.classList.add('active');
+      overlay.style.display = 'block';
+      updateCartCount();
     }
-  });
+  };
+  
+  window.closeCartDrawer = function() {
+    const drawer = document.getElementById('cart-drawer');
+    const overlay = document.getElementById('cart-drawer-overlay');
+    if (drawer && overlay) {
+      drawer.classList.remove('active');
+      overlay.style.display = 'none';
+    }
+  };
+  
+  window.toggleAccountDropdown = function() {
+    const dropdown = document.getElementById('account-dropdown');
+    if (dropdown) {
+      dropdown.classList.toggle('active');
+    }
+  };
   
   function updateCartCount() {
     fetch('/cart.js')
       .then(response => response.json())
       .then(cart => {
-        document.getElementById('cart-count').textContent = cart.item_count;
-        document.getElementById('cart-item-count').textContent = cart.item_count;
-        document.getElementById('cart-subtotal').textContent = '$ ' + (cart.total_price / 100).toFixed(0);
-        const shipping = {{ section.settings.shipping_cost | default: 15 }};
+        const cartCount = document.getElementById('cart-count');
+        const cartItemCount = document.getElementById('cart-item-count');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartTotal = document.getElementById('cart-total');
+        
+        if (cartCount) cartCount.textContent = cart.item_count;
+        if (cartItemCount) cartItemCount.textContent = cart.item_count;
+        if (cartSubtotal) cartSubtotal.textContent = '$ ' + (cart.total_price / 100).toFixed(0);
+        
+        const shipping = parseFloat('{{ section.settings.shipping_cost | default: 15 }}') || 15;
         const total = (cart.total_price / 100) + shipping;
-        document.getElementById('cart-total').textContent = '$ ' + total.toFixed(0);
+        if (cartTotal) cartTotal.textContent = '$ ' + total.toFixed(0);
         
         // Update cart items
         const cartItemsContainer = document.getElementById('cart-items');
-        if (cart.items && cart.items.length > 0) {
-          cartItemsContainer.innerHTML = cart.items.map(item => `
-            <div class="cart-item">
-              <div class="cart-item-image">
-                <img src="${item.image}" alt="${item.title}">
+        if (cartItemsContainer) {
+          if (cart.items && cart.items.length > 0) {
+            cartItemsContainer.innerHTML = cart.items.map(item => `
+              <div class="cart-item">
+                <div class="cart-item-image">
+                  <img src="${item.image || ''}" alt="${item.title || 'Product'}">
+                </div>
+                <div class="cart-item-info">
+                  <h4 class="cart-item-title">${item.title || 'Product Name'}</h4>
+                  <p class="cart-item-variant">Size: ${item.variant_title || 'L'}</p>
+                  <button class="cart-item-remove" onclick="removeFromCart(${item.id})">🗑️</button>
+                </div>
               </div>
-              <div class="cart-item-info">
-                <h4 class="cart-item-title">${item.title}</h4>
-                <p class="cart-item-variant">Size: ${item.variant_title || 'L'}</p>
-                <button class="cart-item-remove" onclick="removeFromCart(${item.id})">🗑️</button>
-              </div>
-            </div>
-          `).join('');
-        } else {
-          cartItemsContainer.innerHTML = '<p style="color: #767676; text-align: center; padding: 40px;">Your cart is empty</p>';
+            `).join('');
+          } else {
+            cartItemsContainer.innerHTML = '<p style="color: #767676; text-align: center; padding: 40px;">Your cart is empty</p>';
+          }
         }
       })
       .catch(error => {
@@ -208,26 +218,69 @@
       });
   }
   
-  function removeFromCart(itemId) {
+  window.removeFromCart = function(itemId) {
     fetch('/cart/change.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: itemId, quantity: 0 })
     })
     .then(() => updateCartCount());
-  }
+  };
   
-  function updateCart() {
+  window.updateCart = function() {
     updateCartCount();
+  };
+  
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      updateCartCount();
+      
+      // Close cart when clicking overlay
+      const overlay = document.getElementById('cart-drawer-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', closeCartDrawer);
+      }
+      
+      // Close cart when clicking close button
+      const closeBtn = document.querySelector('.cart-close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeCartDrawer);
+      }
+      
+      // Close account dropdown when clicking outside
+      document.addEventListener('click', function(event) {
+        const accountWrapper = document.querySelector('.account-menu-wrapper');
+        const accountDropdown = document.getElementById('account-dropdown');
+        if (accountWrapper && accountDropdown && !accountWrapper.contains(event.target)) {
+          accountDropdown.classList.remove('active');
+        }
+      });
+    });
+  } else {
+    updateCartCount();
+    
+    // Close cart when clicking overlay
+    const overlay = document.getElementById('cart-drawer-overlay');
+    if (overlay) {
+      overlay.addEventListener('click', closeCartDrawer);
+    }
+    
+    // Close cart when clicking close button
+    const closeBtn = document.querySelector('.cart-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeCartDrawer);
+    }
+    
+    // Close account dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const accountWrapper = document.querySelector('.account-menu-wrapper');
+      const accountDropdown = document.getElementById('account-dropdown');
+      if (accountWrapper && accountDropdown && !accountWrapper.contains(event.target)) {
+        accountDropdown.classList.remove('active');
+      }
+    });
   }
-  
-  // Close cart when clicking overlay
-  document.getElementById('cart-drawer-overlay').addEventListener('click', closeCartDrawer);
-  
-  // Close cart when clicking close button
-  document.querySelector('.cart-close')?.addEventListener('click', closeCartDrawer);
-  
-  updateCartCount();
 </script>
 
 {% schema %}
@@ -341,6 +394,7 @@
     {
       "type": "submenu",
       "name": "Submenu Column",
+      "limit": 10,
       "settings": [
         {
           "type": "text",
@@ -433,6 +487,7 @@
     {
       "type": "account_menu_item",
       "name": "Account Menu Item",
+      "limit": 10,
       "settings": [
         {
           "type": "text",
