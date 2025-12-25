@@ -152,12 +152,26 @@
   function openCartDrawer() {
     document.getElementById('cart-drawer').classList.add('active');
     document.getElementById('cart-drawer-overlay').style.display = 'block';
+    updateCartCount();
   }
   
   function closeCartDrawer() {
     document.getElementById('cart-drawer').classList.remove('active');
     document.getElementById('cart-drawer-overlay').style.display = 'none';
   }
+  
+  function toggleAccountDropdown() {
+    document.getElementById('account-dropdown').classList.toggle('active');
+  }
+  
+  // Close account dropdown when clicking outside
+  document.addEventListener('click', function(event) {
+    const accountWrapper = document.querySelector('.account-menu-wrapper');
+    const accountDropdown = document.getElementById('account-dropdown');
+    if (accountWrapper && !accountWrapper.contains(event.target)) {
+      accountDropdown.classList.remove('active');
+    }
+  });
   
   function updateCartCount() {
     fetch('/cart.js')

@@ -50,22 +50,33 @@ body {
   height: 16px;
 }
 
+.header-nav a {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
 .menu-item-wrapper {
   position: relative;
 }
 
 .menu-link {
-  color: #ffffff;
-  text-decoration: none;
+  color: #ffffff !important;
+  text-decoration: none !important;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: color 0.3s;
   display: block;
+  background: none !important;
+  border: none !important;
 }
 
-.menu-link:hover {
-  color: #d2d2d2;
+.menu-link:hover,
+.menu-link:visited,
+.menu-link:active,
+.menu-link:focus {
+  color: #d2d2d2 !important;
+  text-decoration: none !important;
 }
 
 .menu-dropdown {
@@ -180,19 +191,42 @@ body {
 
 .header-icons button,
 .header-icons a {
-  background: none;
-  border: none;
-  color: #d2d2d2;
+  background: none !important;
+  border: none !important;
+  color: #d2d2d2 !important;
   cursor: pointer;
   display: flex;
   align-items: center;
   padding: 0;
-  text-decoration: none;
+  text-decoration: none !important;
   position: relative;
+}
+
+.header-icons button:hover,
+.header-icons button:focus,
+.header-icons button:active {
+  color: #ffffff !important;
+  background: none !important;
+  border: none !important;
+  outline: none !important;
 }
 
 .cart-icon {
   position: relative;
+  background: none !important;
+  border: none !important;
+  color: #d2d2d2 !important;
+  cursor: pointer;
+  padding: 0;
+}
+
+.cart-icon:hover,
+.cart-icon:focus,
+.cart-icon:active {
+  color: #ffffff !important;
+  background: none !important;
+  border: none !important;
+  outline: none !important;
 }
 
 .cart-count {
@@ -213,6 +247,23 @@ body {
 
 .account-menu-wrapper {
   position: relative;
+}
+
+.account-icon {
+  background: none !important;
+  border: none !important;
+  color: #d2d2d2 !important;
+  cursor: pointer;
+  padding: 0;
+}
+
+.account-icon:hover,
+.account-icon:focus,
+.account-icon:active {
+  color: #ffffff !important;
+  background: none !important;
+  border: none !important;
+  outline: none !important;
 }
 
 .account-icon img {
