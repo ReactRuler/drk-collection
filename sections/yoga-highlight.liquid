@@ -11,16 +11,22 @@
       <div class="yoga-highlight-middle">
         {% if section.settings.products_image %}
           <img src="{{ section.settings.products_image | image_url: width: 800 }}" alt="{{ section.settings.products_image.alt }}">
+        {% else %}
+          <img src="{{ 'yoga-products.png' | asset_url }}" alt="Yoga Products">
         {% endif %}
       </div>
       <div class="yoga-highlight-right">
         {% if section.settings.model_image %}
           <img src="{{ section.settings.model_image | image_url: width: 800 }}" alt="{{ section.settings.model_image.alt }}">
+        {% else %}
+          <img src="{{ 'yoga-lady.png' | asset_url }}" alt="Yoga Model">
         {% endif %}
       </div>
       <div class="yoga-water-ripples">
         {% if section.settings.water_image %}
           <img src="{{ section.settings.water_image | image_url: width: 1200 }}" alt="{{ section.settings.water_image.alt }}">
+        {% else %}
+          <img src="{{ 'bottom-horizontal-no-text.png' | asset_url }}" alt="Water Ripples">
         {% endif %}
         <div class="yoga-water-ripples-text">
           <p>

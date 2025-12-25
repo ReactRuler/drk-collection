@@ -7,16 +7,20 @@
     {% endif %}
   </video>
   <div class="video-overlay-content">
-    {% if section.settings.button1_image %}
-      <a href="{{ section.settings.button1_link }}">
-        <img src="{{ section.settings.button1_image | image_url: width: 400 }}" alt="{{ section.settings.button1_alt }}">
-      </a>
-    {% endif %}
-    {% if section.settings.button2_image %}
-      <a href="{{ section.settings.button2_link }}">
-        <img src="{{ section.settings.button2_image | image_url: width: 400 }}" alt="{{ section.settings.button2_alt }}">
-      </a>
-    {% endif %}
+    <a href="{{ section.settings.button1_link | default: '#' }}">
+      {% if section.settings.button1_image %}
+        <img src="{{ section.settings.button1_image | image_url: width: 400 }}" alt="{{ section.settings.button1_alt | default: 'Button 1' }}">
+      {% else %}
+        <img src="{{ 'DRK_button1.gif' | asset_url }}" alt="{{ section.settings.button1_alt | default: 'Button 1' }}">
+      {% endif %}
+    </a>
+    <a href="{{ section.settings.button2_link | default: '#' }}">
+      {% if section.settings.button2_image %}
+        <img src="{{ section.settings.button2_image | image_url: width: 400 }}" alt="{{ section.settings.button2_alt | default: 'Button 2' }}">
+      {% else %}
+        <img src="{{ 'DRK_button2.gif' | asset_url }}" alt="{{ section.settings.button2_alt | default: 'Button 2' }}">
+      {% endif %}
+    </a>
   </div>
 </div>
 

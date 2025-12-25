@@ -1,4 +1,4 @@
-<section class="travel-cta-section" style="background-image: url('{{ section.settings.background_image | image_url: width: 2000 }}');">
+<section class="travel-cta-section" style="background-image: url('{% if section.settings.background_image %}{{ section.settings.background_image | image_url: width: 2000 }}{% else %}{{ 'cta-bg.png' | asset_url }}{% endif %}');">
   <div class="travel-cta-content">
     <div class="travel-cta-text">
       <h2 class="travel-cta-title">{{ section.settings.title }}</h2>

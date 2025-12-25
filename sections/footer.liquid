@@ -1,43 +1,45 @@
-<footer class="footer-section" style="background-image: url('{{ section.settings.background_image | image_url: width: 2000 }}');">
+<footer class="footer-section" style="background-image: url('{% if section.settings.background_image %}{{ section.settings.background_image | image_url: width: 2000 }}{% else %}{{ 'footer-bg.png' | asset_url }}{% endif %}');">
   <div class="footer-main-content">
     <div class="footer-left">
       <div class="footer-logo">
         {% if section.settings.logo %}
           <img src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ section.settings.logo.alt | default: 'DRK Collection' }}">
+        {% else %}
+          <img src="{{ 'logo-footer.png' | asset_url }}" alt="DRK Collection">
         {% endif %}
       </div>
       <p class="footer-description">
         {{ section.settings.description }}
       </p>
       <div class="footer-social-icons">
-        {% if section.settings.facebook_url != blank %}
-          <a href="{{ section.settings.facebook_url }}" class="social-icon" target="_blank">
-            {% if section.settings.facebook_icon %}
-              <img src="{{ section.settings.facebook_icon | image_url: width: 48 }}" alt="Facebook">
-            {% endif %}
-          </a>
-        {% endif %}
-        {% if section.settings.instagram_url != blank %}
-          <a href="{{ section.settings.instagram_url }}" class="social-icon" target="_blank">
-            {% if section.settings.instagram_icon %}
-              <img src="{{ section.settings.instagram_icon | image_url: width: 48 }}" alt="Instagram">
-            {% endif %}
-          </a>
-        {% endif %}
-        {% if section.settings.whatsapp_url != blank %}
-          <a href="{{ section.settings.whatsapp_url }}" class="social-icon" target="_blank">
-            {% if section.settings.whatsapp_icon %}
-              <img src="{{ section.settings.whatsapp_icon | image_url: width: 48 }}" alt="WhatsApp">
-            {% endif %}
-          </a>
-        {% endif %}
-        {% if section.settings.linkedin_url != blank %}
-          <a href="{{ section.settings.linkedin_url }}" class="social-icon" target="_blank">
-            {% if section.settings.linkedin_icon %}
-              <img src="{{ section.settings.linkedin_icon | image_url: width: 48 }}" alt="LinkedIn">
-            {% endif %}
-          </a>
-        {% endif %}
+        <a href="{{ section.settings.facebook_url | default: '#' }}" class="social-icon" target="_blank">
+          {% if section.settings.facebook_icon %}
+            <img src="{{ section.settings.facebook_icon | image_url: width: 48 }}" alt="Facebook">
+          {% else %}
+            <img src="{{ '_Facebook.png' | asset_url }}" alt="Facebook">
+          {% endif %}
+        </a>
+        <a href="{{ section.settings.instagram_url | default: '#' }}" class="social-icon" target="_blank">
+          {% if section.settings.instagram_icon %}
+            <img src="{{ section.settings.instagram_icon | image_url: width: 48 }}" alt="Instagram">
+          {% else %}
+            <img src="{{ '_Instagram.png' | asset_url }}" alt="Instagram">
+          {% endif %}
+        </a>
+        <a href="{{ section.settings.whatsapp_url | default: '#' }}" class="social-icon" target="_blank">
+          {% if section.settings.whatsapp_icon %}
+            <img src="{{ section.settings.whatsapp_icon | image_url: width: 48 }}" alt="WhatsApp">
+          {% else %}
+            <img src="{{ '_WhatsApp.png' | asset_url }}" alt="WhatsApp">
+          {% endif %}
+        </a>
+        <a href="{{ section.settings.linkedin_url | default: '#' }}" class="social-icon" target="_blank">
+          {% if section.settings.linkedin_icon %}
+            <img src="{{ section.settings.linkedin_icon | image_url: width: 48 }}" alt="LinkedIn">
+          {% else %}
+            <img src="{{ '_Linkedin.png' | asset_url }}" alt="LinkedIn">
+          {% endif %}
+        </a>
       </div>
     </div>
 
