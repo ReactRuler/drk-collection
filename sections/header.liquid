@@ -13,10 +13,10 @@
       <nav class="header-nav">
         {% for block in section.blocks %}
           {% if block.type == 'menu_item' %}
-            <div class="menu-item-wrapper">
+            <div class="menu-item-wrapper" onmouseenter="showDropdown(this)" onmouseleave="hideDropdown(this)">
               <a href="{{ block.settings.link | default: '#' }}" class="menu-link">{{ block.settings.label }}</a>
               {% if block.settings.show_dropdown %}
-                <div class="menu-dropdown">
+                <div class="menu-dropdown" style="display: none;">
                   <div class="dropdown-content">
                     {% if block.settings.featured_product_image %}
                       <div class="dropdown-featured">
@@ -230,6 +230,20 @@
   
   window.updateCart = function() {
     updateCartCount();
+  };
+  
+  window.showDropdown = function(element) {
+    const dropdown = element.querySelector('.menu-dropdown');
+    if (dropdown) {
+      dropdown.style.display = 'block';
+    }
+  };
+  
+  window.hideDropdown = function(element) {
+    const dropdown = element.querySelector('.menu-dropdown');
+    if (dropdown) {
+      dropdown.style.display = 'none';
+    }
   };
   
   if (document.readyState === 'loading') {
@@ -618,8 +632,7 @@
         "type": "menu_item",
         "settings": {
           "label": "FITNESS",
-          "link": "#",
-          "show_dropdown": true
+          "link": "#"
         }
       },
       {

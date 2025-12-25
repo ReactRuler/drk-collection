@@ -95,8 +95,9 @@ body {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
-.menu-item-wrapper:hover .menu-dropdown {
-  display: block;
+.menu-item-wrapper:hover .menu-dropdown,
+.menu-dropdown.active {
+  display: block !important;
 }
 
 .dropdown-content {
