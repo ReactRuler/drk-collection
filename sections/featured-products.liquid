@@ -2,29 +2,56 @@
   <div class="page-width">
     <h2>{{ section.settings.title }}</h2>
     <div class="products-grid">
-      {% assign collection = collections[section.settings.collection] %}
-      {% if collection and collection.products.size > 0 %}
-        {% for product in collection.products limit: section.settings.products_to_show %}
-          <div class="product-card">
-            <a href="{{ product.url }}">
-              <div class="product-image">
-                {% if product.featured_image %}
-                  <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title }}">
-                {% endif %}
-              </div>
-              <h3>{{ product.title }}</h3>
-              <div class="product-price">{{ product.price | money }}</div>
-            </a>
-          </div>
-        {% endfor %}
+      {% if section.settings.collection != blank %}
+        {% assign selected_collection = collections[section.settings.collection] %}
+        {% if selected_collection and selected_collection.products.size > 0 %}
+          {% for product in selected_collection.products limit: section.settings.products_to_show %}
+            <div class="product-card">
+              <a href="{{ product.url }}">
+                <div class="product-image">
+                  {% if product.featured_image %}
+                    <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title }}">
+                  {% endif %}
+                </div>
+                <h3>{{ product.title }}</h3>
+                <div class="product-price">{{ product.price | money }}</div>
+              </a>
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for i in (1..section.settings.products_to_show) %}
+            <div class="product-card">
+              <div class="product-image"></div>
+              <h3>PRODUCT NAME</h3>
+              <div class="product-price">$200</div>
+            </div>
+          {% endfor %}
+        {% endif %}
       {% else %}
-        {% for i in (1..section.settings.products_to_show) %}
-          <div class="product-card">
-            <div class="product-image"></div>
-            <h3>PRODUCT NAME</h3>
-            <div class="product-price">$200</div>
-          </div>
-        {% endfor %}
+        {% assign all_products = collections.all.products | sort: 'created_at' | reverse %}
+        {% if all_products.size > 0 %}
+          {% for product in all_products limit: section.settings.products_to_show %}
+            <div class="product-card">
+              <a href="{{ product.url }}">
+                <div class="product-image">
+                  {% if product.featured_image %}
+                    <img src="{{ product.featured_image | img_url: '400x400' }}" alt="{{ product.title }}">
+                  {% endif %}
+                </div>
+                <h3>{{ product.title }}</h3>
+                <div class="product-price">{{ product.price | money }}</div>
+              </a>
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for i in (1..section.settings.products_to_show) %}
+            <div class="product-card">
+              <div class="product-image"></div>
+              <h3>PRODUCT NAME</h3>
+              <div class="product-price">$200</div>
+            </div>
+          {% endfor %}
+        {% endif %}
       {% endif %}
     </div>
   </div>
@@ -43,7 +70,8 @@
     {
       "type": "collection",
       "id": "collection",
-      "label": "Collection"
+      "label": "Collection (Optional)",
+      "info": "Leave empty to show latest products. Select a collection to override with specific products."
     },
     {
       "type": "range",
