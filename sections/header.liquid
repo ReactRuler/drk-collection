@@ -80,7 +80,7 @@
           <span class="cart-count" id="cart-count">0</span>
         </button>
         <div class="account-menu-wrapper">
-          <button class="account-icon" onclick="document.getElementById('account-dropdown').classList.toggle('active')">
+          <button class="account-icon" onclick="toggleAccountDropdown()">
             {% if section.settings.account_icon_image %}
               <img src="{{ section.settings.account_icon_image | image_url: width: 40 }}" alt="Account">
             {% else %}
