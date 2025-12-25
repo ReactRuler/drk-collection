@@ -98,8 +98,7 @@ body {
   pointer-events: auto;
 }
 
-.menu-item-wrapper:hover .menu-dropdown,
-.menu-dropdown.active {
+.menu-item-wrapper:hover .menu-dropdown {
   display: block !important;
 }
 

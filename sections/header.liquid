@@ -13,10 +13,10 @@
       <nav class="header-nav">
         {% for block in section.blocks %}
           {% if block.type == 'menu_item' %}
-            <div class="menu-item-wrapper" onmouseenter="showDropdown(this)" onmouseleave="hideDropdownDelayed(this)">
+            <div class="menu-item-wrapper" data-menu-item>
               <a href="{{ block.settings.link | default: '#' }}" class="menu-link">{{ block.settings.label }}</a>
               {% if block.settings.show_dropdown %}
-                <div class="menu-dropdown" style="display: none;" onmouseenter="showDropdown(this.closest('.menu-item-wrapper'))" onmouseleave="hideDropdownDelayed(this.closest('.menu-item-wrapper'))">
+                <div class="menu-dropdown" style="display: none;" data-dropdown>
                   <div class="dropdown-content">
                     {% if block.settings.featured_product_image %}
                       <div class="dropdown-featured">
@@ -232,6 +232,36 @@
     updateCartCount();
   };
   
+  function initMenuDropdowns() {
+    const menuItems = document.querySelectorAll('.menu-item-wrapper[data-menu-item]');
+    
+    menuItems.forEach(function(menuItem) {
+      const dropdown = menuItem.querySelector('.menu-dropdown[data-dropdown]');
+      if (!dropdown) return;
+      
+      let hideTimeout;
+      
+      function showDropdown() {
+        clearTimeout(hideTimeout);
+        dropdown.style.display = 'block';
+      }
+      
+      function hideDropdown() {
+        clearTimeout(hideTimeout);
+        hideTimeout = setTimeout(function() {
+          if (!menuItem.matches(':hover') && !dropdown.matches(':hover')) {
+            dropdown.style.display = 'none';
+          }
+        }, 150);
+      }
+      
+      menuItem.addEventListener('mouseenter', showDropdown);
+      menuItem.addEventListener('mouseleave', hideDropdown);
+      dropdown.addEventListener('mouseenter', showDropdown);
+      dropdown.addEventListener('mouseleave', hideDropdown);
+    });
+  }
+  
   window.showDropdown = function(element) {
     const dropdown = element.querySelector('.menu-dropdown');
     if (dropdown) {
@@ -243,7 +273,6 @@
     if (!element) return;
     const dropdown = element.querySelector('.menu-dropdown');
     if (dropdown) {
-      // Add small delay to allow moving mouse to dropdown
       setTimeout(function() {
         if (dropdown && !dropdown.matches(':hover') && !element.querySelector('.menu-link').matches(':hover')) {
           dropdown.style.display = 'none';
