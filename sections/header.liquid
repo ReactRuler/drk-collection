@@ -42,7 +42,7 @@
                       {% for subblock in section.blocks %}
                         {% if subblock.type == 'submenu' and subblock.settings.parent_menu_label == block.settings.label %}
                           <div class="dropdown-column">
-                            {% for i in (1..8) %}
+                            {% for i in (1..10) %}
                               {% assign label_key = 'menu_item_' | append: i | append: '_label' %}
                               {% assign link_key = 'menu_item_' | append: i | append: '_link' %}
                               {% if subblock.settings[label_key] != blank %}
@@ -453,6 +453,26 @@
           "type": "url",
           "id": "menu_item_8_link",
           "label": "Menu Item 8 Link"
+        },
+        {
+          "type": "text",
+          "id": "menu_item_9_label",
+          "label": "Menu Item 9 Label"
+        },
+        {
+          "type": "url",
+          "id": "menu_item_9_link",
+          "label": "Menu Item 9 Link"
+        },
+        {
+          "type": "text",
+          "id": "menu_item_10_label",
+          "label": "Menu Item 10 Label"
+        },
+        {
+          "type": "url",
+          "id": "menu_item_10_link",
+          "label": "Menu Item 10 Link"
         }
       ]
     },
