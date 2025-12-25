@@ -1,0 +1,456 @@
+{% section 'header' %}
+
+<div class="article-page">
+  <div class="page-width">
+    <div class="breadcrumbs">
+      <a href="/">Home</a>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(90deg);">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+      <a href="{{ blog.url }}">Blog</a>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(90deg);">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+      <span>{{ article.title }}</span>
+    </div>
+
+    <div class="article-content-wrapper">
+      <div class="article-header">
+        <h1 class="article-title">{{ article.title }}</h1>
+        <div class="article-date">
+          {{ article.published_at | date: "%B %d, %Y" | upcase }}
+        </div>
+      </div>
+
+      {% if article.image %}
+        <div class="article-image">
+          <img src="{{ article.image | image_url: width: 840 }}" alt="{{ article.title }}">
+        </div>
+      {% endif %}
+
+      <div class="article-body">
+        <div class="article-content">
+          {{ article.content }}
+        </div>
+
+        <div class="article-divider"></div>
+
+        <div class="comments-section">
+          <div class="comments-list">
+            <h3 class="comments-title">Comments:</h3>
+            
+            {% if article.comments.size > 0 %}
+              {% for comment in article.comments %}
+                <div class="comment-item">
+                  <div class="comment-user">
+                    <div class="comment-avatar"></div>
+                    <div class="comment-author">{{ comment.author }}</div>
+                  </div>
+                  <div class="comment-text">
+                    {{ comment.content }}
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="comment-item">
+                <div class="comment-user">
+                  <div class="comment-avatar"></div>
+                  <div class="comment-author">John Doe</div>
+                </div>
+                <div class="comment-text">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tristique non risus venenatis aliquam. Vestibulum mollis metus risus, eu commodo nisl bibendum sit amet. Vivamus interdum dictum ex congue bibendum.
+                </div>
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="article-divider"></div>
+
+          <div class="comment-form-section">
+            <h3 class="comment-form-title">Leave a comment below:</h3>
+            
+            {% form 'new_comment', article %}
+              <div class="comment-form-fields">
+                <div class="comment-field">
+                  <label for="comment-author">Full Name: *</label>
+                  <input type="text" id="comment-author" name="comment[author]" placeholder="Enter your name here" required>
+                </div>
+                <div class="comment-field">
+                  <label for="comment-email">Email Address: *</label>
+                  <input type="email" id="comment-email" name="comment[email]" placeholder="Enter your best email" required>
+                </div>
+              </div>
+              <div class="comment-field comment-field-message">
+                <label for="comment-body">Message: *</label>
+                <textarea id="comment-body" name="comment[body]" placeholder="Enter your message here..." required></textarea>
+              </div>
+              <button type="submit" class="comment-submit-btn">SEND MESSAGE</button>
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="{{ blog.url }}" class="back-link">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(-90deg);">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+      <span>BACK</span>
+    </a>
+  </div>
+</div>
+
+{% section 'footer' %}
+
+<style>
+.article-page {
+  background: #050505;
+  min-height: 100vh;
+  padding: 120px 0 80px 0;
+  margin-top: 40px;
+  position: relative;
+}
+
+.page-width {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px 0;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.breadcrumbs a {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #767676;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.breadcrumbs a:hover {
+  color: #FFFFFF;
+}
+
+.breadcrumbs svg {
+  color: #767676;
+}
+
+.breadcrumbs span {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #FFFFFF;
+}
+
+.article-content-wrapper {
+  background: rgba(20, 20, 20, 0.3);
+  border-radius: 10px;
+  padding: 50px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.article-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.article-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 50px;
+  text-align: center;
+  text-transform: uppercase;
+  background: linear-gradient(82.13deg, #A2A2A2 2.11%, #191919 50.06%, #797979 98%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.article-date {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #777777;
+}
+
+.article-image {
+  width: 100%;
+  height: 493px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.article-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.article-body {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.article-content {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #B0B0B0;
+  text-align: justify;
+}
+
+.article-content p {
+  margin: 0 0 16px 0;
+}
+
+.article-content p:last-child {
+  margin-bottom: 0;
+}
+
+.article-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.05);
+  margin: 16px 0;
+}
+
+.comments-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.comments-title,
+.comment-form-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 130%;
+  color: #767676;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.comment-item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 36px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(125, 125, 125, 0.3);
+}
+
+.comment-item:last-child {
+  border-bottom: none;
+}
+
+.comment-user {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 60px;
+  flex-shrink: 0;
+}
+
+.comment-avatar {
+  width: 60px;
+  height: 60px;
+  background: rgba(217, 217, 217, 0.2);
+  border-radius: 50%;
+}
+
+.comment-author {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+.comment-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #B0B0B0;
+  text-align: justify;
+  flex: 1;
+}
+
+.comment-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.comment-form-fields {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.comment-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.comment-field-message {
+  flex: 1 1 100%;
+}
+
+.comment-field label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  color: #FFFFFF;
+}
+
+.comment-field input,
+.comment-field textarea {
+  width: 100%;
+  padding: 0 24px;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 130%;
+}
+
+.comment-field input {
+  height: 60px;
+}
+
+.comment-field textarea {
+  height: 179px;
+  padding-top: 24px;
+  resize: vertical;
+}
+
+.comment-field input::placeholder,
+.comment-field textarea::placeholder {
+  color: #7D7D7D;
+}
+
+.comment-submit-btn {
+  width: 250px;
+  height: 40px;
+  background: #FFFFFF;
+  border: none;
+  border-radius: 100px;
+  color: #050505;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.comment-submit-btn:hover {
+  opacity: 0.9;
+}
+
+.back-link {
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #7D7D7D;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 15px;
+  transition: color 0.3s;
+}
+
+.back-link:hover {
+  color: #FFFFFF;
+}
+
+.back-link svg {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 1024px) {
+  .article-content-wrapper {
+    padding: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .article-page {
+    padding: 100px 0 60px 0;
+    margin-top: 60px;
+  }
+
+  .article-content-wrapper {
+    padding: 24px;
+  }
+
+  .article-title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .article-image {
+    height: 300px;
+  }
+
+  .comment-form-fields {
+    flex-direction: column;
+  }
+
+  .back-link {
+    position: static;
+    margin-top: 20px;
+    justify-content: flex-start;
+  }
+}
+</style>
+

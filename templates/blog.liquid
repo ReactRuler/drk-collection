@@ -1,0 +1,365 @@
+{% section 'header' %}
+
+<div class="blog-page">
+  <div class="page-width">
+    <div class="breadcrumbs">
+      <a href="/">Home</a>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform: rotate(90deg);">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+      <span>Blog</span>
+    </div>
+
+    <div class="blog-header">
+      <h1 class="blog-title">BLOG</h1>
+    </div>
+
+    <div class="blog-content-wrapper">
+      <form action="{{ routes.search_url }}" method="get" class="search-field">
+        <input type="text" name="q" placeholder="Search Products" class="search-input" value="{{ search.terms }}">
+        <input type="hidden" name="type" value="article">
+        <button type="submit" class="search-submit" aria-label="Search">
+          <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
+        </button>
+      </form>
+
+      <div class="blog-posts-grid">
+        {% for article in blog.articles %}
+          <article class="blog-post-card">
+            <a href="{{ article.url }}" class="blog-post-link">
+              <div class="blog-post-image">
+                {% if article.image %}
+                  <img src="{{ article.image | image_url: width: 416 }}" alt="{{ article.title }}">
+                {% else %}
+                  <img src="{{ 'placeholder.png' | asset_url }}" alt="{{ article.title }}">
+                {% endif %}
+              </div>
+              <div class="blog-post-content">
+                <div class="blog-post-date">
+                  {{ article.published_at | date: "%B %d, %Y" | upcase }}
+                </div>
+                <h2 class="blog-post-title">{{ article.title }}</h2>
+                <div class="blog-post-excerpt">
+                  {{ article.excerpt | default: article.content | strip_html | truncate: 150 }}
+                </div>
+                <div class="blog-post-read-more">
+                  <span>Read more</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+
+        {% if blog.articles.size == 0 %}
+          {% for i in (1..3) %}
+            <article class="blog-post-card">
+              <div class="blog-post-image">
+                <img src="{{ 'placeholder.png' | asset_url }}" alt="Placeholder Blog Post">
+              </div>
+              <div class="blog-post-content">
+                <div class="blog-post-date">APRIL 02, 2025</div>
+                <h2 class="blog-post-title">Black Takes Flight</h2>
+                <div class="blog-post-excerpt">
+                  From airports to boardrooms, the DRK Travel Collection turns every departure into a statement. Black-on-black design, engineered for presence and performance.
+                </div>
+                <div class="blog-post-read-more">
+                  <span>Read more</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </div>
+              </div>
+            </article>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% section 'footer' %}
+
+<style>
+.blog-page {
+  background: #050505;
+  min-height: 100vh;
+  padding: 120px 0 80px 0;
+  margin-top: 40px;
+}
+
+.page-width {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px 0;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.breadcrumbs a {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #767676;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.breadcrumbs a:hover {
+  color: #FFFFFF;
+}
+
+.breadcrumbs svg {
+  color: #767676;
+}
+
+.breadcrumbs span {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #FFFFFF;
+}
+
+.blog-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0 20px;
+  gap: 8px;
+  margin-bottom: 36px;
+}
+
+.blog-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 45px;
+  line-height: 50px;
+  text-align: center;
+  text-transform: uppercase;
+  background: linear-gradient(82.13deg, #A2A2A2 2.11%, #191919 50.06%, #797979 98%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.blog-content-wrapper {
+  background: rgba(20, 20, 20, 0.3);
+  border-radius: 10px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.search-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.search-input {
+  width: 100%;
+  height: 60px;
+  padding: 0 24px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-input::placeholder {
+  color: #7D7D7D;
+  text-align: center;
+}
+
+.search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-submit {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-icon {
+  color: #D2D2D2;
+  pointer-events: none;
+}
+
+.search-input {
+  padding-right: 60px;
+}
+
+.blog-posts-grid {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+
+.blog-post-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 416px;
+}
+
+.blog-post-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.blog-post-image {
+  width: 100%;
+  height: 250px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.blog-post-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blog-post-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 10px 0 0;
+}
+
+.blog-post-date {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #494949;
+}
+
+.blog-post-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 22px;
+  background: linear-gradient(90deg, #4D4D4D 0%, #DCDCDC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.blog-post-excerpt {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #B0B0B0;
+  text-align: justify;
+}
+
+.blog-post-read-more {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0 6px;
+  gap: 12px;
+  border-bottom: 0.8px solid rgba(125, 125, 125, 0.5);
+  box-sizing: border-box;
+}
+
+.blog-post-read-more span {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #7D7D7D;
+}
+
+.blog-post-read-more svg {
+  color: #7D7D7D;
+}
+
+@media (max-width: 1024px) {
+  .blog-posts-grid {
+    gap: 24px;
+  }
+
+  .blog-post-card {
+    max-width: calc(50% - 12px);
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-page {
+    padding: 100px 0 60px 0;
+    margin-top: 60px;
+  }
+
+  .blog-title {
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  .blog-content-wrapper {
+    padding: 24px;
+  }
+
+  .blog-post-card {
+    max-width: 100%;
+  }
+
+  .blog-posts-grid {
+    flex-direction: column;
+  }
+}
+</style>
+
