@@ -39,29 +39,25 @@
                       </div>
                     {% endif %}
                     <div class="dropdown-menu-columns">
-                      {% for subblock in section.blocks %}
-                        {% if subblock.type == 'submenu' and subblock.settings.parent_menu_label == block.settings.label %}
-                          {% assign has_links = false %}
-                          {% for i in (1..10) %}
-                            {% assign label_key = 'menu_item_' | append: i | append: '_label' %}
-                            {% if subblock.settings[label_key] != blank %}
-                              {% assign has_links = true %}
-                              {% break %}
-                            {% endif %}
-                          {% endfor %}
-                          {% if has_links %}
-                            <div class="dropdown-column">
-                              {% for i in (1..10) %}
-                                {% assign label_key = 'menu_item_' | append: i | append: '_label' %}
-                                {% assign link_key = 'menu_item_' | append: i | append: '_link' %}
-                                {% if subblock.settings[label_key] != blank %}
-                                  <a href="{{ subblock.settings[link_key] | default: '#' }}" class="dropdown-link">{{ subblock.settings[label_key] }}</a>
-                                {% endif %}
-                              {% endfor %}
-                            </div>
-                          {% endif %}
+                      {% assign has_links = false %}
+                      {% for i in (1..10) %}
+                        {% assign label_key = 'submenu_link_' | append: i | append: '_label' %}
+                        {% if block.settings[label_key] != blank %}
+                          {% assign has_links = true %}
+                          {% break %}
                         {% endif %}
                       {% endfor %}
+                      {% if has_links %}
+                        <div class="dropdown-column">
+                          {% for i in (1..10) %}
+                            {% assign label_key = 'submenu_link_' | append: i | append: '_label' %}
+                            {% assign link_key = 'submenu_link_' | append: i | append: '_link' %}
+                            {% if block.settings[label_key] != blank %}
+                              <a href="{{ block.settings[link_key] | default: '#' }}" class="dropdown-link">{{ block.settings[label_key] }}</a>
+                            {% endif %}
+                          {% endfor %}
+                        </div>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
@@ -344,6 +340,110 @@
           "type": "checkbox",
           "id": "show_dropdown",
           "label": "Show Dropdown Menu"
+        },
+        {
+          "type": "header",
+          "content": "Submenu Links"
+        },
+        {
+          "type": "text",
+          "id": "submenu_link_1_label",
+          "label": "Submenu Link 1 Label"
+        },
+        {
+          "type": "url",
+          "id": "submenu_link_1_link",
+          "label": "Submenu Link 1 URL"
+        },
+        {
+          "type": "text",
+          "id": "submenu_link_2_label",
+          "label": "Submenu Link 2 Label"
+        },
+        {
+          "type": "url",
+          "id": "submenu_link_2_link",
+          "label": "Submenu Link 2 URL"
+        },
+        {
+          "type": "text",
+          "id": "submenu_link_3_label",
+          "label": "Submenu Link 3 Label"
+        },
+        {
+          "type": "url",
+          "id": "submenu_link_3_link",
+          "label": "Submenu Link 3 URL"
+        },
+        {
+          "type": "text",
+          "id": "submenu_link_4_label",
+          "label": "Submenu Link 4 Label"
+        },
+        {
+          "type": "url",
+          "id": "submenu_link_4_link",
+          "label": "Submenu Link 4 URL"
+        },
+        {
+          "type": "text",
+          "id": "submenu_link_5_label",
+          "label": "Submenu Link 5 Label"
+        },
+        {
+          "type": "url",
+          "id": "submenu_link_5_link",
+          "label": "Submenu Link 5 URL"
+        },
+        {
+          "type": "text",
+          "id": "submenu_link_6_label",
+          "label": "Submenu Link 6 Label"
+        },
+        {
+          "type": "url",
+          "id": "submenu_link_6_link",
+          "label": "Submenu Link 6 URL"
+        },
+        {
+          "type": "text",
+          "id": "submenu_link_7_label",
+          "label": "Submenu Link 7 Label"
+        },
+        {
+          "type": "url",
+          "id": "submenu_link_7_link",
+          "label": "Submenu Link 7 URL"
+        },
+        {
+          "type": "text",
+          "id": "submenu_link_8_label",
+          "label": "Submenu Link 8 Label"
+        },
+        {
+          "type": "url",
+          "id": "submenu_link_8_link",
+          "label": "Submenu Link 8 URL"
+        },
+        {
+          "type": "text",
+          "id": "submenu_link_9_label",
+          "label": "Submenu Link 9 Label"
+        },
+        {
+          "type": "url",
+          "id": "submenu_link_9_link",
+          "label": "Submenu Link 9 URL"
+        },
+        {
+          "type": "text",
+          "id": "submenu_link_10_label",
+          "label": "Submenu Link 10 Label"
+        },
+        {
+          "type": "url",
+          "id": "submenu_link_10_link",
+          "label": "Submenu Link 10 URL"
         },
         {
           "type": "header",
