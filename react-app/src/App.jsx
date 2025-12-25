@@ -5,6 +5,9 @@ import Hero from "./components/Hero";
 import FeaturedProducts from "./components/FeaturedProducts";
 import TravelCTA from "./components/TravelCTA";
 import YogaHighlight from "./components/YogaHighlight";
+import LatestBlogs from "./components/LatestBlogs";
+import LogoRepeated from "./components/LogoRepeated";
+import Footer from "./components/Footer";
 import "./App.css";
 
 function App() {
@@ -18,6 +21,9 @@ function App() {
       <FeaturedProducts />
       <TravelCTA />
       <YogaHighlight />
+      <LatestBlogs />
+      <LogoRepeated />
+      <Footer />
 
       {searchOpen && (
         <div className="search-popup" onClick={() => setSearchOpen(false)}>
@@ -47,4 +53,3 @@ function App() {
 }
 
 export default App;
-

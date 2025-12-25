@@ -1,0 +1,32 @@
+.logo-repeated-section {
+  width: 100%;
+  height: auto;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.36) 0%,
+    rgba(24, 24, 24, 0.36) 26.92%,
+    rgba(0, 0, 0, 0.36) 50%,
+    rgba(12, 12, 12, 0.36) 71.15%,
+    rgba(12, 12, 12, 0.36) 100%
+  );
+}
+
+.logo-repeated-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0px;
+  width: 100%;
+  height: auto;
+  flex: none;
+  align-self: stretch;
+}
+
+.logo-repeated-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
