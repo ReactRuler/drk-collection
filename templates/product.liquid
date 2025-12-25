@@ -127,6 +127,78 @@
       </div>
     </div>
   </div>
+
+  <div class="related-products-section">
+    <div class="page-width">
+      <h2 class="related-products-title">RELATED PRODUCTS</h2>
+      <div class="related-products-grid">
+        {% assign related_products = product.collections.first.products | where: 'id', product.id | reverse %}
+        {% assign has_related = false %}
+        
+        {% if product.collections.size > 0 %}
+          {% for collection in product.collections %}
+            {% for related_product in collection.products limit: 5 %}
+              {% if related_product.id != product.id %}
+                {% assign has_related = true %}
+                <div class="related-product-card">
+                  <a href="{{ related_product.url }}">
+                    <div class="related-product-image">
+                      {% if related_product.featured_image %}
+                        <img src="{{ related_product.featured_image | image_url: width: 400 }}" alt="{{ related_product.title }}">
+                      {% else %}
+                        <div class="related-product-placeholder"></div>
+                      {% endif %}
+                    </div>
+                    <h3 class="related-product-title">{{ related_product.title }}</h3>
+                    <div class="related-product-price">
+                      {% if related_product.compare_at_price > related_product.price %}
+                        <span class="related-original-price">{{ related_product.compare_at_price | money }}</span>
+                        <span class="related-sale-price">{{ related_product.price | money }}</span>
+                      {% else %}
+                        <span class="related-current-price">{{ related_product.price | money }}</span>
+                      {% endif %}
+                    </div>
+                  </a>
+                </div>
+                {% if forloop.index >= 4 %}{% break %}{% endif %}
+              {% endif %}
+            {% endfor %}
+            {% if has_related %}{% break %}{% endif %}
+          {% endfor %}
+        {% endif %}
+
+        {% unless has_related %}
+          {% assign all_products = collections.all.products | where: 'id', product.id | reverse %}
+          {% assign count = 0 %}
+          {% for random_product in collections.all.products %}
+            {% if random_product.id != product.id and count < 4 %}
+              {% assign count = count | plus: 1 %}
+              <div class="related-product-card">
+                <a href="{{ random_product.url }}">
+                  <div class="related-product-image">
+                    {% if random_product.featured_image %}
+                      <img src="{{ random_product.featured_image | image_url: width: 400 }}" alt="{{ random_product.title }}">
+                    {% else %}
+                      <div class="related-product-placeholder"></div>
+                    {% endif %}
+                  </div>
+                  <h3 class="related-product-title">{{ random_product.title }}</h3>
+                  <div class="related-product-price">
+                    {% if random_product.compare_at_price > random_product.price %}
+                      <span class="related-original-price">{{ random_product.compare_at_price | money }}</span>
+                      <span class="related-sale-price">{{ random_product.price | money }}</span>
+                    {% else %}
+                      <span class="related-current-price">{{ random_product.price | money }}</span>
+                    {% endif %}
+                  </div>
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endunless %}
+      </div>
+    </div>
+  </div>
 </div>
 
 {% section 'footer' %}
@@ -135,7 +207,7 @@
 .product-page {
   background: #050505;
   min-height: 100vh;
-  padding: 180px 0 40px 0;
+  padding: 100px 0 40px 0;
   margin-top: 120px;
 }
 
