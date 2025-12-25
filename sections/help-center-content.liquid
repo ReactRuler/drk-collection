@@ -4,10 +4,7 @@
       <a href="/">Home</a> > <span>Help Center</span>
     </div>
     
-    <h1 class="page-title">
-      <span class="title-part-1">HELP</span>
-      <span class="title-part-2">CENTER</span>
-    </h1>
+    <h1 class="page-title">{{ section.settings.page_title | default: 'HELP CENTER' }}</h1>
     
     <div class="help-content-wrapper">
       <div class="contact-section-wrapper">
@@ -90,19 +87,20 @@
 .page-title {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 50px;
-  line-height: 60px;
-  text-transform: uppercase;
+  font-size: 45px;
+  line-height: 50px;
   text-align: center;
+  text-transform: uppercase;
+  background: linear-gradient(82.13deg, #A2A2A2 2.11%, #191919 50.06%, #797979 98%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
   margin: 0 0 60px 0;
-}
-
-.title-part-1 {
-  color: #FFFFFF;
-}
-
-.title-part-2 {
-  color: #767676;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
 }
 
 .help-content-wrapper {
@@ -243,7 +241,7 @@
 
   .page-title {
     font-size: 36px;
-    line-height: 44px;
+    line-height: 40px;
     margin-bottom: 40px;
   }
 
@@ -292,6 +290,12 @@ function toggleFaq(index) {
 {
   "name": "Help Center Content",
   "settings": [
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page Title",
+      "default": "HELP CENTER"
+    },
     {
       "type": "header",
       "content": "Contact Section"
