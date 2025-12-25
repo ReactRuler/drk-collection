@@ -1,121 +1,32 @@
-.hero-section {
-  background-color: #050505;
-  min-height: 90vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.hero-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-  padding: 80px 20px;
-  flex: 1;
-}
-
-.hero-title {
-  color: #d2d2d2;
-  font-size: 72px;
-  font-weight: 300;
-  margin: 0 0 30px;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  line-height: 1.1;
-}
-
-.hero-description {
-  color: #767676;
-  font-size: 20px;
-  margin: 0 0 40px;
-  line-height: 1.6;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.btn-primary {
-  padding: 15px 40px;
-  border: 1px solid rgba(124, 124, 124, 0.27);
-  border-radius: 23px;
-  background: rgba(124, 124, 124, 0.27);
-  color: #d2d2d2;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 14px;
-}
-
-.btn-secondary {
-  padding: 15px 40px;
-  background: #fff;
-  border-radius: 25px;
-  color: #000;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.placeholder-image {
-  background: #141414;
-  border-radius: 10px;
-  aspect-ratio: 3/4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #767676;
-}
-
 .hero-highlights {
   box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  gap: 10px;
-  margin: 0 auto;
   width: 100%;
-  max-width: 1920px;
+  margin-bottom: -200px;
   height: 150px;
   background: rgba(17, 17, 17, 0.8);
   border-top: 1px solid #1d1d1d;
   backdrop-filter: blur(7.5px);
   z-index: 3;
+  display: flex;
+  justify-content: center;
 }
 
 .highlights-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 60px;
-  max-width: 1400px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   width: 100%;
-  padding: 0 20px;
+  max-width: 1440px;
+  height: 100%;
+  padding: 0;
 }
 
 .highlight-item {
   display: flex;
   align-items: center;
-  gap: 15px;
+  justify-content: center;
 }
 
 .highlight-item img {
-  width: 40px;
-  height: 40px;
+  width: 100%;
+  height: auto;
 }
-
-.highlight-item span {
-  color: #d2d2d2;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  white-space: nowrap;
-}
-
