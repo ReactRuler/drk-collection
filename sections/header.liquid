@@ -151,6 +151,9 @@
 </div>
 
 <script>
+  (function() {
+    'use strict';
+  
   window.openCartDrawer = function() {
     const drawer = document.getElementById('cart-drawer');
     const overlay = document.getElementById('cart-drawer-overlay');
@@ -239,28 +242,40 @@
       const dropdown = menuItem.querySelector('.menu-dropdown[data-dropdown]');
       if (!dropdown) return;
       
+      // Remove any existing listeners by cloning
+      const newMenuItem = menuItem.cloneNode(true);
+      menuItem.parentNode.replaceChild(newMenuItem, menuItem);
+      const newDropdown = newMenuItem.querySelector('.menu-dropdown[data-dropdown]');
+      
       let hideTimeout;
       
       function showDropdown() {
         clearTimeout(hideTimeout);
-        dropdown.style.display = 'block';
+        if (newDropdown) {
+          newDropdown.style.display = 'block';
+        }
       }
       
       function hideDropdown() {
         clearTimeout(hideTimeout);
         hideTimeout = setTimeout(function() {
-          if (!menuItem.matches(':hover') && !dropdown.matches(':hover')) {
-            dropdown.style.display = 'none';
+          if (newDropdown && !newMenuItem.matches(':hover') && !newDropdown.matches(':hover')) {
+            newDropdown.style.display = 'none';
           }
         }, 150);
       }
       
-      menuItem.addEventListener('mouseenter', showDropdown);
-      menuItem.addEventListener('mouseleave', hideDropdown);
-      dropdown.addEventListener('mouseenter', showDropdown);
-      dropdown.addEventListener('mouseleave', hideDropdown);
+      newMenuItem.addEventListener('mouseenter', showDropdown);
+      newMenuItem.addEventListener('mouseleave', hideDropdown);
+      if (newDropdown) {
+        newDropdown.addEventListener('mouseenter', showDropdown);
+        newDropdown.addEventListener('mouseleave', hideDropdown);
+      }
     });
   }
+  
+  // Make it globally accessible
+  window.initMenuDropdowns = initMenuDropdowns;
   
   window.showDropdown = function(element) {
     const dropdown = element.querySelector('.menu-dropdown');
