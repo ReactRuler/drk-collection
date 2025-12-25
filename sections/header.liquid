@@ -12,7 +12,56 @@
       </div>
       <nav class="header-nav">
         {% for block in section.blocks %}
-          <a href="{{ block.settings.link }}">{{ block.settings.label }}</a>
+          {% if block.type == 'menu_item' %}
+            <div class="menu-item-wrapper">
+              <a href="{{ block.settings.link }}" class="menu-link">{{ block.settings.label }}</a>
+              {% if block.settings.show_dropdown %}
+                <div class="menu-dropdown">
+                  <div class="dropdown-content">
+                    {% if block.settings.featured_product_image %}
+                      <div class="dropdown-featured">
+                        <div class="featured-product-image">
+                          {% if block.settings.featured_product_image %}
+                            <img src="{{ block.settings.featured_product_image | image_url: width: 300 }}" alt="{{ block.settings.featured_product_title }}">
+                          {% endif %}
+                        </div>
+                        <div class="featured-product-info">
+                          <h4>{{ block.settings.featured_product_title | default: 'PRODUCT NAME' }}</h4>
+                          {% if block.settings.featured_product_original_price != blank or block.settings.featured_product_sale_price != blank %}
+                            <div class="featured-product-price">
+                              {% if block.settings.featured_product_original_price != blank %}
+                                <span class="original-price">{{ block.settings.featured_product_original_price }}</span>
+                              {% endif %}
+                              {% if block.settings.featured_product_sale_price != blank %}
+                                <span class="sale-price">{{ block.settings.featured_product_sale_price }}</span>
+                              {% endif %}
+                            </div>
+                          {% endif %}
+                        </div>
+                      </div>
+                    {% endif %}
+                    <div class="dropdown-menu-columns">
+                      {% assign submenu_count = 0 %}
+                      {% for subblock in section.blocks %}
+                        {% if subblock.type == 'submenu' and subblock.settings.parent_menu == block.id %}
+                          {% assign submenu_count = submenu_count | plus: 1 %}
+                          <div class="dropdown-column">
+                            {% for i in (1..8) %}
+                              {% assign label_key = 'menu_item_' | append: i | append: '_label' %}
+                              {% assign link_key = 'menu_item_' | append: i | append: '_link' %}
+                              {% if subblock.settings[label_key] != blank %}
+                                <a href="{{ subblock.settings[link_key] | default: '#' }}" class="dropdown-link">{{ subblock.settings[label_key] }}</a>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
         {% endfor %}
       </nav>
       <div class="header-icons">
@@ -22,19 +71,37 @@
             <path d="m21 21-4.35-4.35" />
           </svg>
         </button>
-        <a href="/cart" class="cart-icon">
+        <button class="cart-icon" onclick="document.getElementById('cart-drawer').classList.add('active')">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <circle cx="9" cy="21" r="2.25" />
             <circle cx="20" cy="21" r="2.25" />
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
           </svg>
-        </a>
-        <a href="/account" class="account-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="7" r="3" />
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-          </svg>
-        </a>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+        <div class="account-menu-wrapper">
+          <button class="account-icon" onclick="document.getElementById('account-dropdown').classList.toggle('active')">
+            {% if section.settings.account_icon_image %}
+              <img src="{{ section.settings.account_icon_image | image_url: width: 40 }}" alt="Account">
+            {% else %}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="7" r="3" />
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              </svg>
+            {% endif %}
+          </button>
+          <div id="account-dropdown" class="account-dropdown">
+            {% for account_item in section.blocks %}
+              {% if account_item.type == 'account_menu_item' %}
+                <a href="{{ account_item.settings.link | default: '#' }}" class="account-menu-link">{{ account_item.settings.label }}</a>
+              {% endif %}
+            {% endfor %}
+            <div class="account-buttons">
+              <a href="{{ section.settings.login_link | default: '/account/login' }}" class="account-button login-button">{{ section.settings.login_text | default: 'LOGIN' }}</a>
+              <a href="{{ section.settings.register_link | default: '/account/register' }}" class="account-button register-button">{{ section.settings.register_text | default: 'REGISTER' }}</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -50,6 +117,59 @@
   </div>
 </div>
 
+<div id="cart-drawer" class="cart-drawer">
+  <div class="cart-drawer-overlay" onclick="document.getElementById('cart-drawer').classList.remove('active')"></div>
+  <div class="cart-drawer-content">
+    <div class="cart-drawer-header">
+      <h2>Review Your Cart (<span id="cart-item-count">0</span>)</h2>
+      <button class="cart-close" onclick="document.getElementById('cart-drawer').classList.remove('active')">×</button>
+    </div>
+    <div class="cart-drawer-items" id="cart-items">
+      <!-- Cart items will be loaded here -->
+    </div>
+    <div class="cart-drawer-summary">
+      <div class="cart-summary-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">$ 0</span>
+      </div>
+      <div class="cart-summary-row">
+        <span>Shipping</span>
+        <span id="cart-shipping">$ {{ section.settings.shipping_cost | default: '15' }}</span>
+      </div>
+      <div class="cart-summary-row total">
+        <span>Total</span>
+        <span id="cart-total">$ 0</span>
+      </div>
+    </div>
+    <div class="cart-drawer-actions">
+      <button class="cart-button update-cart" onclick="updateCart()">UPDATE CART</button>
+      <a href="/checkout" class="cart-button checkout-button">PROCEED TO CHECKOUT</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateCartCount() {
+    fetch('/cart.js')
+      .then(response => response.json())
+      .then(cart => {
+        document.getElementById('cart-count').textContent = cart.item_count;
+        document.getElementById('cart-item-count').textContent = cart.item_count;
+        document.getElementById('cart-subtotal').textContent = '$ ' + (cart.total_price / 100).toFixed(0);
+        const shipping = {{ section.settings.shipping_cost | default: 15 }};
+        const total = (cart.total_price / 100) + shipping;
+        document.getElementById('cart-total').textContent = '$ ' + total.toFixed(0);
+      });
+  }
+  
+  function updateCart() {
+    // Cart update logic
+    updateCartCount();
+  }
+  
+  updateCartCount();
+</script>
+
 {% schema %}
 {
   "name": "Header",
@@ -57,20 +177,202 @@
     {
       "type": "image_picker",
       "id": "logo",
-      "label": "Logo",
-      "default": "drk-logo.png"
+      "label": "Logo"
     },
     {
       "type": "url",
       "id": "logo_link",
       "label": "Logo Link",
       "default": "/"
+    },
+    {
+      "type": "header",
+      "content": "Account Menu"
+    },
+    {
+      "type": "image_picker",
+      "id": "account_icon_image",
+      "label": "Account Icon Image"
+    },
+    {
+      "type": "text",
+      "id": "login_text",
+      "label": "Login Button Text",
+      "default": "LOGIN"
+    },
+    {
+      "type": "url",
+      "id": "login_link",
+      "label": "Login Link",
+      "default": "/account/login"
+    },
+    {
+      "type": "text",
+      "id": "register_text",
+      "label": "Register Button Text",
+      "default": "REGISTER"
+    },
+    {
+      "type": "url",
+      "id": "register_link",
+      "label": "Register Link",
+      "default": "/account/register"
+    },
+    {
+      "type": "header",
+      "content": "Cart Settings"
+    },
+    {
+      "type": "text",
+      "id": "shipping_cost",
+      "label": "Shipping Cost",
+      "default": "15"
     }
   ],
   "blocks": [
     {
       "type": "menu_item",
       "name": "Menu Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "MENU ITEM"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_dropdown",
+          "label": "Show Dropdown Menu"
+        },
+        {
+          "type": "header",
+          "content": "Featured Product (Left Side)"
+        },
+        {
+          "type": "image_picker",
+          "id": "featured_product_image",
+          "label": "Featured Product Image"
+        },
+        {
+          "type": "text",
+          "id": "featured_product_title",
+          "label": "Featured Product Title"
+        },
+        {
+          "type": "text",
+          "id": "featured_product_original_price",
+          "label": "Original Price",
+          "info": "e.g., $200"
+        },
+        {
+          "type": "text",
+          "id": "featured_product_sale_price",
+          "label": "Sale Price",
+          "info": "e.g., $150"
+        }
+      ]
+    },
+    {
+      "type": "submenu",
+      "name": "Submenu Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "parent_menu",
+          "label": "Parent Menu Block ID",
+          "info": "Enter the block ID of the parent menu item (found in block settings)"
+        },
+        {
+          "type": "text",
+          "id": "menu_item_1_label",
+          "label": "Menu Item 1 Label"
+        },
+        {
+          "type": "url",
+          "id": "menu_item_1_link",
+          "label": "Menu Item 1 Link"
+        },
+        {
+          "type": "text",
+          "id": "menu_item_2_label",
+          "label": "Menu Item 2 Label"
+        },
+        {
+          "type": "url",
+          "id": "menu_item_2_link",
+          "label": "Menu Item 2 Link"
+        },
+        {
+          "type": "text",
+          "id": "menu_item_3_label",
+          "label": "Menu Item 3 Label"
+        },
+        {
+          "type": "url",
+          "id": "menu_item_3_link",
+          "label": "Menu Item 3 Link"
+        },
+        {
+          "type": "text",
+          "id": "menu_item_4_label",
+          "label": "Menu Item 4 Label"
+        },
+        {
+          "type": "url",
+          "id": "menu_item_4_link",
+          "label": "Menu Item 4 Link"
+        },
+        {
+          "type": "text",
+          "id": "menu_item_5_label",
+          "label": "Menu Item 5 Label"
+        },
+        {
+          "type": "url",
+          "id": "menu_item_5_link",
+          "label": "Menu Item 5 Link"
+        },
+        {
+          "type": "text",
+          "id": "menu_item_6_label",
+          "label": "Menu Item 6 Label"
+        },
+        {
+          "type": "url",
+          "id": "menu_item_6_link",
+          "label": "Menu Item 6 Link"
+        },
+        {
+          "type": "text",
+          "id": "menu_item_7_label",
+          "label": "Menu Item 7 Label"
+        },
+        {
+          "type": "url",
+          "id": "menu_item_7_link",
+          "label": "Menu Item 7 Link"
+        },
+        {
+          "type": "text",
+          "id": "menu_item_8_label",
+          "label": "Menu Item 8 Label"
+        },
+        {
+          "type": "url",
+          "id": "menu_item_8_link",
+          "label": "Menu Item 8 Link"
+        }
+      ]
+    },
+    {
+      "type": "account_menu_item",
+      "name": "Account Menu Item",
       "settings": [
         {
           "type": "text",
@@ -99,7 +401,11 @@
         "type": "menu_item",
         "settings": {
           "label": "FITNESS",
-          "link": "#"
+          "link": "#",
+          "show_dropdown": true,
+          "featured_product_title": "PRODUCT NAME",
+          "featured_product_original_price": "$200",
+          "featured_product_sale_price": "$150"
         }
       },
       {
@@ -136,9 +442,36 @@
           "label": "OFFICE",
           "link": "#"
         }
+      },
+      {
+        "type": "account_menu_item",
+        "settings": {
+          "label": "MY ORDERS",
+          "link": "/account/orders"
+        }
+      },
+      {
+        "type": "account_menu_item",
+        "settings": {
+          "label": "MY ACCOUNT",
+          "link": "/account"
+        }
+      },
+      {
+        "type": "account_menu_item",
+        "settings": {
+          "label": "SETTINGS",
+          "link": "/account"
+        }
+      },
+      {
+        "type": "account_menu_item",
+        "settings": {
+          "label": "HELP CENTER",
+          "link": "/pages/help"
+        }
       }
     ]
   }
 }
 {% endschema %}
-
