@@ -3,6 +3,8 @@ import Header from "./components/Header";
 import TopVideo from "./components/TopVideo";
 import Hero from "./components/Hero";
 import FeaturedProducts from "./components/FeaturedProducts";
+import TravelCTA from "./components/TravelCTA";
+import YogaHighlight from "./components/YogaHighlight";
 import "./App.css";
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
       <TopVideo />
       <Hero />
       <FeaturedProducts />
+      <TravelCTA />
+      <YogaHighlight />
 
       {searchOpen && (
         <div className="search-popup" onClick={() => setSearchOpen(false)}>
