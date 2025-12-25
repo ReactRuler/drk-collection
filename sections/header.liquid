@@ -288,27 +288,23 @@
     }
   };
   
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      updateCartCount();
-      const overlay = document.getElementById('cart-drawer-overlay');
-      if (overlay) overlay.addEventListener('click', closeCartDrawer);
-      const closeBtn = document.querySelector('.cart-close');
-      if (closeBtn) closeBtn.addEventListener('click', closeCartDrawer);
-      document.addEventListener('click', function(event) {
-        const accountWrapper = document.querySelector('.account-menu-wrapper');
-        const accountDropdown = document.getElementById('account-dropdown');
-        if (accountWrapper && accountDropdown && !accountWrapper.contains(event.target)) {
-          accountDropdown.classList.remove('active');
-        }
-      });
-    });
-  } else {
+  function initAll() {
     updateCartCount();
+    initMenuDropdowns();
+    
+    // Close cart when clicking overlay
     const overlay = document.getElementById('cart-drawer-overlay');
-    if (overlay) overlay.addEventListener('click', closeCartDrawer);
+    if (overlay) {
+      overlay.addEventListener('click', closeCartDrawer);
+    }
+    
+    // Close cart when clicking close button
     const closeBtn = document.querySelector('.cart-close');
-    if (closeBtn) closeBtn.addEventListener('click', closeCartDrawer);
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeCartDrawer);
+    }
+    
+    // Close account dropdown when clicking outside
     document.addEventListener('click', function(event) {
       const accountWrapper = document.querySelector('.account-menu-wrapper');
       const accountDropdown = document.getElementById('account-dropdown');
@@ -316,6 +312,18 @@
         accountDropdown.classList.remove('active');
       }
     });
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
+  
+  // Also initialize on theme editor updates
+  if (typeof window.Shopify !== 'undefined' && window.Shopify.designMode) {
+    document.addEventListener('shopify:section:load', initAll);
+    document.addEventListener('shopify:section:reorder', initAll);
   }
 </script>
 
