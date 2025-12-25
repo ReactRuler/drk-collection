@@ -1,4 +1,3 @@
-<div id="react-root"></div>
 <script>
   window.SHOPIFY_ASSETS = {
     video: "{{ 'DRK_video.mp4' | asset_url }}",
@@ -6,6 +5,8 @@
     button1: "{{ 'DRK_button1.gif' | asset_url }}",
     button2: "{{ 'DRK_button2.gif' | asset_url }}"
   };
+  console.log('Shopify Assets:', window.SHOPIFY_ASSETS);
 </script>
+<div id="react-root"></div>
 <link rel="stylesheet" href="{{ 'react-asset-index.css' | asset_url }}">
 <script src="{{ 'react-app.js' | asset_url }}" defer></script>
