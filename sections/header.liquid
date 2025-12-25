@@ -8,15 +8,21 @@
       
       {% comment %} Logo {% endcomment %}
       <div class="header-logo">
-        <a href="{{ routes.root_url }}" style="text-decoration: none; color: #D2D2D2;">
-          <h1 style="margin: 0; font-size: 24px; font-weight: 300; text-transform: uppercase; letter-spacing: 3px;">
-            DRK COLLECTION
-          </h1>
+        <a href="{{ routes.root_url }}" style="text-decoration: none; color: #D2D2D2; display: flex; align-items: center;">
+          {% if section.settings.logo != blank %}
+            <img src="{{ section.settings.logo | image_url: width: 200 }}" 
+                 alt="{{ shop.name }}"
+                 style="height: 40px; width: auto;">
+          {% else %}
+            <img src="{{ 'drk-logo.png' | asset_url }}" 
+                 alt="{{ shop.name }}"
+                 style="height: 40px; width: auto;">
+          {% endif %}
         </a>
       </div>
 
       {% comment %} Navigation {% endcomment %}
-      <nav class="header-nav" style="display: flex; align-items: center; gap: 40px;">
+      <nav class="header-nav" style="display: flex; flex-direction: row; align-items: center; padding: 0px; gap: 40px; width: 627px; height: 16px; flex: none; order: 0; flex-grow: 0;">
         <a href="{{ routes.root_url }}" style="color: #767676; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s;">
           HOME
         </a>
@@ -45,12 +51,12 @@
 
       {% comment %} Header Icons {% endcomment %}
       <div class="header-icons" style="display: flex; align-items: center; gap: 25px;">
-        <a href="{{ routes.search_url }}" class="search-icon" style="color: #D2D2D2; text-decoration: none; display: flex; align-items: center; transition: color 0.3s;">
+        <button class="search-icon" id="search-toggle" style="background: none; border: none; color: #D2D2D2; cursor: pointer; display: flex; align-items: center; transition: color 0.3s; padding: 0;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <circle cx="11" cy="11" r="8"/>
             <path d="m21 21-4.35-4.35"/>
           </svg>
-        </a>
+        </button>
         <a href="{{ routes.cart_url }}" class="cart-icon" style="color: #D2D2D2; text-decoration: none; display: flex; align-items: center; position: relative; transition: color 0.3s;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <circle cx="9" cy="21" r="2.25"/>
@@ -75,28 +81,106 @@
   </div>
 </header>
 
+{% comment %} Search Popup Modal {% endcomment %}
+<div class="search-popup" id="search-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,5,0.98); z-index: 10000; padding: 100px 20px;">
+  <div class="search-popup-content" style="max-width: 800px; margin: 0 auto; position: relative;">
+    <button class="search-close" id="search-close" style="position: absolute; top: -60px; right: 0; background: none; border: none; color: #D2D2D2; font-size: 32px; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <form action="{{ routes.search_url }}" method="get" class="search-form" style="display: flex; flex-direction: column; gap: 30px;">
+      <input type="search" 
+             name="q" 
+             id="search-input"
+             placeholder="Search products, articles, pages..." 
+             autocomplete="off"
+             style="width: 100%; padding: 20px 0; background: transparent; border: none; border-bottom: 2px solid rgba(125,125,125,0.5); color: #D2D2D2; font-size: 32px; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; outline: none;">
+      <button type="submit" 
+              style="align-self: flex-start; padding: 15px 40px; border: 1px solid rgba(124,124,124,0.27); border-radius: 23px; background: rgba(124,124,124,0.27); color: #D2D2D2; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; cursor: pointer; transition: all 0.3s;">
+        Search
+      </button>
+    </form>
+  </div>
+</div>
+
 {% comment %} Top Video Section (if enabled) {% endcomment %}
-{% if section.settings.show_top_video and section.settings.top_video != blank %}
+{% if section.settings.show_top_video %}
   <div class="top-video-section" style="width: 100%; position: relative; background: #050505;">
-    <video 
-      autoplay 
-      muted 
-      loop 
-      playsinline
-      style="width: 100%; height: auto; display: block;"
-      {% if section.settings.video_poster != blank %}
-        poster="{{ section.settings.video_poster | image_url: width: 1920 }}"
-      {% endif %}>
-      <source src="{{ section.settings.top_video }}" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    {% if section.settings.video_overlay_text != blank %}
-      <div class="video-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; z-index: 10;">
-        <h2 style="font-size: 48px; font-weight: 300; text-transform: uppercase; letter-spacing: 4px; margin: 0;">
-          {{ section.settings.video_overlay_text }}
-        </h2>
-      </div>
+    {% if section.settings.top_video_file != blank %}
+      <video 
+        autoplay 
+        muted 
+        loop 
+        playsinline
+        style="width: 100%; height: auto; display: block;"
+        {% if section.settings.video_poster != blank %}
+          poster="{{ section.settings.video_poster | image_url: width: 1920 }}"
+        {% else %}
+          poster="{{ 'drk-logo.png' | asset_url }}"
+        {% endif %}>
+        <source src="{{ section.settings.top_video_file }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    {% elsif section.settings.top_video != blank %}
+      <video 
+        autoplay 
+        muted 
+        loop 
+        playsinline
+        style="width: 100%; height: auto; display: block;"
+        {% if section.settings.video_poster != blank %}
+          poster="{{ section.settings.video_poster | image_url: width: 1920 }}"
+        {% else %}
+          poster="{{ 'drk-logo.png' | asset_url }}"
+        {% endif %}>
+        <source src="{{ section.settings.top_video }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    {% else %}
+      {% comment %} Fallback to video from assets {% endcomment %}
+      <video 
+        autoplay 
+        muted 
+        loop 
+        playsinline
+        style="width: 100%; height: auto; display: block;"
+        poster="{{ 'drk-logo.png' | asset_url }}">
+        <source src="{{ 'DRK_video.mp4' | asset_url }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     {% endif %}
+    
+    {% comment %} Animated Elements and GIF Buttons {% endcomment %}
+    <div class="video-overlay-content" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; gap: 30px; z-index: 10;">
+      {% comment %} Animated Element (can be customized) {% endcomment %}
+      {% if section.settings.animated_element != blank %}
+        <div class="animated-element" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 5;">
+          <img src="{{ section.settings.animated_element | image_url: width: 200 }}" 
+               alt="Animated Element"
+               style="max-width: 200px; height: auto;">
+        </div>
+      {% endif %}
+      
+      {% comment %} GIF Buttons {% endcomment %}
+      <div class="gif-buttons" style="display: flex; gap: 20px; align-items: center; z-index: 15;">
+        <a href="{{ section.settings.button_1_link | default: '#' }}" 
+           class="gif-button-1"
+           style="display: block;">
+          <img src="{{ 'DRK_button1.gif' | asset_url }}" 
+               alt="Button 1"
+               style="max-width: 200px; height: auto; display: block;">
+        </a>
+        <a href="{{ section.settings.button_2_link | default: '#' }}" 
+           class="gif-button-2"
+           style="display: block;">
+          <img src="{{ 'DRK_button2.gif' | asset_url }}" 
+               alt="Button 2"
+               style="max-width: 200px; height: auto; display: block;">
+        </a>
+      </div>
+    </div>
   </div>
 {% endif %}
 
@@ -157,6 +241,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Menu
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const menuOverlay = document.querySelector('.mobile-menu-overlay');
     const menuClose = document.querySelector('.mobile-menu-close');
@@ -182,6 +267,45 @@
         });
       });
     }
+
+    // Search Popup
+    const searchToggle = document.getElementById('search-toggle');
+    const searchPopup = document.getElementById('search-popup');
+    const searchClose = document.getElementById('search-close');
+    const searchInput = document.getElementById('search-input');
+
+    if (searchToggle && searchPopup) {
+      searchToggle.addEventListener('click', function() {
+        searchPopup.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        setTimeout(function() {
+          if (searchInput) searchInput.focus();
+        }, 100);
+      });
+
+      if (searchClose) {
+        searchClose.addEventListener('click', function() {
+          searchPopup.style.display = 'none';
+          document.body.style.overflow = '';
+        });
+      }
+
+      // Close on Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && searchPopup.style.display === 'block') {
+          searchPopup.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+
+      // Close on background click
+      searchPopup.addEventListener('click', function(e) {
+        if (e.target === searchPopup) {
+          searchPopup.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+    }
   });
 </script>
 
@@ -189,6 +313,12 @@
 {
   "name": "Header",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "If not set, will use drk-logo.png from assets/media"
+    },
     {
       "type": "header",
       "content": "Top Video Settings"
@@ -214,13 +344,25 @@
     {
       "type": "image_picker",
       "id": "video_poster",
-      "label": "Video Poster Image"
+      "label": "Video Poster Image",
+      "info": "If not set, will use drk-logo.png"
     },
     {
-      "type": "text",
-      "id": "video_overlay_text",
-      "label": "Video Overlay Text",
-      "default": "THE DRK SIDE OF COOL"
+      "type": "image_picker",
+      "id": "animated_element",
+      "label": "Animated Element (Optional)"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "GIF Button 1 Link",
+      "default": "#"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "GIF Button 2 Link",
+      "default": "#"
     }
   ],
   "presets": [
