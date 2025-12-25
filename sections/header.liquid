@@ -41,15 +41,25 @@
                     <div class="dropdown-menu-columns">
                       {% for subblock in section.blocks %}
                         {% if subblock.type == 'submenu' and subblock.settings.parent_menu_label == block.settings.label %}
-                          <div class="dropdown-column">
-                            {% for i in (1..10) %}
-                              {% assign label_key = 'menu_item_' | append: i | append: '_label' %}
-                              {% assign link_key = 'menu_item_' | append: i | append: '_link' %}
-                              {% if subblock.settings[label_key] != blank %}
-                                <a href="{{ subblock.settings[link_key] | default: '#' }}" class="dropdown-link">{{ subblock.settings[label_key] }}</a>
-                              {% endif %}
-                            {% endfor %}
-                          </div>
+                          {% assign has_links = false %}
+                          {% for i in (1..10) %}
+                            {% assign label_key = 'menu_item_' | append: i | append: '_label' %}
+                            {% if subblock.settings[label_key] != blank %}
+                              {% assign has_links = true %}
+                              {% break %}
+                            {% endif %}
+                          {% endfor %}
+                          {% if has_links %}
+                            <div class="dropdown-column">
+                              {% for i in (1..10) %}
+                                {% assign label_key = 'menu_item_' | append: i | append: '_label' %}
+                                {% assign link_key = 'menu_item_' | append: i | append: '_link' %}
+                                {% if subblock.settings[label_key] != blank %}
+                                  <a href="{{ subblock.settings[link_key] | default: '#' }}" class="dropdown-link">{{ subblock.settings[label_key] }}</a>
+                                {% endif %}
+                              {% endfor %}
+                            </div>
+                          {% endif %}
                         {% endif %}
                       {% endfor %}
                     </div>
