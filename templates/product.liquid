@@ -1,0 +1,429 @@
+{% section 'header' %}
+
+<div class="product-page">
+  <div class="page-width">
+    <div class="product-container">
+      <div class="product-images">
+        <div class="product-main-image">
+          {% if product.featured_image %}
+            <img 
+              src="{{ product.featured_image | image_url: width: 800 }}" 
+              alt="{{ product.featured_image.alt | escape }}"
+              id="main-product-image"
+            >
+          {% else %}
+            <img src="{{ 'placeholder.png' | asset_url }}" alt="{{ product.title }}">
+          {% endif %}
+        </div>
+        <div class="product-thumbnails">
+          {% for image in product.images limit: 6 %}
+            <div class="thumbnail-item">
+              <img 
+                src="{{ image | image_url: width: 150 }}" 
+                alt="{{ image.alt | escape }}"
+                onclick="changeMainImage('{{ image | image_url: width: 800 }}', '{{ image.alt | escape }}')"
+              >
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h1 class="product-title">{{ product.title }}</h1>
+        
+        <div class="product-price">
+          {% if product.compare_at_price > product.price %}
+            <span class="original-price">{{ product.compare_at_price | money }}</span>
+            <span class="sale-price">{{ product.price | money }}</span>
+          {% else %}
+            <span class="current-price">{{ product.price | money }}</span>
+          {% endif %}
+        </div>
+
+        <div class="product-rating">
+          {% assign rating = product.metafields.reviews.rating.value | default: 4.5 %}
+          {% assign full_stars = rating | floor %}
+          {% assign has_half = rating | modulo: 1 | round: 1 %}
+          
+          {% for i in (1..5) %}
+            {% if i <= full_stars %}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+              </svg>
+            {% elsif i == full_stars | plus: 1 and has_half >= 0.5 %}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77V2Z" fill="white"/>
+              </svg>
+            {% else %}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" opacity="0.3">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+              </svg>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="product-description">
+          {{ product.description }}
+        </div>
+
+        <form action="/cart/add" method="post" enctype="multipart/form-data" id="product-form">
+          {% unless product.has_only_default_variant %}
+            <div class="product-variants">
+              {% for option in product.options_with_values %}
+                <div class="variant-selector">
+                  <label for="option-{{ forloop.index }}">{{ option.name }}</label>
+                  <select 
+                    name="id" 
+                    id="option-{{ forloop.index }}"
+                    class="variant-select"
+                  >
+                    {% for variant in product.variants %}
+                      <option 
+                        value="{{ variant.id }}"
+                        {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                        {% unless variant.available %}disabled{% endunless %}
+                      >
+                        {{ variant.title }} - {{ variant.price | money }}
+                        {% unless variant.available %} (Sold Out){% endunless %}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          {% endunless %}
+
+          <div class="product-quantity">
+            <label for="quantity">Quantity</label>
+            <div class="quantity-selector">
+              <button type="button" class="quantity-btn minus" onclick="decreaseQuantity()">-</button>
+              <input 
+                type="number" 
+                id="quantity" 
+                name="quantity" 
+                value="1" 
+                min="1"
+                class="quantity-input"
+              >
+              <button type="button" class="quantity-btn plus" onclick="increaseQuantity()">+</button>
+            </div>
+          </div>
+
+          <button 
+            type="submit" 
+            class="add-to-cart-btn"
+            {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+          >
+            {% if product.selected_or_first_available_variant.available %}
+              ADD TO CART
+            {% else %}
+              SOLD OUT
+            {% endif %}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% section 'footer' %}
+
+<style>
+.product-page {
+  background: #050505;
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+.product-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.product-images {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.product-main-image {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0B0B0B;
+}
+
+.product-main-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.product-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.thumbnail-item {
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0B0B0B;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.thumbnail-item:hover {
+  opacity: 0.8;
+}
+
+.thumbnail-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.product-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 40px;
+  text-transform: uppercase;
+  background: linear-gradient(82.13deg, #A2A2A2 2.11%, #191919 50.06%, #797979 98%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.product-price {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.original-price {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 28px;
+  color: #767676;
+  text-decoration: line-through;
+}
+
+.sale-price,
+.current-price {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: #FFFFFF;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.product-description {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  color: #B0B0B0;
+}
+
+.product-variants {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.variant-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.variant-selector label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  letter-spacing: 0.2em;
+}
+
+.variant-select {
+  width: 100%;
+  padding: 20px;
+  background: rgba(124, 124, 124, 0.27);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(140, 140, 140, 0.4);
+  border-radius: 100px;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.variant-select option {
+  background: #0B0B0B;
+  color: #FFFFFF;
+}
+
+.product-quantity {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-quantity label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  letter-spacing: 0.2em;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: fit-content;
+}
+
+.quantity-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(124, 124, 124, 0.27);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(140, 140, 140, 0.4);
+  color: #FFFFFF;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.quantity-btn:hover {
+  background: rgba(124, 124, 124, 0.4);
+}
+
+.quantity-input {
+  width: 80px;
+  padding: 12px;
+  background: rgba(124, 124, 124, 0.27);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(140, 140, 140, 0.4);
+  border-radius: 100px;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  text-align: center;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  padding: 20px 0;
+  background: rgba(124, 124, 124, 0.27);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(140, 140, 140, 0.4);
+  border-radius: 100px;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.add-to-cart-btn:hover:not(:disabled) {
+  background: rgba(124, 124, 124, 0.4);
+  border-color: rgba(140, 140, 140, 0.6);
+}
+
+.add-to-cart-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .product-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .product-title {
+    font-size: 36px;
+  }
+}
+</style>
+
+<script>
+function changeMainImage(src, alt) {
+  const mainImage = document.getElementById('main-product-image');
+  if (mainImage) {
+    mainImage.src = src;
+    mainImage.alt = alt;
+  }
+}
+
+function increaseQuantity() {
+  const input = document.getElementById('quantity');
+  if (input) {
+    input.value = parseInt(input.value) + 1;
+  }
+}
+
+function decreaseQuantity() {
+  const input = document.getElementById('quantity');
+  if (input && parseInt(input.value) > 1) {
+    input.value = parseInt(input.value) - 1;
+  }
+}
+
+document.getElementById('product-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const formData = new FormData(this);
+  
+  fetch('/cart/add.js', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (window.updateCartCount) {
+      window.updateCartCount();
+    }
+    if (window.openCartDrawer) {
+      window.openCartDrawer();
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+});
+</script>
+
