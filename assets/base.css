@@ -670,33 +670,6 @@ body {
   flex: none;
 }
 
-@media (max-width: 768px) {
-  .travel-cta-section {
-    height: auto;
-    padding: 40px 20px;
-  }
-
-  .travel-cta-title {
-    font-size: 40px;
-    line-height: 50px;
-    height: auto;
-  }
-
-  .travel-cta-description {
-    font-size: 20px;
-    line-height: 28px;
-    height: auto;
-  }
-
-  .travel-cta-content {
-    gap: 32px;
-  }
-
-  .travel-cta-text {
-    height: auto;
-  }
-}
-
 .yoga-highlight-section {
   width: 100%;
   background-color: #050505;
@@ -882,43 +855,6 @@ body {
   color: #767676;
 }
 
-@media (max-width: 768px) {
-  .yoga-highlight-content {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .yoga-highlight-left,
-  .yoga-highlight-middle,
-  .yoga-highlight-right,
-  .yoga-water-ripples {
-    grid-column: 1;
-    grid-row: auto;
-    width: 100%;
-    height: auto;
-  }
-
-  .yoga-highlight-title {
-    font-size: 36px;
-  }
-
-  .yoga-highlight-description {
-    font-size: 20px;
-  }
-
-  .yoga-water-ripples-text {
-    position: static;
-    width: 100%;
-    padding: 20px;
-    align-items: center;
-  }
-
-  .yoga-water-ripples-text p {
-    width: 100%;
-    text-align: center;
-  }
-}
-
 .latest-blogs-section {
   width: 100%;
   background-color: #050505;
@@ -1099,29 +1035,6 @@ body {
   width: 16px;
   height: 16px;
   flex: none;
-}
-
-@media (max-width: 1024px) {
-  .latest-blogs-grid {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .blog-post {
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .latest-blogs-title {
-    font-size: 32px;
-    line-height: 40px;
-    height: auto;
-  }
-
-  .blog-post-title {
-    font-size: 24px;
-  }
 }
 
 .logo-repeated-section {
@@ -1416,42 +1329,6 @@ body {
   align-self: stretch;
 }
 
-@media (max-width: 1024px) {
-  .footer-main-content {
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-  }
-
-  .footer-right {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .footer-columns {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 768px) {
-  .footer-columns {
-    flex-direction: column;
-    height: auto;
-    padding: 20px 0px;
-  }
-
-  .footer-column {
-    width: 100%;
-    height: auto;
-  }
-
-  .footer-subscribe {
-    width: 100%;
-    max-width: 285px;
-  }
-}
-
 .cart-drawer {
   position: fixed;
   top: 0;
@@ -1648,23 +1525,400 @@ body {
   background: #d2d2d2;
 }
 
-@media (max-width: 768px) {
-  .cart-drawer {
-    max-width: 100%;
+@media (max-width: 1024px) {
+  .page-width {
+    padding: 0 16px;
+  }
+
+  .header-nav {
+    width: auto;
+    gap: 24px;
   }
 
   .menu-dropdown {
-    min-width: 90vw;
-    max-width: 90vw;
-    left: 50%;
-    transform: translateX(-50%);
+    min-width: 500px;
+    max-width: 700px;
+  }
+
+  .dropdown-menu-columns {
+    gap: 16px;
+  }
+
+  .dropdown-column {
+    min-width: 100px;
+  }
+
+  .travel-cta-title {
+    font-size: 55px;
+    line-height: 75px;
+  }
+
+  .travel-cta-description {
+    font-size: 24px;
+    line-height: 34px;
+  }
+
+  .yoga-highlight-left {
+    padding: 10px 50px;
+  }
+
+  .yoga-water-ripples-text {
+    width: 100%;
+    padding: 10px 30px;
+  }
+
+  .featured-products h2 {
+    font-size: 40px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 32px;
+  }
+
+  .footer-main-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .footer-right {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-columns {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-left {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-description {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-width {
+    padding: 0 16px;
+  }
+
+  .site-header {
+    padding: 16px 0;
+  }
+
+  .header-wrapper {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .header-logo img {
+    height: 32px;
+  }
+
+  .header-nav {
+    order: 3;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 16px;
+    height: auto;
+    padding: 16px 0 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .menu-link {
+    font-size: 12px;
+  }
+
+  .menu-dropdown {
+    position: fixed;
+    min-width: calc(100vw - 32px);
+    max-width: calc(100vw - 32px);
+    left: 16px;
+    right: 16px;
+    transform: none;
+    top: auto;
+    max-height: 70vh;
+    overflow-y: auto;
   }
 
   .dropdown-content {
     flex-direction: column;
+    gap: 20px;
   }
 
   .dropdown-featured {
     flex: 1;
+    width: 100%;
+  }
+
+  .dropdown-menu-columns {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .dropdown-column {
+    width: 100%;
+  }
+
+  .header-icons {
+    gap: 16px;
+  }
+
+  .header-icons button svg,
+  .header-icons a svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .account-dropdown {
+    right: 0;
+    left: auto;
+    min-width: 180px;
+  }
+
+  .search-popup {
+    padding: 60px 20px;
+  }
+
+  .search-close {
+    top: -50px;
+    font-size: 28px;
+  }
+
+  .search-form input {
+    font-size: 24px;
+  }
+
+  .top-video-section video {
+    width: 100%;
+  }
+
+  .video-overlay-content {
+    width: 100%;
+    gap: 20px;
+  }
+
+  .video-overlay-content img {
+    max-width: 150px;
+  }
+
+  .hero-highlights {
+    height: 120px;
+  }
+
+  .highlights-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+
+  .highlight-item img {
+    max-width: 80%;
+  }
+
+  .featured-products {
+    padding: 60px 16px;
+  }
+
+  .featured-products h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 24px;
+  }
+
+  .travel-cta-section {
+    padding: 60px 16px;
+  }
+
+  .travel-cta-content {
+    gap: 32px;
+    padding: 30px 16px 0px;
+  }
+
+  .travel-cta-text {
+    height: auto;
+    gap: 20px;
+  }
+
+  .travel-cta-title {
+    font-size: 36px;
+    line-height: 48px;
+    height: auto;
+  }
+
+  .travel-cta-description {
+    font-size: 18px;
+    line-height: 26px;
+    height: auto;
+  }
+
+  .travel-cta-buttons {
+    width: 100%;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .travel-cta-button {
+    width: 100%;
+  }
+
+  .yoga-highlight-section {
+    padding: 60px 0;
+  }
+
+  .yoga-highlight-container {
+    padding: 0 16px;
+  }
+
+  .yoga-highlight-content {
+    grid-template-columns: 1fr;
+    gap: 0;
+    min-height: auto;
+  }
+
+  .yoga-highlight-left,
+  .yoga-highlight-middle,
+  .yoga-highlight-right,
+  .yoga-water-ripples {
+    grid-column: 1;
+    grid-row: auto;
+    width: 100%;
+    height: auto;
+    min-height: 300px;
+  }
+
+  .yoga-highlight-left {
+    padding: 40px 20px;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .yoga-highlight-title {
+    width: 100%;
+    font-size: 36px;
+    line-height: 44px;
+    height: auto;
+  }
+
+  .yoga-highlight-description {
+    width: 100%;
+    font-size: 18px;
+    line-height: 26px;
+    height: auto;
+  }
+
+  .yoga-highlight-button {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .yoga-water-ripples-text {
+    position: static;
+    width: 100%;
+    padding: 30px 20px;
+    align-items: center;
+  }
+
+  .yoga-water-ripples-text p {
+    width: 100%;
+    text-align: center;
+  }
+
+  .latest-blogs-section {
+    padding: 60px 10px 100px;
+  }
+
+  .latest-blogs-container {
+    padding: 0 16px;
+  }
+
+  .latest-blogs-title {
+    font-size: 32px;
+  }
+
+  .latest-blogs-grid {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .blog-post {
+    max-width: 100%;
+  }
+
+  .blog-post-title {
+    font-size: 24px;
+  }
+
+  .footer-section {
+    padding: 40px 16px;
+  }
+
+  .footer-main-content {
+    gap: 32px;
+  }
+
+  .footer-columns {
+    flex-direction: column;
+    height: auto;
+    padding: 20px 0px;
+    gap: 32px;
+  }
+
+  .footer-column {
+    width: 100%;
+    height: auto;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-subscribe {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .subscribe-title {
+    width: 100%;
+  }
+
+  .subscribe-description {
+    width: 100%;
+  }
+
+  .cart-drawer {
+    max-width: 100%;
+  }
+
+  .cart-drawer-header {
+    padding: 20px 16px;
+  }
+
+  .cart-drawer-items {
+    padding: 16px;
+  }
+
+  .cart-item {
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .cart-item-image {
+    width: 70px;
+    height: 70px;
+  }
+
+  .cart-drawer-summary {
+    padding: 16px;
+  }
+
+  .cart-drawer-actions {
+    padding: 16px;
   }
 }
