@@ -1,0 +1,245 @@
+<section class="category-grid-section">
+  <div class="page-width">
+    <div class="category-grid">
+      {% for block in section.blocks %}
+        <div class="category-card" {{ block.shopify_attributes }}>
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}" class="category-link">
+          {% endif %}
+          
+          <div class="category-card-inner">
+            <div class="category-icon">
+              {% if block.settings.image %}
+                <img src="{{ block.settings.image | image_url: width: 80 }}" alt="{{ block.settings.text }}">
+              {% else %}
+                {% case forloop.index %}
+                  {% when 1 %}
+                    <img src="{{ 'fitness.png' | asset_url }}" alt="{{ block.settings.text }}">
+                  {% when 2 %}
+                    <img src="{{ 'drinkware.png' | asset_url }}" alt="{{ block.settings.text }}">
+                  {% when 3 %}
+                    <img src="{{ 'house.png' | asset_url }}" alt="{{ block.settings.text }}">
+                  {% when 4 %}
+                    <img src="{{ 'travel.png' | asset_url }}" alt="{{ block.settings.text }}">
+                  {% when 5 %}
+                    <img src="{{ 'clothes.png' | asset_url }}" alt="{{ block.settings.text }}">
+                  {% when 6 %}
+                    <img src="{{ 'digital.png' | asset_url }}" alt="{{ block.settings.text }}">
+                  {% when 7 %}
+                    <img src="{{ 'office.png' | asset_url }}" alt="{{ block.settings.text }}">
+                  {% else %}
+                    <img src="{{ 'fitness.png' | asset_url }}" alt="{{ block.settings.text }}">
+                {% endcase %}
+              {% endif %}
+            </div>
+            <div class="category-text">
+              {{ block.settings.text | default: 'CATEGORY' }}
+            </div>
+          </div>
+          
+          {% if block.settings.link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.category-grid-section {
+  background-color: #000000;
+  padding: 60px 0;
+}
+
+.category-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.category-card {
+  width: 120px;
+  height: 120px;
+  position: relative;
+}
+
+.category-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.category-card-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 36px;
+  background: linear-gradient(135deg, #0F0F0F 0%, #1F1F1F 49.52%, #0F0F0F 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-card-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.category-card:hover .category-card-inner {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+.category-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.category-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0) invert(1) opacity(0.7);
+}
+
+.category-text {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #D9D9D9;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .category-grid {
+    gap: 15px;
+  }
+  
+  .category-card {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .category-card-inner {
+    border-radius: 28px;
+    padding: 15px;
+  }
+  
+  .category-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 8px;
+  }
+  
+  .category-text {
+    font-size: 10px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Category Grid",
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category Icon",
+          "info": "Upload a custom icon. If not provided, default icons will be used."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Category Text",
+          "default": "CATEGORY"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category Link",
+          "info": "Optional link for the category card"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Grid",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "text": "FITNESS"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "text": "DRINKWARE"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "text": "HOME"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "text": "TRAVEL"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "text": "BASICS"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "text": "DIGITAL"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "text": "OFFICE"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
