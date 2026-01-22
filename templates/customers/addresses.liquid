@@ -1,0 +1,293 @@
+{% section 'header' %}
+
+<div class="dashboard-page">
+  <div class="page-width">
+    <div class="dashboard-container">
+      <!-- Sidebar Navigation -->
+      <div class="dashboard-sidebar">
+        <h2 class="sidebar-title">My Account</h2>
+        <nav class="dashboard-nav">
+          <a href="/account" class="nav-item">Account Information</a>
+          <a href="/account/orders" class="nav-item">My Orders</a>
+          <a href="/account/addresses" class="nav-item active">Addresses</a>
+          <a href="/account/tracking" class="nav-item">Tracking</a>
+          <a href="/account/wishlist" class="nav-item">Wishlist</a>
+          <a href="/account/logout" class="nav-item">Logout</a>
+        </nav>
+      </div>
+
+      <!-- Main Content -->
+      <div class="dashboard-content">
+        <div class="dashboard-header">
+          <h1 class="dashboard-page-title">Addresses</h1>
+          <button class="add-address-button" onclick="showAddAddressForm()">+ Add New Address</button>
+        </div>
+        
+        <div class="dashboard-section">
+          {% if customer.addresses.size > 0 %}
+            <div class="addresses-grid">
+              {% for address in customer.addresses %}
+                <div class="address-card">
+                  <div class="address-header">
+                    <h3 class="address-name">{{ address.first_name }} {{ address.last_name }}</h3>
+                    {% if address == customer.default_address %}
+                      <span class="default-badge">Default</span>
+                    {% endif %}
+                  </div>
+                  
+                  <div class="address-details">
+                    <p>{{ address.address1 }}</p>
+                    {% if address.address2 != blank %}
+                      <p>{{ address.address2 }}</p>
+                    {% endif %}
+                    <p>{{ address.city }}, {{ address.province }} {{ address.zip }}</p>
+                    <p>{{ address.country }}</p>
+                    {% if address.phone != blank %}
+                      <p>{{ address.phone }}</p>
+                    {% endif %}
+                  </div>
+                  
+                  <div class="address-actions">
+                    <button class="edit-button" onclick="editAddress({{ address.id }})">Edit</button>
+                    {% unless address == customer.default_address %}
+                      <form action="/account/addresses/{{ address.id }}" method="post" style="display: inline;">
+                        <input type="hidden" name="_method" value="delete">
+                        <button type="submit" class="delete-button" onclick="return confirm('Are you sure?')">Delete</button>
+                      </form>
+                    {% endunless %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="empty-state">
+              <h2>No addresses saved</h2>
+              <p>Add your first address to get started.</p>
+              <button class="add-address-button" onclick="showAddAddressForm()">+ Add Address</button>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.dashboard-page {
+  background-color: #050505;
+  min-height: 100vh;
+  padding: 120px 0 60px;
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-sidebar {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 30px;
+  height: fit-content;
+  position: sticky;
+  top: 120px;
+}
+
+.sidebar-title {
+  color: #D2D2D2;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+.dashboard-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  color: #767676;
+  text-decoration: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #D2D2D2;
+}
+
+.dashboard-content {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 40px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.dashboard-page-title {
+  color: #D2D2D2;
+  font-size: 28px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.add-address-button {
+  background: #D2D2D2;
+  color: #050505;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.add-address-button:hover {
+  background: #ffffff;
+}
+
+.addresses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.address-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  padding: 24px;
+}
+
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.address-name {
+  color: #D2D2D2;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.default-badge {
+  background: rgba(255, 255, 255, 0.1);
+  color: #D2D2D2;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.address-details {
+  color: #767676;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.address-details p {
+  margin: 4px 0;
+}
+
+.address-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.edit-button,
+.delete-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: #D2D2D2;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.edit-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.delete-button:hover {
+  background: rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.3);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #767676;
+}
+
+.empty-state h2 {
+  color: #D2D2D2;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-sidebar {
+    position: static;
+  }
+  
+  .dashboard-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .dashboard-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  
+  .addresses-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<script>
+function showAddAddressForm() {
+  window.location.href = '/account/addresses/new';
+}
+
+function editAddress(addressId) {
+  window.location.href = '/account/addresses/' + addressId;
+}
+</script>
+

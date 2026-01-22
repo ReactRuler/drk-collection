@@ -1,0 +1,350 @@
+{% section 'header' %}
+
+<div class="checkout-page">
+  <div class="page-width">
+    <div class="checkout-container">
+      <!-- Left Column: Cart Items & Shipping Form -->
+      <div class="checkout-left">
+        <!-- Cart Items Section -->
+        <div class="checkout-section cart-items-section">
+          <h2 class="checkout-section-title">Your Cart</h2>
+          <div id="checkout-cart-items" class="checkout-cart-items">
+            <!-- Cart items will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Shipping Information Section -->
+        <div class="checkout-section shipping-section">
+          <h2 class="checkout-section-title">Shipping Information</h2>
+          <form id="checkout-form" class="checkout-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" name="first_name" required>
+              </div>
+              <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" name="last_name" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" required>
+              </div>
+              <div class="form-group">
+                <label for="zip">ZIP Code</label>
+                <input type="text" id="zip" name="zip" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" name="country" required>
+                  <option value="">Select Country</option>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="UK">United Kingdom</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right Column: Order Summary -->
+      <div class="checkout-right">
+        <div class="order-summary">
+          <h2 class="order-summary-title">Order Summary</h2>
+          
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="summary-subtotal">$0</span>
+          </div>
+          
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span id="summary-shipping">$15</span>
+          </div>
+          
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="summary-total">$0</span>
+          </div>
+
+          <button type="submit" form="checkout-form" class="checkout-button" onclick="proceedToCheckout(event)">
+            PROCEED TO CHECKOUT
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.checkout-page {
+  background-color: #050505;
+  min-height: 100vh;
+  padding: 120px 0 60px;
+}
+
+.checkout-container {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.checkout-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+.checkout-section-title {
+  color: #D2D2D2;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.checkout-cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.checkout-cart-item {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+}
+
+.checkout-item-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.checkout-item-info {
+  flex: 1;
+}
+
+.checkout-item-title {
+  color: #D2D2D2;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.checkout-item-variant {
+  color: #767676;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.checkout-item-price {
+  color: #D2D2D2;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-row:first-child {
+  grid-template-columns: 1fr;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: #767676;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: #D2D2D2;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.form-group input::placeholder {
+  color: #767676;
+}
+
+.order-summary {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 30px;
+  position: sticky;
+  top: 120px;
+}
+
+.order-summary-title {
+  color: #D2D2D2;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  color: #D2D2D2;
+  font-size: 14px;
+}
+
+.summary-row.total {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 12px;
+  padding-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.checkout-button {
+  width: 100%;
+  background: #D2D2D2;
+  color: #050505;
+  border: none;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 24px;
+  transition: background 0.3s;
+}
+
+.checkout-button:hover {
+  background: #ffffff;
+}
+
+@media (max-width: 1024px) {
+  .checkout-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .order-summary {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .checkout-cart-item {
+    flex-direction: column;
+  }
+  
+  .checkout-item-image {
+    width: 100%;
+    height: 200px;
+  }
+}
+</style>
+
+<script>
+function loadCheckoutCart() {
+  fetch('/cart.js')
+    .then(response => response.json())
+    .then(cart => {
+      const cartItemsContainer = document.getElementById('checkout-cart-items');
+      const subtotalEl = document.getElementById('summary-subtotal');
+      const shippingEl = document.getElementById('summary-shipping');
+      const totalEl = document.getElementById('summary-total');
+      
+      if (cart.items && cart.items.length > 0) {
+        cartItemsContainer.innerHTML = cart.items.map(item => `
+          <div class="checkout-cart-item">
+            <img src="${item.image || '/assets/placeholder.png'}" alt="${item.title}" class="checkout-item-image">
+            <div class="checkout-item-info">
+              <h3 class="checkout-item-title">${item.title}</h3>
+              <p class="checkout-item-variant">${item.variant_title || 'Default'}</p>
+              <p class="checkout-item-price">$${(item.price / 100).toFixed(2)}</p>
+            </div>
+          </div>
+        `).join('');
+        
+        const subtotal = cart.total_price / 100;
+        const shipping = 15;
+        const total = subtotal + shipping;
+        
+        if (subtotalEl) subtotalEl.textContent = '$' + subtotal.toFixed(2);
+        if (shippingEl) shippingEl.textContent = '$' + shipping.toFixed(2);
+        if (totalEl) totalEl.textContent = '$' + total.toFixed(2);
+      } else {
+        cartItemsContainer.innerHTML = '<p style="color: #767676; text-align: center; padding: 40px;">Your cart is empty</p>';
+      }
+    })
+    .catch(error => {
+      console.error('Error loading cart:', error);
+    });
+}
+
+function proceedToCheckout(event) {
+  event.preventDefault();
+  window.location.href = '/checkout';
+}
+
+// Load cart on page load
+document.addEventListener('DOMContentLoaded', loadCheckoutCart);
+</script>
+

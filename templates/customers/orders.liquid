@@ -1,0 +1,340 @@
+{% section 'header' %}
+
+<div class="dashboard-page">
+  <div class="page-width">
+    <div class="dashboard-container">
+      <!-- Sidebar Navigation -->
+      <div class="dashboard-sidebar">
+        <h2 class="sidebar-title">My Account</h2>
+        <nav class="dashboard-nav">
+          <a href="/account" class="nav-item">Account Information</a>
+          <a href="/account/orders" class="nav-item active">My Orders</a>
+          <a href="/account/addresses" class="nav-item">Addresses</a>
+          <a href="/account/tracking" class="nav-item">Tracking</a>
+          <a href="/account/wishlist" class="nav-item">Wishlist</a>
+          <a href="/account/logout" class="nav-item">Logout</a>
+        </nav>
+      </div>
+
+      <!-- Main Content -->
+      <div class="dashboard-content">
+        <h1 class="dashboard-page-title">My Orders</h1>
+        
+        <div class="dashboard-section">
+          {% if customer.orders.size > 0 %}
+            <div class="orders-list">
+              {% for order in customer.orders %}
+                <div class="order-card">
+                  <div class="order-header">
+                    <div>
+                      <h3 class="order-number">Order #{{ order.order_number }}</h3>
+                      <p class="order-date">{{ order.created_at | date: "%B %d, %Y" }}</p>
+                    </div>
+                    <div class="order-status">
+                      <span class="status-badge {{ order.financial_status }}">{{ order.financial_status_label }}</span>
+                    </div>
+                  </div>
+                  
+                  <div class="order-items">
+                    {% for line_item in order.line_items limit: 3 %}
+                      <div class="order-item">
+                        <img src="{{ line_item.image | image_url: width: 80 }}" alt="{{ line_item.title }}" class="order-item-image">
+                        <div class="order-item-info">
+                          <h4 class="order-item-title">{{ line_item.title }}</h4>
+                          <p class="order-item-variant">{{ line_item.variant_title }}</p>
+                          <p class="order-item-price">Qty: {{ line_item.quantity }} × {{ line_item.price | money }}</p>
+                        </div>
+                      </div>
+                    {% endfor %}
+                    {% if order.line_items.size > 3 %}
+                      <p class="more-items">+ {{ order.line_items.size | minus: 3 }} more item(s)</p>
+                    {% endif %}
+                  </div>
+                  
+                  <div class="order-footer">
+                    <div class="order-total">
+                      <span>Total:</span>
+                      <span class="total-amount">{{ order.total_price | money }}</span>
+                    </div>
+                    <a href="{{ order.order_status_url }}" class="view-order-button">VIEW ORDER</a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="empty-state">
+              <h2>No orders yet</h2>
+              <p>You haven't placed any orders yet.</p>
+              <a href="/" class="shop-button">Start Shopping</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.dashboard-page {
+  background-color: #050505;
+  min-height: 100vh;
+  padding: 120px 0 60px;
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-sidebar {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 30px;
+  height: fit-content;
+  position: sticky;
+  top: 120px;
+}
+
+.sidebar-title {
+  color: #D2D2D2;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+.dashboard-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  color: #767676;
+  text-decoration: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #D2D2D2;
+}
+
+.dashboard-content {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 40px;
+}
+
+.dashboard-page-title {
+  color: #D2D2D2;
+  font-size: 28px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 32px;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.order-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  padding: 24px;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.order-number {
+  color: #D2D2D2;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.order-date {
+  color: #767676;
+  font-size: 14px;
+  margin: 0;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.1);
+  color: #D2D2D2;
+}
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.order-item {
+  display: flex;
+  gap: 16px;
+}
+
+.order-item-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.order-item-info {
+  flex: 1;
+}
+
+.order-item-title {
+  color: #D2D2D2;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.order-item-variant {
+  color: #767676;
+  font-size: 14px;
+  margin: 0 0 4px 0;
+}
+
+.order-item-price {
+  color: #767676;
+  font-size: 14px;
+  margin: 0;
+}
+
+.more-items {
+  color: #767676;
+  font-size: 14px;
+  text-align: center;
+  padding: 12px;
+}
+
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.order-total {
+  display: flex;
+  gap: 12px;
+  color: #D2D2D2;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.total-amount {
+  color: #D2D2D2;
+}
+
+.view-order-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: #D2D2D2;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.view-order-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #767676;
+}
+
+.empty-state h2 {
+  color: #D2D2D2;
+  margin-bottom: 16px;
+}
+
+.shop-button {
+  display: inline-block;
+  background: #D2D2D2;
+  color: #050505;
+  border: none;
+  border-radius: 10px;
+  padding: 16px 32px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 24px;
+  transition: background 0.3s;
+}
+
+.shop-button:hover {
+  background: #ffffff;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-sidebar {
+    position: static;
+  }
+  
+  .dashboard-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .order-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .order-footer {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .view-order-button {
+    text-align: center;
+  }
+}
+</style>
+

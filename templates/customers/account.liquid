@@ -1,0 +1,195 @@
+{% section 'header' %}
+
+<div class="dashboard-page">
+  <div class="page-width">
+    <div class="dashboard-container">
+      <!-- Sidebar Navigation -->
+      <div class="dashboard-sidebar">
+        <h2 class="sidebar-title">My Account</h2>
+        <nav class="dashboard-nav">
+          <a href="/account" class="nav-item active">Account Information</a>
+          <a href="/account/orders" class="nav-item">My Orders</a>
+          <a href="/account/addresses" class="nav-item">Addresses</a>
+          <a href="/account/tracking" class="nav-item">Tracking</a>
+          <a href="/account/wishlist" class="nav-item">Wishlist</a>
+          <a href="/account/logout" class="nav-item">Logout</a>
+        </nav>
+      </div>
+
+      <!-- Main Content -->
+      <div class="dashboard-content">
+        <h1 class="dashboard-page-title">Account Information</h1>
+        
+        <div class="dashboard-section">
+          <form class="account-form">
+            <div class="form-group">
+              <label for="first-name">First Name</label>
+              <input type="text" id="first-name" name="first_name" value="{{ customer.first_name }}" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="last-name">Last Name</label>
+              <input type="text" id="last-name" name="last_name" value="{{ customer.last_name }}" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" value="{{ customer.email }}" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" value="{{ customer.phone }}">
+            </div>
+
+            <button type="submit" class="save-button">SAVE CHANGES</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.dashboard-page {
+  background-color: #050505;
+  min-height: 100vh;
+  padding: 120px 0 60px;
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-sidebar {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 30px;
+  height: fit-content;
+  position: sticky;
+  top: 120px;
+}
+
+.sidebar-title {
+  color: #D2D2D2;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+.dashboard-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  color: #767676;
+  text-decoration: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #D2D2D2;
+}
+
+.dashboard-content {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 40px;
+}
+
+.dashboard-page-title {
+  color: #D2D2D2;
+  font-size: 28px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 32px;
+}
+
+.dashboard-section {
+  margin-top: 24px;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 600px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: #767676;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-group input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: #D2D2D2;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.save-button {
+  background: #D2D2D2;
+  color: #050505;
+  border: none;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.3s;
+  max-width: 200px;
+}
+
+.save-button:hover {
+  background: #ffffff;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-sidebar {
+    position: static;
+  }
+  
+  .dashboard-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+</style>
+

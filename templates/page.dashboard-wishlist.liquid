@@ -1,0 +1,271 @@
+{% section 'header' %}
+
+<div class="dashboard-page">
+  <div class="page-width">
+    <div class="dashboard-container">
+      <!-- Sidebar Navigation -->
+      <div class="dashboard-sidebar">
+        <h2 class="sidebar-title">My Account</h2>
+        <nav class="dashboard-nav">
+          <a href="/account" class="nav-item">Account Information</a>
+          <a href="/account/orders" class="nav-item">My Orders</a>
+          <a href="/account/addresses" class="nav-item">Addresses</a>
+          <a href="/pages/dashboard-tracking" class="nav-item">Tracking</a>
+          <a href="/pages/dashboard-wishlist" class="nav-item active">Wishlist</a>
+          <a href="/account/logout" class="nav-item">Logout</a>
+        </nav>
+      </div>
+
+      <!-- Main Content -->
+      <div class="dashboard-content">
+        <h1 class="dashboard-page-title">My Wishlist</h1>
+        
+        <div class="dashboard-section">
+          <div id="wishlist-items" class="wishlist-grid">
+            <!-- Wishlist items will be loaded here -->
+            <div class="empty-state">
+              <h2>Your wishlist is empty</h2>
+              <p>Start adding items to your wishlist!</p>
+              <a href="/" class="shop-button">Start Shopping</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.dashboard-page {
+  background-color: #050505;
+  min-height: 100vh;
+  padding: 120px 0 60px;
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-sidebar {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 30px;
+  height: fit-content;
+  position: sticky;
+  top: 120px;
+}
+
+.sidebar-title {
+  color: #D2D2D2;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+.dashboard-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  color: #767676;
+  text-decoration: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #D2D2D2;
+}
+
+.dashboard-content {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 40px;
+}
+
+.dashboard-page-title {
+  color: #D2D2D2;
+  font-size: 28px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 32px;
+}
+
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.wishlist-item {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.wishlist-item:hover {
+  transform: translateY(-5px);
+}
+
+.wishlist-item-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.wishlist-item-info {
+  padding: 20px;
+}
+
+.wishlist-item-title {
+  color: #D2D2D2;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.wishlist-item-price {
+  color: #D2D2D2;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+}
+
+.wishlist-item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.wishlist-button {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  color: #D2D2D2;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.wishlist-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.wishlist-button.primary {
+  background: #D2D2D2;
+  color: #050505;
+  border-color: #D2D2D2;
+}
+
+.wishlist-button.primary:hover {
+  background: #ffffff;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #767676;
+}
+
+.empty-state h2 {
+  color: #D2D2D2;
+  margin-bottom: 16px;
+}
+
+.shop-button {
+  display: inline-block;
+  background: #D2D2D2;
+  color: #050505;
+  border: none;
+  border-radius: 10px;
+  padding: 16px 32px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 24px;
+  transition: background 0.3s;
+}
+
+.shop-button:hover {
+  background: #ffffff;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-sidebar {
+    position: static;
+  }
+  
+  .dashboard-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .wishlist-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+</style>
+
+<script>
+// Load wishlist items from localStorage or API
+function loadWishlist() {
+  const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+  const container = document.getElementById('wishlist-items');
+  
+  if (wishlist.length > 0) {
+    container.innerHTML = wishlist.map(item => `
+      <div class="wishlist-item">
+        <img src="${item.image || '/assets/placeholder.png'}" alt="${item.title}" class="wishlist-item-image">
+        <div class="wishlist-item-info">
+          <h3 class="wishlist-item-title">${item.title}</h3>
+          <p class="wishlist-item-price">$${item.price}</p>
+          <div class="wishlist-item-actions">
+            <button class="wishlist-button primary" onclick="addToCart('${item.id}')">Add to Cart</button>
+            <button class="wishlist-button" onclick="removeFromWishlist('${item.id}')">Remove</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function addToCart(productId) {
+  // Add to cart logic
+  console.log('Adding to cart:', productId);
+}
+
+function removeFromWishlist(productId) {
+  let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+  wishlist = wishlist.filter(item => item.id !== productId);
+  localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  loadWishlist();
+}
+
+document.addEventListener('DOMContentLoaded', loadWishlist);
+</script>
+
