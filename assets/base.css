@@ -98,7 +98,10 @@ body {
   pointer-events: auto;
 }
 
-.menu-item-wrapper:hover .menu-dropdown,
+.menu-item-wrapper:hover .menu-dropdown {
+  display: block !important;
+}
+
 .menu-item-wrapper .menu-dropdown[style*="block"] {
   display: block !important;
 }
