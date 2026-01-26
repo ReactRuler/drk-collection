@@ -39,25 +39,50 @@
                       </div>
                     {% endif %}
                     <div class="dropdown-menu-columns">
-                      {% assign has_links = false %}
-                      {% for i in (1..10) %}
-                        {% assign label_key = 'submenu_link_' | append: i | append: '_label' %}
-                        {% if block.settings[label_key] != blank %}
-                          {% assign has_links = true %}
-                          {% break %}
+                      {% comment %} First, check for submenu blocks that match this menu item {% endcomment %}
+                      {% assign found_submenu = false %}
+                      {% for submenu_block in section.blocks %}
+                        {% if submenu_block.type == 'submenu' and submenu_block.settings.parent_menu_label == block.settings.label %}
+                          {% assign found_submenu = true %}
+                          <div class="dropdown-column">
+                            {% for i in (1..10) %}
+                              {% assign label_key = 'menu_item_' | append: i | append: '_label' %}
+                              {% assign link_key = 'menu_item_' | append: i | append: '_link' %}
+                              {% if submenu_block.settings[label_key] != blank %}
+                                <a href="{{ submenu_block.settings[link_key] | default: '#' }}" class="dropdown-link">{{ submenu_block.settings[label_key] }}</a>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
                         {% endif %}
                       {% endfor %}
-                      {% if has_links %}
-                        <div class="dropdown-column">
-                          {% for i in (1..10) %}
-                            {% assign label_key = 'submenu_link_' | append: i | append: '_label' %}
-                            {% assign link_key = 'submenu_link_' | append: i | append: '_link' %}
-                            {% if block.settings[label_key] != blank %}
-                              <a href="{{ block.settings[link_key] | default: '#' }}" class="dropdown-link">{{ block.settings[label_key] }}</a>
-                            {% endif %}
-                          {% endfor %}
-                        </div>
-                      {% endif %}
+                      
+                      {% comment %} Fallback to inline submenu links if no submenu block found {% endcomment %}
+                      {% unless found_submenu %}
+                        {% assign has_links = false %}
+                        {% for i in (1..10) %}
+                          {% assign label_key = 'submenu_link_' | append: i | append: '_label' %}
+                          {% if block.settings[label_key] != blank %}
+                            {% assign has_links = true %}
+                            {% break %}
+                          {% endif %}
+                        {% endfor %}
+                        {% if has_links %}
+                          <div class="dropdown-column">
+                            {% for i in (1..10) %}
+                              {% assign label_key = 'submenu_link_' | append: i | append: '_label' %}
+                              {% assign link_key = 'submenu_link_' | append: i | append: '_link' %}
+                              {% if block.settings[label_key] != blank %}
+                                <a href="{{ block.settings[link_key] | default: '#' }}" class="dropdown-link">{{ block.settings[label_key] }}</a>
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        {% else %}
+                          {% comment %} Show placeholder if no links configured {% endcomment %}
+                          <div class="dropdown-column">
+                            <p style="color: #767676; font-size: 14px;">Add submenu links in theme editor</p>
+                          </div>
+                        {% endif %}
+                      {% endunless %}
                     </div>
                   </div>
                 </div>
@@ -330,7 +355,15 @@
   if (typeof window.Shopify !== 'undefined' && window.Shopify.designMode) {
     document.addEventListener('shopify:section:load', initAll);
     document.addEventListener('shopify:section:reorder', initAll);
+    document.addEventListener('shopify:section:select', initAll);
   }
+  
+  // Re-initialize when section is reloaded
+  document.addEventListener('shopify:section:load', function(event) {
+    if (event.detail.sectionId === '{{ section.id }}') {
+      setTimeout(initAll, 100);
+    }
+  });
 </script>
 
 {% schema %}
