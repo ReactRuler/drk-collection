@@ -289,10 +289,19 @@
               "text": "Fitness",
               "link": "shopify://collections/fitness"
             }
+          },
+          "category_EdXjid": {
+            "type": "category",
+            "settings": {
+              "image": "shopify://shop_images/drinkware.png",
+              "text": "Drinkware",
+              "link": "shopify://collections/drinkware"
+            }
           }
         },
         "block_order": [
-          "category_hB4rWV"
+          "category_hB4rWV",
+          "category_EdXjid"
         ],
         "settings": {}
       },
