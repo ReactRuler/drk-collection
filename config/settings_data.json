@@ -58,7 +58,7 @@
             "type": "menu_item",
             "settings": {
               "label": "FITNESS",
-              "link": "#",
+              "link": "shopify://collections/fitness",
               "show_dropdown": false,
               "submenu_link_1_label": "",
               "submenu_link_1_link": "",
@@ -89,7 +89,7 @@
             "type": "menu_item",
             "settings": {
               "label": "HOME",
-              "link": "#",
+              "link": "shopify://collections/home",
               "show_dropdown": false,
               "submenu_link_1_label": "",
               "submenu_link_1_link": "",
@@ -120,38 +120,7 @@
             "type": "menu_item",
             "settings": {
               "label": "TRAVEL",
-              "link": "#",
-              "show_dropdown": false,
-              "submenu_link_1_label": "",
-              "submenu_link_1_link": "",
-              "submenu_link_2_label": "",
-              "submenu_link_2_link": "",
-              "submenu_link_3_label": "",
-              "submenu_link_3_link": "",
-              "submenu_link_4_label": "",
-              "submenu_link_4_link": "",
-              "submenu_link_5_label": "",
-              "submenu_link_5_link": "",
-              "submenu_link_6_label": "",
-              "submenu_link_6_link": "",
-              "submenu_link_7_label": "",
-              "submenu_link_7_link": "",
-              "submenu_link_8_label": "",
-              "submenu_link_8_link": "",
-              "submenu_link_9_label": "",
-              "submenu_link_9_link": "",
-              "submenu_link_10_label": "",
-              "submenu_link_10_link": "",
-              "featured_product_title": "",
-              "featured_product_original_price": "",
-              "featured_product_sale_price": ""
-            }
-          },
-          "header-4": {
-            "type": "menu_item",
-            "settings": {
-              "label": "BASICS",
-              "link": "#",
+              "link": "shopify://collections/travel",
               "show_dropdown": false,
               "submenu_link_1_label": "",
               "submenu_link_1_link": "",
@@ -182,7 +151,7 @@
             "type": "menu_item",
             "settings": {
               "label": "DIGITAL",
-              "link": "#",
+              "link": "shopify://collections/digital",
               "show_dropdown": false,
               "submenu_link_1_label": "",
               "submenu_link_1_link": "",
@@ -213,7 +182,7 @@
             "type": "menu_item",
             "settings": {
               "label": "OFFICE",
-              "link": "#",
+              "link": "shopify://collections/office",
               "show_dropdown": false,
               "submenu_link_1_label": "",
               "submenu_link_1_link": "",
@@ -274,7 +243,6 @@
           "header-1",
           "header-2",
           "header-3",
-          "header-4",
           "header-5",
           "header-6",
           "header-7",
@@ -301,9 +269,9 @@
           "video_aspect_ratio": "21/9",
           "buttons_left": "0",
           "buttons_bottom": "30%",
-          "button1_link": "",
+          "button1_link": "shopify://products/guardian-angel-earrings",
           "button1_alt": "Button 1",
-          "button2_link": "",
+          "button2_link": "shopify://collections/office",
           "button2_alt": "Button 2"
         }
       },
@@ -317,8 +285,9 @@
           "category_hB4rWV": {
             "type": "category",
             "settings": {
-              "text": "CATEGORY",
-              "link": ""
+              "image": "shopify://shop_images/fitness.png",
+              "text": "Fitness",
+              "link": "shopify://collections/fitness"
             }
           }
         },
