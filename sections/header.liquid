@@ -32,6 +32,7 @@
                   {% assign final_link = '#' %}
                 {% endif %}
                 <a href="{{ final_link }}" class="menu-link">{{ block.settings.label }}</a>
+                {% if block.settings.show_dropdown %}
                 <div class="menu-dropdown" style="display: none;" data-dropdown>
                 <div class="dropdown-content">
                   {% if block.settings.featured_product_image %}
@@ -97,6 +98,7 @@
                   </div>
                 </div>
               </div>
+                {% endif %}
             </div>
           {% endif %}
         {% endfor %}
