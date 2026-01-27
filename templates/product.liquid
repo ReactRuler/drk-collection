@@ -603,21 +603,38 @@ document.getElementById('product-form').addEventListener('submit', function(e) {
   
   const formData = new FormData(this);
   
+  const variantId = formData.get('id');
+  const quantity = formData.get('quantity') || 1;
+  
   fetch('/cart/add.js', {
     method: 'POST',
-    body: formData
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: variantId,
+      quantity: parseInt(quantity)
+    })
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      return response.json().then(err => Promise.reject(err));
+    }
+    return response.json();
+  })
   .then(data => {
     if (window.updateCartCount) {
       window.updateCartCount();
     }
     if (window.openCartDrawer) {
       window.openCartDrawer();
+    } else {
+      window.location.href = '/cart';
     }
   })
   .catch(error => {
-    console.error('Error:', error);
+    console.error('Error adding to cart:', error);
+    alert('Error adding product to cart: ' + (error.description || error.message || 'Please try again.'));
   });
 });
 </script>
