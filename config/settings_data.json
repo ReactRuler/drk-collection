@@ -27,7 +27,7 @@
             "type": "menu_item",
             "settings": {
               "label": "DRINKWARE",
-              "link": "#",
+              "link": "shopify://collections/drinkware",
               "show_dropdown": false,
               "submenu_link_1_label": "",
               "submenu_link_1_link": "",
