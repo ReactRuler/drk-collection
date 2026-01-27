@@ -6,22 +6,5 @@
     "theme_author": "DRK Collection",
     "theme_documentation_url": "",
     "theme_support_url": ""
-  },
-  {
-    "name": "Typography",
-    "settings": [
-      {
-        "type": "font_picker",
-        "id": "type_body_font",
-        "label": "Body font",
-        "default": "inter_n4"
-      },
-      {
-        "type": "font_picker",
-        "id": "type_header_font",
-        "label": "Heading font",
-        "default": "inter_n4"
-      }
-    ]
   }
 ]
