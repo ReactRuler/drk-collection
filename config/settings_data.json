@@ -305,12 +305,48 @@
               "text": "Home",
               "link": "shopify://collections/home"
             }
+          },
+          "category_6PDgpj": {
+            "type": "category",
+            "settings": {
+              "image": "shopify://shop_images/travel.png",
+              "text": "Travel",
+              "link": "shopify://collections/travel"
+            }
+          },
+          "category_fGmicR": {
+            "type": "category",
+            "settings": {
+              "image": "shopify://shop_images/clothes.png",
+              "text": "Basics",
+              "link": ""
+            }
+          },
+          "category_PHKyf6": {
+            "type": "category",
+            "settings": {
+              "image": "shopify://shop_images/digital.png",
+              "text": "Digital",
+              "link": "shopify://collections/digital"
+            }
+          },
+          "category_KL9QhD": {
+            "type": "category",
+            "settings": {
+              "image": "shopify://shop_images/office.png",
+              "text": "Office",
+              "link": "shopify://collections/office"
+            }
           }
         },
         "block_order": [
           "category_hB4rWV",
           "category_EdXjid",
-          "category_jqh6x8"
+          "category_jqh6x8",
+          "category_6PDgpj",
+          "category_fGmicR",
+          "category_PHKyf6",
+          "category_KL9QhD"
         ],
         "settings": {}
       },
@@ -328,7 +364,7 @@
           "title": "DRK TRAVEL EDITION",
           "description": "Black-on-black design crafted to turn every journey into a style statement.",
           "button_text": "EXPLORE COLLECTION",
-          "button_link": ""
+          "button_link": "shopify://collections/travel"
         }
       },
       "yoga-highlight": {
@@ -337,8 +373,8 @@
           "title": "DRK Yoga",
           "description": "The art of stillness, the power of black.",
           "button_text": "EXPLORE COLLECTION",
-          "button_link": "",
-          "text_content": "<p><b>DRK Yoga </b>transforms silence into motion and simplicity into elegance. Designed in black to sharpen focus, built with refined detail to follow every flow.<br><br>Each product invites you to experience balance with intensity and grace.</p>"
+          "button_link": "shopify://collections/fitness",
+          "text_content": "<p><strong>DRK Yoga </strong>transforms silence into motion and simplicity into elegance. Designed in black to sharpen focus, built with refined detail to follow every flow.<br/><br/>Each product invites you to experience balance with intensity and grace.</p>"
         }
       },
       "latest-blogs": {
