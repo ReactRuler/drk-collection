@@ -9,18 +9,22 @@
         <a href="{{ section.settings.button_link }}" class="yoga-highlight-button">{{ section.settings.button_text }}</a>
       </div>
       <div class="yoga-highlight-middle">
-        {% if section.settings.products_image %}
-          <img src="{{ section.settings.products_image | image_url: width: 800 }}" alt="{{ section.settings.products_image.alt }}">
-        {% else %}
-          <img src="{{ 'yoga-products.png' | asset_url }}" alt="Yoga Products">
-        {% endif %}
+        <a href="https://drk-collection-2.myshopify.com/products/looped-earrings">
+          {% if section.settings.products_image %}
+            <img src="{{ section.settings.products_image | image_url: width: 800 }}" alt="{{ section.settings.products_image.alt }}">
+          {% else %}
+            <img src="{{ 'yoga-products.png' | asset_url }}" alt="Yoga Products">
+          {% endif %}
+        </a>
       </div>
       <div class="yoga-highlight-right">
-        {% if section.settings.model_image %}
-          <img src="{{ section.settings.model_image | image_url: width: 800 }}" alt="{{ section.settings.model_image.alt }}">
-        {% else %}
-          <img src="{{ 'yoga-lady.png' | asset_url }}" alt="Yoga Model">
-        {% endif %}
+        <a href="https://drk-collection-2.myshopify.com/products/looped-earrings">
+          {% if section.settings.model_image %}
+            <img src="{{ section.settings.model_image | image_url: width: 800 }}" alt="{{ section.settings.model_image.alt }}">
+          {% else %}
+            <img src="{{ 'yoga-lady.png' | asset_url }}" alt="Yoga Model">
+          {% endif %}
+        </a>
       </div>
       <div class="yoga-water-ripples">
         {% if section.settings.water_image %}
@@ -63,7 +67,8 @@
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button Link"
+      "label": "Button Link",
+      "default": "/collections/new"
     },
     {
       "type": "image_picker",

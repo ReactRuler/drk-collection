@@ -27,7 +27,7 @@ function TopVideo() {
       )}
       <div className="video-overlay-content">
         {button1Src && (
-          <a href="#">
+          <a href="/collections/essentials">
             <img
               src={button1Src}
               alt="Button 1"
@@ -38,7 +38,7 @@ function TopVideo() {
           </a>
         )}
         {button2Src && (
-          <a href="#">
+          <a href="/collections/new">
             <img
               src={button2Src}
               alt="Button 2"
