@@ -1,0 +1,190 @@
+{% section 'header' %}
+
+<div class="collections-page">
+  <div class="page-width">
+    <div class="collections-header">
+      <h1 class="collections-title">All Collections</h1>
+      <p class="collections-subtitle">Browse our product categories</p>
+    </div>
+
+    {% if collections.size > 0 %}
+      <div class="collections-grid">
+        {% for collection in collections %}
+          {% unless collection.handle == 'all' or collection.handle == 'frontpage' %}
+            <div class="collection-card">
+              <a href="{{ collection.url }}" class="collection-link">
+                <div class="collection-image-wrapper">
+                  {% if collection.featured_image %}
+                    <img 
+                      src="{{ collection.featured_image | image_url: width: 600 }}" 
+                      alt="{{ collection.featured_image.alt | escape }}"
+                      class="collection-image"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    <div class="collection-image-placeholder">
+                      <svg width="300" height="300" viewBox="0 0 300 300" fill="none">
+                        <rect width="300" height="300" fill="#1a1a1a"/>
+                        <path d="M150 100L200 150H150V200H100V150H150V100Z" fill="#767676"/>
+                      </svg>
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="collection-info">
+                  <h2 class="collection-name">{{ collection.title }}</h2>
+                  <p class="collection-product-count">
+                    {{ collection.products_count }} {{ collection.products_count | pluralize: 'product', 'products' }}
+                  </p>
+                  {% if collection.description != blank %}
+                    <p class="collection-description">{{ collection.description | strip_html | truncate: 100 }}</p>
+                  {% endif %}
+                </div>
+              </a>
+            </div>
+          {% endunless %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="collections-empty">
+        <p>No collections found.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% section 'footer' %}
+
+<style>
+.collections-page {
+  background-color: #050505;
+  color: #d2d2d2;
+  min-height: 100vh;
+  padding: 120px 0 60px;
+}
+
+.collections-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.collections-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.collections-subtitle {
+  font-size: 18px;
+  color: #767676;
+}
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 40px;
+}
+
+.collection-card {
+  background: rgba(20, 20, 20, 0.6);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.collection-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.collection-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.collection-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 75%;
+  background: #1a1a1a;
+  overflow: hidden;
+}
+
+.collection-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.collection-card:hover .collection-image {
+  transform: scale(1.1);
+}
+
+.collection-image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.collection-info {
+  padding: 30px;
+}
+
+.collection-name {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.collection-product-count {
+  font-size: 14px;
+  color: #767676;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.collection-description {
+  font-size: 14px;
+  color: #d2d2d2;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+
+.collections-empty {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.collections-empty p {
+  font-size: 18px;
+  color: #767676;
+}
+
+@media (max-width: 768px) {
+  .collections-title {
+    font-size: 32px;
+  }
+
+  .collections-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+</style>
+
