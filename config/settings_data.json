@@ -1,0 +1,440 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "type_body_font": "system_ui_n4",
+    "type_header_font": "system_ui_n4",
+    "colors_text": "#ffffff",
+    "colors_background_1": "#000000",
+    "colors_background_2": "#1a1a1a",
+    "colors_solid_button_labels": "#ffffff",
+    "colors_outline_button_labels": "#ffffff",
+    "colors_accent_1": "#ffffff",
+    "colors_accent_2": "#e0e0e0",
+    "page_width": 1400,
+    "sections": {
+      "header": {
+        "type": "header",
+        "blocks": {
+          "header-0": {
+            "type": "menu_item",
+            "settings": {
+              "label": "DRINKWARE",
+              "link": "#",
+              "show_dropdown": false,
+              "submenu_link_1_label": "",
+              "submenu_link_1_link": "",
+              "submenu_link_2_label": "",
+              "submenu_link_2_link": "",
+              "submenu_link_3_label": "",
+              "submenu_link_3_link": "",
+              "submenu_link_4_label": "",
+              "submenu_link_4_link": "",
+              "submenu_link_5_label": "",
+              "submenu_link_5_link": "",
+              "submenu_link_6_label": "",
+              "submenu_link_6_link": "",
+              "submenu_link_7_label": "",
+              "submenu_link_7_link": "",
+              "submenu_link_8_label": "",
+              "submenu_link_8_link": "",
+              "submenu_link_9_label": "",
+              "submenu_link_9_link": "",
+              "submenu_link_10_label": "",
+              "submenu_link_10_link": "",
+              "featured_product_title": "",
+              "featured_product_original_price": "",
+              "featured_product_sale_price": ""
+            }
+          },
+          "header-1": {
+            "type": "menu_item",
+            "settings": {
+              "label": "FITNESS",
+              "link": "#",
+              "show_dropdown": false,
+              "submenu_link_1_label": "",
+              "submenu_link_1_link": "",
+              "submenu_link_2_label": "",
+              "submenu_link_2_link": "",
+              "submenu_link_3_label": "",
+              "submenu_link_3_link": "",
+              "submenu_link_4_label": "",
+              "submenu_link_4_link": "",
+              "submenu_link_5_label": "",
+              "submenu_link_5_link": "",
+              "submenu_link_6_label": "",
+              "submenu_link_6_link": "",
+              "submenu_link_7_label": "",
+              "submenu_link_7_link": "",
+              "submenu_link_8_label": "",
+              "submenu_link_8_link": "",
+              "submenu_link_9_label": "",
+              "submenu_link_9_link": "",
+              "submenu_link_10_label": "",
+              "submenu_link_10_link": "",
+              "featured_product_title": "",
+              "featured_product_original_price": "",
+              "featured_product_sale_price": ""
+            }
+          },
+          "header-2": {
+            "type": "menu_item",
+            "settings": {
+              "label": "HOME",
+              "link": "#",
+              "show_dropdown": false,
+              "submenu_link_1_label": "",
+              "submenu_link_1_link": "",
+              "submenu_link_2_label": "",
+              "submenu_link_2_link": "",
+              "submenu_link_3_label": "",
+              "submenu_link_3_link": "",
+              "submenu_link_4_label": "",
+              "submenu_link_4_link": "",
+              "submenu_link_5_label": "",
+              "submenu_link_5_link": "",
+              "submenu_link_6_label": "",
+              "submenu_link_6_link": "",
+              "submenu_link_7_label": "",
+              "submenu_link_7_link": "",
+              "submenu_link_8_label": "",
+              "submenu_link_8_link": "",
+              "submenu_link_9_label": "",
+              "submenu_link_9_link": "",
+              "submenu_link_10_label": "",
+              "submenu_link_10_link": "",
+              "featured_product_title": "",
+              "featured_product_original_price": "",
+              "featured_product_sale_price": ""
+            }
+          },
+          "header-3": {
+            "type": "menu_item",
+            "settings": {
+              "label": "TRAVEL",
+              "link": "#",
+              "show_dropdown": false,
+              "submenu_link_1_label": "",
+              "submenu_link_1_link": "",
+              "submenu_link_2_label": "",
+              "submenu_link_2_link": "",
+              "submenu_link_3_label": "",
+              "submenu_link_3_link": "",
+              "submenu_link_4_label": "",
+              "submenu_link_4_link": "",
+              "submenu_link_5_label": "",
+              "submenu_link_5_link": "",
+              "submenu_link_6_label": "",
+              "submenu_link_6_link": "",
+              "submenu_link_7_label": "",
+              "submenu_link_7_link": "",
+              "submenu_link_8_label": "",
+              "submenu_link_8_link": "",
+              "submenu_link_9_label": "",
+              "submenu_link_9_link": "",
+              "submenu_link_10_label": "",
+              "submenu_link_10_link": "",
+              "featured_product_title": "",
+              "featured_product_original_price": "",
+              "featured_product_sale_price": ""
+            }
+          },
+          "header-4": {
+            "type": "menu_item",
+            "settings": {
+              "label": "BASICS",
+              "link": "#",
+              "show_dropdown": false,
+              "submenu_link_1_label": "",
+              "submenu_link_1_link": "",
+              "submenu_link_2_label": "",
+              "submenu_link_2_link": "",
+              "submenu_link_3_label": "",
+              "submenu_link_3_link": "",
+              "submenu_link_4_label": "",
+              "submenu_link_4_link": "",
+              "submenu_link_5_label": "",
+              "submenu_link_5_link": "",
+              "submenu_link_6_label": "",
+              "submenu_link_6_link": "",
+              "submenu_link_7_label": "",
+              "submenu_link_7_link": "",
+              "submenu_link_8_label": "",
+              "submenu_link_8_link": "",
+              "submenu_link_9_label": "",
+              "submenu_link_9_link": "",
+              "submenu_link_10_label": "",
+              "submenu_link_10_link": "",
+              "featured_product_title": "",
+              "featured_product_original_price": "",
+              "featured_product_sale_price": ""
+            }
+          },
+          "header-5": {
+            "type": "menu_item",
+            "settings": {
+              "label": "DIGITAL",
+              "link": "#",
+              "show_dropdown": false,
+              "submenu_link_1_label": "",
+              "submenu_link_1_link": "",
+              "submenu_link_2_label": "",
+              "submenu_link_2_link": "",
+              "submenu_link_3_label": "",
+              "submenu_link_3_link": "",
+              "submenu_link_4_label": "",
+              "submenu_link_4_link": "",
+              "submenu_link_5_label": "",
+              "submenu_link_5_link": "",
+              "submenu_link_6_label": "",
+              "submenu_link_6_link": "",
+              "submenu_link_7_label": "",
+              "submenu_link_7_link": "",
+              "submenu_link_8_label": "",
+              "submenu_link_8_link": "",
+              "submenu_link_9_label": "",
+              "submenu_link_9_link": "",
+              "submenu_link_10_label": "",
+              "submenu_link_10_link": "",
+              "featured_product_title": "",
+              "featured_product_original_price": "",
+              "featured_product_sale_price": ""
+            }
+          },
+          "header-6": {
+            "type": "menu_item",
+            "settings": {
+              "label": "OFFICE",
+              "link": "#",
+              "show_dropdown": false,
+              "submenu_link_1_label": "",
+              "submenu_link_1_link": "",
+              "submenu_link_2_label": "",
+              "submenu_link_2_link": "",
+              "submenu_link_3_label": "",
+              "submenu_link_3_link": "",
+              "submenu_link_4_label": "",
+              "submenu_link_4_link": "",
+              "submenu_link_5_label": "",
+              "submenu_link_5_link": "",
+              "submenu_link_6_label": "",
+              "submenu_link_6_link": "",
+              "submenu_link_7_label": "",
+              "submenu_link_7_link": "",
+              "submenu_link_8_label": "",
+              "submenu_link_8_link": "",
+              "submenu_link_9_label": "",
+              "submenu_link_9_link": "",
+              "submenu_link_10_label": "",
+              "submenu_link_10_link": "",
+              "featured_product_title": "",
+              "featured_product_original_price": "",
+              "featured_product_sale_price": ""
+            }
+          },
+          "header-7": {
+            "type": "account_menu_item",
+            "settings": {
+              "label": "MY ORDERS",
+              "link": "/account/orders"
+            }
+          },
+          "header-8": {
+            "type": "account_menu_item",
+            "settings": {
+              "label": "MY ACCOUNT",
+              "link": "/account"
+            }
+          },
+          "header-9": {
+            "type": "account_menu_item",
+            "settings": {
+              "label": "SETTINGS",
+              "link": "/account"
+            }
+          },
+          "header-10": {
+            "type": "account_menu_item",
+            "settings": {
+              "label": "HELP CENTER",
+              "link": "/pages/help"
+            }
+          }
+        },
+        "block_order": [
+          "header-0",
+          "header-1",
+          "header-2",
+          "header-3",
+          "header-4",
+          "header-5",
+          "header-6",
+          "header-7",
+          "header-8",
+          "header-9",
+          "header-10"
+        ],
+        "settings": {
+          "logo_link": "",
+          "login_text": "LOGIN",
+          "login_link": "",
+          "register_text": "REGISTER",
+          "register_link": "",
+          "shipping_cost": "15"
+        }
+      },
+      "top-video": {
+        "type": "top-video",
+        "settings": {
+          "video_url": "",
+          "video_width": "100%",
+          "video_max_width": "",
+          "video_height": "auto",
+          "video_aspect_ratio": "21/9",
+          "buttons_left": "0",
+          "buttons_bottom": "30%",
+          "button1_link": "",
+          "button1_alt": "Button 1",
+          "button2_link": "",
+          "button2_alt": "Button 2"
+        }
+      },
+      "hero": {
+        "type": "hero",
+        "settings": {}
+      },
+      "category-grid": {
+        "type": "category-grid",
+        "blocks": {
+          "category_hB4rWV": {
+            "type": "category",
+            "settings": {
+              "text": "CATEGORY",
+              "link": ""
+            }
+          }
+        },
+        "block_order": [
+          "category_hB4rWV"
+        ],
+        "settings": {}
+      },
+      "featured-products": {
+        "type": "featured-products",
+        "settings": {
+          "title": "FEATURED PRODUCTS",
+          "collection": "",
+          "products_to_show": 9
+        }
+      },
+      "travel-cta": {
+        "type": "travel-cta",
+        "settings": {
+          "title": "DRK TRAVEL EDITION",
+          "description": "Black-on-black design crafted to turn every journey into a style statement.",
+          "button_text": "EXPLORE COLLECTION",
+          "button_link": ""
+        }
+      },
+      "yoga-highlight": {
+        "type": "yoga-highlight",
+        "settings": {
+          "title": "DRK Yoga",
+          "description": "The art of stillness, the power of black.",
+          "button_text": "EXPLORE COLLECTION",
+          "button_link": "",
+          "text_content": "<p><b>DRK Yoga </b>transforms silence into motion and simplicity into elegance. Designed in black to sharpen focus, built with refined detail to follow every flow.<br><br>Each product invites you to experience balance with intensity and grace.</p>"
+        }
+      },
+      "latest-blogs": {
+        "type": "latest-blogs",
+        "settings": {
+          "title": "LATEST BLOGS",
+          "blog": "",
+          "posts_to_show": 3
+        }
+      },
+      "logo-repeated": {
+        "type": "logo-repeated",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "footer-0": {
+            "type": "menu",
+            "settings": {
+              "title": "HOME",
+              "label_1": "Offers",
+              "link_1": "#",
+              "label_2": "Shop",
+              "link_2": "#",
+              "label_3": "Categories",
+              "link_3": "#",
+              "label_4": "New Arrivals",
+              "link_4": "#",
+              "label_5": "Best Selling",
+              "link_5": "#"
+            }
+          },
+          "footer-1": {
+            "type": "menu",
+            "settings": {
+              "title": "COMPANY",
+              "label_1": "About Us",
+              "link_1": "#",
+              "label_2": "FAQ",
+              "link_2": "#",
+              "label_3": "Contacts",
+              "link_3": "#",
+              "label_4": "Blog",
+              "link_4": "#",
+              "label_5": "Reviews",
+              "link_5": "#"
+            }
+          },
+          "footer-2": {
+            "type": "menu",
+            "settings": {
+              "title": "LEGAL",
+              "label_1": "Privacy Policy",
+              "link_1": "#",
+              "label_2": "Terms & Conditions",
+              "link_2": "#",
+              "label_3": "Cookie Settings",
+              "link_3": "#",
+              "label_4": "Tracking Package",
+              "link_4": "#",
+              "label_5": "Exchange and Return",
+              "link_5": "#"
+            }
+          }
+        },
+        "block_order": [
+          "footer-0",
+          "footer-1",
+          "footer-2"
+        ],
+        "settings": {
+          "description": "A design-forward brand where everyday objects are reimagined in black. Minimal, timeless, and iconic.",
+          "facebook_url": "",
+          "instagram_url": "",
+          "whatsapp_url": "",
+          "linkedin_url": "",
+          "subscribe_title": "SAY HELLO!",
+          "subscribe_description": "Get the latest trends delivered to your inbox.",
+          "subscribe_button_text": "SUBSCRIBE"
+        }
+      }
+    },
+    "content_for_index": []
+  }
+}
