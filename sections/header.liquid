@@ -15,78 +15,71 @@
           {% if block.type == 'menu_item' %}
             <div class="menu-item-wrapper" data-menu-item>
               <a href="{{ block.settings.link | default: '#' }}" class="menu-link">{{ block.settings.label }}</a>
-              {% if block.settings.show_dropdown %}
-                <div class="menu-dropdown" style="display: none;" data-dropdown>
-                  <div class="dropdown-content">
-                    {% if block.settings.featured_product_image %}
-                      <div class="dropdown-featured">
-                        <div class="featured-product-image">
-                          <img src="{{ block.settings.featured_product_image | image_url: width: 300 }}" alt="{{ block.settings.featured_product_title }}">
-                        </div>
-                        <div class="featured-product-info">
-                          <h4>{{ block.settings.featured_product_title | default: 'PRODUCT NAME' }}</h4>
-                          {% if block.settings.featured_product_original_price != blank or block.settings.featured_product_sale_price != blank %}
-                            <div class="featured-product-price">
-                              {% if block.settings.featured_product_original_price != blank %}
-                                <span class="original-price">{{ block.settings.featured_product_original_price }}</span>
-                              {% endif %}
-                              {% if block.settings.featured_product_sale_price != blank %}
-                                <span class="sale-price">{{ block.settings.featured_product_sale_price }}</span>
-                              {% endif %}
-                            </div>
-                          {% endif %}
-                        </div>
+              <div class="menu-dropdown" style="display: none;" data-dropdown>
+                <div class="dropdown-content">
+                  {% if block.settings.featured_product_image %}
+                    <div class="dropdown-featured">
+                      <div class="featured-product-image">
+                        <img src="{{ block.settings.featured_product_image | image_url: width: 300 }}" alt="{{ block.settings.featured_product_title }}">
                       </div>
-                    {% endif %}
-                    <div class="dropdown-menu-columns">
-                      {% comment %} First, check for submenu blocks that match this menu item {% endcomment %}
-                      {% assign found_submenu = false %}
-                      {% for submenu_block in section.blocks %}
-                        {% if submenu_block.type == 'submenu' and submenu_block.settings.parent_menu_label == block.settings.label %}
-                          {% assign found_submenu = true %}
-                          <div class="dropdown-column">
-                            {% for i in (1..10) %}
-                              {% assign label_key = 'menu_item_' | append: i | append: '_label' %}
-                              {% assign link_key = 'menu_item_' | append: i | append: '_link' %}
-                              {% if submenu_block.settings[label_key] != blank %}
-                                <a href="{{ submenu_block.settings[link_key] | default: '#' }}" class="dropdown-link">{{ submenu_block.settings[label_key] }}</a>
-                              {% endif %}
-                            {% endfor %}
+                      <div class="featured-product-info">
+                        <h4>{{ block.settings.featured_product_title | default: 'PRODUCT NAME' }}</h4>
+                        {% if block.settings.featured_product_original_price != blank or block.settings.featured_product_sale_price != blank %}
+                          <div class="featured-product-price">
+                            {% if block.settings.featured_product_original_price != blank %}
+                              <span class="original-price">{{ block.settings.featured_product_original_price }}</span>
+                            {% endif %}
+                            {% if block.settings.featured_product_sale_price != blank %}
+                              <span class="sale-price">{{ block.settings.featured_product_sale_price }}</span>
+                            {% endif %}
                           </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endif %}
+                  <div class="dropdown-menu-columns">
+                    {% comment %} First, check for submenu blocks that match this menu item {% endcomment %}
+                    {% assign found_submenu = false %}
+                    {% for submenu_block in section.blocks %}
+                      {% if submenu_block.type == 'submenu' and submenu_block.settings.parent_menu_label == block.settings.label %}
+                        {% assign found_submenu = true %}
+                        <div class="dropdown-column">
+                          {% for i in (1..10) %}
+                            {% assign label_key = 'menu_item_' | append: i | append: '_label' %}
+                            {% assign link_key = 'menu_item_' | append: i | append: '_link' %}
+                            {% if submenu_block.settings[label_key] != blank %}
+                              <a href="{{ submenu_block.settings[link_key] | default: '#' }}" class="dropdown-link">{{ submenu_block.settings[label_key] }}</a>
+                            {% endif %}
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                    
+                    {% comment %} Fallback to inline submenu links if no submenu block found {% endcomment %}
+                    {% unless found_submenu %}
+                      {% assign has_links = false %}
+                      {% for i in (1..10) %}
+                        {% assign label_key = 'submenu_link_' | append: i | append: '_label' %}
+                        {% if block.settings[label_key] != blank %}
+                          {% assign has_links = true %}
+                          {% break %}
                         {% endif %}
                       {% endfor %}
-                      
-                      {% comment %} Fallback to inline submenu links if no submenu block found {% endcomment %}
-                      {% unless found_submenu %}
-                        {% assign has_links = false %}
-                        {% for i in (1..10) %}
-                          {% assign label_key = 'submenu_link_' | append: i | append: '_label' %}
-                          {% if block.settings[label_key] != blank %}
-                            {% assign has_links = true %}
-                            {% break %}
-                          {% endif %}
-                        {% endfor %}
-                        {% if has_links %}
-                          <div class="dropdown-column">
-                            {% for i in (1..10) %}
-                              {% assign label_key = 'submenu_link_' | append: i | append: '_label' %}
-                              {% assign link_key = 'submenu_link_' | append: i | append: '_link' %}
-                              {% if block.settings[label_key] != blank %}
-                                <a href="{{ block.settings[link_key] | default: '#' }}" class="dropdown-link">{{ block.settings[label_key] }}</a>
-                              {% endif %}
-                            {% endfor %}
-                          </div>
-                        {% else %}
-                          {% comment %} Show placeholder if no links configured {% endcomment %}
-                          <div class="dropdown-column">
-                            <p style="color: #767676; font-size: 14px;">Add submenu links in theme editor</p>
-                          </div>
-                        {% endif %}
-                      {% endunless %}
-                    </div>
+                      {% if has_links %}
+                        <div class="dropdown-column">
+                          {% for i in (1..10) %}
+                            {% assign label_key = 'submenu_link_' | append: i | append: '_label' %}
+                            {% assign link_key = 'submenu_link_' | append: i | append: '_link' %}
+                            {% if block.settings[label_key] != blank %}
+                              <a href="{{ block.settings[link_key] | default: '#' }}" class="dropdown-link">{{ block.settings[label_key] }}</a>
+                            {% endif %}
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+                    {% endunless %}
                   </div>
                 </div>
-              {% endif %}
+              </div>
             </div>
           {% endif %}
         {% endfor %}
@@ -714,49 +707,98 @@
         "type": "menu_item",
         "settings": {
           "label": "DRINKWARE",
-          "link": "#"
+          "link": "#",
+          "show_dropdown": true,
+          "submenu_link_1_label": "Water Bottles",
+          "submenu_link_1_link": "#",
+          "submenu_link_2_label": "Travel Mugs",
+          "submenu_link_2_link": "#",
+          "submenu_link_3_label": "Tumblers",
+          "submenu_link_3_link": "#"
         }
       },
       {
         "type": "menu_item",
         "settings": {
           "label": "FITNESS",
-          "link": "#"
+          "link": "#",
+          "show_dropdown": true,
+          "submenu_link_1_label": "Weights",
+          "submenu_link_1_link": "#",
+          "submenu_link_2_label": "Yoga Mats",
+          "submenu_link_2_link": "#",
+          "submenu_link_3_label": "Equipment",
+          "submenu_link_3_link": "#"
         }
       },
       {
         "type": "menu_item",
         "settings": {
           "label": "HOME",
-          "link": "#"
+          "link": "#",
+          "show_dropdown": true,
+          "submenu_link_1_label": "Decor",
+          "submenu_link_1_link": "#",
+          "submenu_link_2_label": "Furniture",
+          "submenu_link_2_link": "#",
+          "submenu_link_3_label": "Accessories",
+          "submenu_link_3_link": "#"
         }
       },
       {
         "type": "menu_item",
         "settings": {
           "label": "TRAVEL",
-          "link": "#"
+          "link": "#",
+          "show_dropdown": true,
+          "submenu_link_1_label": "Luggage",
+          "submenu_link_1_link": "#",
+          "submenu_link_2_label": "Bags",
+          "submenu_link_2_link": "#",
+          "submenu_link_3_label": "Accessories",
+          "submenu_link_3_link": "#"
         }
       },
       {
         "type": "menu_item",
         "settings": {
           "label": "BASICS",
-          "link": "#"
+          "link": "#",
+          "show_dropdown": true,
+          "submenu_link_1_label": "T-Shirts",
+          "submenu_link_1_link": "#",
+          "submenu_link_2_label": "Hoodies",
+          "submenu_link_2_link": "#",
+          "submenu_link_3_label": "Pants",
+          "submenu_link_3_link": "#"
         }
       },
       {
         "type": "menu_item",
         "settings": {
           "label": "DIGITAL",
-          "link": "#"
+          "link": "#",
+          "show_dropdown": true,
+          "submenu_link_1_label": "Headphones",
+          "submenu_link_1_link": "#",
+          "submenu_link_2_label": "Speakers",
+          "submenu_link_2_link": "#",
+          "submenu_link_3_label": "Accessories",
+          "submenu_link_3_link": "#"
         }
       },
       {
         "type": "menu_item",
         "settings": {
           "label": "OFFICE",
-          "link": "#"
+          "link": "#",
+          "show_dropdown": true,
+          "submenu_link_1_label": "Desk Accessories",
+          "submenu_link_1_link": "#",
+          "submenu_link_2_label": "Organizers",
+          "submenu_link_2_link": "#",
+          "submenu_link_3_label": "Supplies",
+          "submenu_link_3_link": "#"
         }
       },
       {

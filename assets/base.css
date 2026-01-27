@@ -92,7 +92,7 @@ body {
   max-width: 900px;
   display: none;
   z-index: 1000;
-  margin-top: 0;
+  margin-top: 10px;
   padding-top: 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   pointer-events: auto;
@@ -100,10 +100,14 @@ body {
 
 .menu-item-wrapper:hover .menu-dropdown {
   display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .menu-item-wrapper .menu-dropdown[style*="block"] {
   display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .dropdown-content {
