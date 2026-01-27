@@ -70,7 +70,7 @@
                     {% endif %}
                   </div>
                 </a>
-                <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form">
+                <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form" onsubmit="addToCartFromCollection(event, this)">
                   <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
                   <button type="submit" class="add-to-cart-btn">Add to Cart</button>
                 </form>
@@ -120,6 +120,38 @@ function sortCollection(value) {
   const url = new URL(window.location.href);
   url.searchParams.set('sort_by', value);
   window.location.href = url.toString();
+}
+
+function addToCartFromCollection(event, form) {
+  event.preventDefault();
+  const formData = new FormData(form);
+  const variantId = formData.get('id');
+  
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: variantId,
+      quantity: 1
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (window.updateCartCount) {
+      window.updateCartCount();
+    }
+    if (window.openCartDrawer) {
+      window.openCartDrawer();
+    } else {
+      window.location.href = '/cart';
+    }
+  })
+  .catch(error => {
+    console.error('Error adding to cart:', error);
+    alert('Error adding product to cart. Please try again.');
+  });
 }
 </script>
 
