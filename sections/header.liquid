@@ -219,7 +219,9 @@
     if (drawer && overlay) {
       drawer.classList.add('active');
       overlay.style.display = 'block';
-      updateCartCount();
+      if (window.updateCartCount) {
+        window.updateCartCount();
+      }
     }
   };
   
@@ -239,7 +241,7 @@
     }
   };
   
-  function updateCartCount() {
+  window.updateCartCount = function() {
     fetch('/cart.js')
       .then(response => response.json())
       .then(cart => {
@@ -248,12 +250,12 @@
         const cartSubtotal = document.getElementById('cart-subtotal');
         const cartTotal = document.getElementById('cart-total');
         
-        if (cartCount) cartCount.textContent = cart.item_count;
-        if (cartItemCount) cartItemCount.textContent = cart.item_count;
-        if (cartSubtotal) cartSubtotal.textContent = '$ ' + (cart.total_price / 100).toFixed(0);
+        if (cartCount) cartCount.textContent = cart.item_count || 0;
+        if (cartItemCount) cartItemCount.textContent = cart.item_count || 0;
+        if (cartSubtotal) cartSubtotal.textContent = '$ ' + ((cart.total_price || 0) / 100).toFixed(0);
         
         const shipping = parseFloat('{{ section.settings.shipping_cost | default: 15 }}') || 15;
-        const total = (cart.total_price / 100) + shipping;
+        const total = ((cart.total_price || 0) / 100) + shipping;
         if (cartTotal) cartTotal.textContent = '$ ' + total.toFixed(0);
         
         const cartItemsContainer = document.getElementById('cart-items');
@@ -287,11 +289,17 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: itemId, quantity: 0 })
     })
-    .then(() => updateCartCount());
+    .then(() => {
+      if (window.updateCartCount) {
+        window.updateCartCount();
+      }
+    });
   };
   
   window.updateCart = function() {
-    updateCartCount();
+    if (window.updateCartCount) {
+      window.updateCartCount();
+    }
   };
   
   function initMenuDropdowns() {
@@ -354,7 +362,9 @@
   };
   
   function initAll() {
-    updateCartCount();
+      if (window.updateCartCount) {
+        window.updateCartCount();
+      }
     initMenuDropdowns();
     
     // Close cart when clicking overlay
@@ -398,6 +408,7 @@
       setTimeout(initAll, 100);
     }
   });
+  })();
 </script>
 
 {% schema %}
@@ -742,99 +753,10 @@
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      {
-        "type": "menu_item",
-        "settings": {
-          "label": "FITNESS",
-          "link": "/collections/fitness",
-          "show_dropdown": false
-        }
-      },
-      {
-        "type": "menu_item",
-        "settings": {
-          "label": "DRINKWARE",
-          "link": "/collections/drinkware",
-          "show_dropdown": false
-        }
-      },
-      {
-        "type": "menu_item",
-        "settings": {
-          "label": "HOME",
-          "link": "/collections/home",
-          "show_dropdown": false
-        }
-      },
-      {
-        "type": "menu_item",
-        "settings": {
-          "label": "TRAVEL",
-          "link": "/collections/travel",
-          "show_dropdown": false
-        }
-      },
-      {
-        "type": "menu_item",
-        "settings": {
-          "label": "BASICS",
-          "link": "/collections/basics",
-          "show_dropdown": false
-        }
-      },
-      {
-        "type": "menu_item",
-        "settings": {
-          "label": "DIGITAL",
-          "link": "/collections/digital",
-          "show_dropdown": false
-        }
-      },
-      {
-        "type": "menu_item",
-        "settings": {
-          "label": "OFFICE",
-          "link": "/collections/office",
-          "show_dropdown": false
-        }
-      },
-      {
-        "type": "account_menu_item",
-        "settings": {
-          "label": "MY ORDERS",
-          "link": "/account/orders"
-        }
-      },
-      {
-        "type": "account_menu_item",
-        "settings": {
-          "label": "MY ACCOUNT",
-          "link": "/account"
-        }
-      },
-      {
-        "type": "account_menu_item",
-        "settings": {
-          "label": "SETTINGS",
-          "link": "/account"
-        }
-      },
-      {
-        "type": "account_menu_item",
-        "settings": {
-          "label": "HELP CENTER",
-          "link": "/pages/help"
-        }
-      }
-    ]
-  }
-},
-"presets": [
-  {
-    "name": "Header"
-  }
-]
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
 }
 {% endschema %}
