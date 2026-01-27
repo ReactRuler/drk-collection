@@ -8,7 +8,10 @@
       {% for block in section.blocks %}
         {% assign category_index = forloop.index0 %}
         {% assign default_link = default_links[category_index] %}
-        {% assign final_link = block.settings.link | default: default_link %}
+        {% assign final_link = block.settings.link %}
+        {% if final_link == blank or final_link == '#' or final_link == '' %}
+          {% assign final_link = default_link %}
+        {% endif %}
         
         <div class="category-card" {{ block.shopify_attributes }}>
           <a href="{{ final_link }}" class="category-link">
@@ -22,7 +25,11 @@
                 {% endif %}
               {% endif %}
               <div class="category-text">
-                {{ block.settings.text | default: default_categories[category_index] }}
+                {% assign category_text = block.settings.text %}
+                {% if category_text == blank %}
+                  {% assign category_text = default_categories[category_index] %}
+                {% endif %}
+                {{ category_text }}
               </div>
             </div>
           </a>

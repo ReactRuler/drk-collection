@@ -15,11 +15,23 @@
           {% for block in section.blocks %}
             {% if block.type == 'menu_item' %}
               <div class="menu-item-wrapper" data-menu-item>
-                {% assign menu_links = '/collections/fitness,/collections/drinkware,/collections/home,/collections/travel,/collections/basics,/collections/digital,/collections/office' | split: ',' %}
-                {% assign menu_labels = 'FITNESS,DRINKWARE,HOME,TRAVEL,BASICS,DIGITAL,OFFICE' | split: ',' %}
-                {% assign link_index = forloop.index0 %}
-                {% assign default_link = menu_links[link_index] %}
-                <a href="{{ block.settings.link | default: default_link }}" class="menu-link">{{ block.settings.label }}</a>
+                {% assign menu_links_map = 'FITNESS:/collections/fitness,DRINKWARE:/collections/drinkware,HOME:/collections/home,TRAVEL:/collections/travel,BASICS:/collections/basics,DIGITAL:/collections/digital,OFFICE:/collections/office' | split: ',' %}
+                {% assign current_label = block.settings.label | upcase | strip %}
+                {% assign final_link = block.settings.link | default: '' %}
+                {% if final_link == blank or final_link == '#' or final_link == '' %}
+                  {% for link_pair in menu_links_map %}
+                    {% assign parts = link_pair | split: ':' %}
+                    {% assign label_part = parts[0] | strip %}
+                    {% if label_part == current_label %}
+                      {% assign final_link = parts[1] %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+                {% if final_link == blank or final_link == '' %}
+                  {% assign final_link = '#' %}
+                {% endif %}
+                <a href="{{ final_link }}" class="menu-link">{{ block.settings.label }}</a>
                 <div class="menu-dropdown" style="display: none;" data-dropdown>
                 <div class="dropdown-content">
                   {% if block.settings.featured_product_image %}
