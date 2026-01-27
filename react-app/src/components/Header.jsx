@@ -1,4 +1,43 @@
+import { useState } from "react";
 import "./Header.css";
+
+const menuItems = [
+  {
+    label: "DRINKWARE",
+    link: "#",
+    submenu: ["Water Bottles", "Travel Mugs", "Tumblers"]
+  },
+  {
+    label: "FITNESS",
+    link: "#",
+    submenu: ["Weights", "Yoga Mats", "Equipment"]
+  },
+  {
+    label: "HOME",
+    link: "#",
+    submenu: ["Decor", "Furniture", "Accessories"]
+  },
+  {
+    label: "TRAVEL",
+    link: "#",
+    submenu: ["Luggage", "Bags", "Accessories"]
+  },
+  {
+    label: "BASICS",
+    link: "#",
+    submenu: ["T-Shirts", "Hoodies", "Pants"]
+  },
+  {
+    label: "DIGITAL",
+    link: "#",
+    submenu: ["Headphones", "Speakers", "Accessories"]
+  },
+  {
+    label: "OFFICE",
+    link: "#",
+    submenu: ["Desk Accessories", "Organizers", "Supplies"]
+  }
+];
 
 function Header({ onSearchClick }) {
   return (
@@ -11,13 +50,24 @@ function Header({ onSearchClick }) {
             </a>
           </div>
           <nav className="header-nav">
-            <a href="#">DRINKWARE</a>
-            <a href="#">FITNESS</a>
-            <a href="#">HOME</a>
-            <a href="#">TRAVEL</a>
-            <a href="#">BASICS</a>
-            <a href="#">DIGITAL</a>
-            <a href="#">OFFICE</a>
+            {menuItems.map((item, index) => (
+              <div key={index} className="menu-item-wrapper" data-menu-item>
+                <a href={item.link} className="menu-link">{item.label}</a>
+                {item.submenu && item.submenu.length > 0 && (
+                  <div className="menu-dropdown" style={{ display: 'none' }} data-dropdown>
+                    <div className="dropdown-content">
+                      <div className="dropdown-menu-columns">
+                        <div className="dropdown-column">
+                          {item.submenu.map((subItem, subIndex) => (
+                            <a key={subIndex} href="#" className="dropdown-link">{subItem}</a>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
           </nav>
           <div className="header-icons">
             <button className="search-icon" onClick={onSearchClick}>
