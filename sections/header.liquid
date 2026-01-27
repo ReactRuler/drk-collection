@@ -15,7 +15,11 @@
           {% for block in section.blocks %}
             {% if block.type == 'menu_item' %}
               <div class="menu-item-wrapper" data-menu-item>
-                <a href="{{ block.settings.link | default: '#' }}" class="menu-link">{{ block.settings.label }}</a>
+                {% assign menu_links = '/collections/fitness,/collections/drinkware,/collections/home,/collections/travel,/collections/basics,/collections/digital,/collections/office' | split: ',' %}
+                {% assign menu_labels = 'FITNESS,DRINKWARE,HOME,TRAVEL,BASICS,DIGITAL,OFFICE' | split: ',' %}
+                {% assign link_index = forloop.index0 %}
+                {% assign default_link = menu_links[link_index] %}
+                <a href="{{ block.settings.link | default: default_link }}" class="menu-link">{{ block.settings.label }}</a>
                 <div class="menu-dropdown" style="display: none;" data-dropdown>
                 <div class="dropdown-content">
                   {% if block.settings.featured_product_image %}
@@ -87,102 +91,25 @@
         {% else %}
           {% comment %} Fallback menu if no blocks configured {% endcomment %}
           <div class="menu-item-wrapper" data-menu-item>
-            <a href="#" class="menu-link">DRINKWARE</a>
-            <div class="menu-dropdown" style="display: none;" data-dropdown>
-              <div class="dropdown-content">
-                <div class="dropdown-menu-columns">
-                  <div class="dropdown-column">
-                    <a href="#" class="dropdown-link">Water Bottles</a>
-                    <a href="#" class="dropdown-link">Travel Mugs</a>
-                    <a href="#" class="dropdown-link">Tumblers</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <a href="/collections/fitness" class="menu-link">FITNESS</a>
           </div>
           <div class="menu-item-wrapper" data-menu-item>
-            <a href="#" class="menu-link">FITNESS</a>
-            <div class="menu-dropdown" style="display: none;" data-dropdown>
-              <div class="dropdown-content">
-                <div class="dropdown-menu-columns">
-                  <div class="dropdown-column">
-                    <a href="#" class="dropdown-link">Weights</a>
-                    <a href="#" class="dropdown-link">Yoga Mats</a>
-                    <a href="#" class="dropdown-link">Equipment</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <a href="/collections/drinkware" class="menu-link">DRINKWARE</a>
           </div>
           <div class="menu-item-wrapper" data-menu-item>
-            <a href="#" class="menu-link">HOME</a>
-            <div class="menu-dropdown" style="display: none;" data-dropdown>
-              <div class="dropdown-content">
-                <div class="dropdown-menu-columns">
-                  <div class="dropdown-column">
-                    <a href="#" class="dropdown-link">Decor</a>
-                    <a href="#" class="dropdown-link">Furniture</a>
-                    <a href="#" class="dropdown-link">Accessories</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <a href="/collections/home" class="menu-link">HOME</a>
           </div>
           <div class="menu-item-wrapper" data-menu-item>
-            <a href="#" class="menu-link">TRAVEL</a>
-            <div class="menu-dropdown" style="display: none;" data-dropdown>
-              <div class="dropdown-content">
-                <div class="dropdown-menu-columns">
-                  <div class="dropdown-column">
-                    <a href="#" class="dropdown-link">Luggage</a>
-                    <a href="#" class="dropdown-link">Bags</a>
-                    <a href="#" class="dropdown-link">Accessories</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <a href="/collections/travel" class="menu-link">TRAVEL</a>
           </div>
           <div class="menu-item-wrapper" data-menu-item>
-            <a href="#" class="menu-link">BASICS</a>
-            <div class="menu-dropdown" style="display: none;" data-dropdown>
-              <div class="dropdown-content">
-                <div class="dropdown-menu-columns">
-                  <div class="dropdown-column">
-                    <a href="#" class="dropdown-link">T-Shirts</a>
-                    <a href="#" class="dropdown-link">Hoodies</a>
-                    <a href="#" class="dropdown-link">Pants</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <a href="/collections/basics" class="menu-link">BASICS</a>
           </div>
           <div class="menu-item-wrapper" data-menu-item>
-            <a href="#" class="menu-link">DIGITAL</a>
-            <div class="menu-dropdown" style="display: none;" data-dropdown>
-              <div class="dropdown-content">
-                <div class="dropdown-menu-columns">
-                  <div class="dropdown-column">
-                    <a href="#" class="dropdown-link">Headphones</a>
-                    <a href="#" class="dropdown-link">Speakers</a>
-                    <a href="#" class="dropdown-link">Accessories</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <a href="/collections/digital" class="menu-link">DIGITAL</a>
           </div>
           <div class="menu-item-wrapper" data-menu-item>
-            <a href="#" class="menu-link">OFFICE</a>
-            <div class="menu-dropdown" style="display: none;" data-dropdown>
-              <div class="dropdown-content">
-                <div class="dropdown-menu-columns">
-                  <div class="dropdown-column">
-                    <a href="#" class="dropdown-link">Desk Accessories</a>
-                    <a href="#" class="dropdown-link">Organizers</a>
-                    <a href="#" class="dropdown-link">Supplies</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <a href="/collections/office" class="menu-link">OFFICE</a>
           </div>
         {% endif %}
       </nav>

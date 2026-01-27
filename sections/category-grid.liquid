@@ -17,7 +17,9 @@
                 <img src="{{ block.settings.image | image_url: width: 120 }}" alt="{{ block.settings.text }}" class="category-image">
               {% else %}
                 {% assign default_image = default_images[category_index] %}
-                <img src="{{ default_image | asset_url }}" alt="{{ block.settings.text }}" class="category-image">
+                {% if default_image != blank %}
+                  <img src="{{ default_image | asset_url }}" alt="{{ block.settings.text }}" class="category-image">
+                {% endif %}
               {% endif %}
               <div class="category-text">
                 {{ block.settings.text | default: default_categories[category_index] }}
@@ -32,7 +34,9 @@
           <div class="category-card">
             <a href="{{ default_links[i] }}" class="category-link">
               <div class="category-card-inner">
-                <img src="{{ default_images[i] | asset_url }}" alt="{{ default_categories[i] }}" class="category-image">
+                {% if default_images[i] != blank %}
+                  <img src="{{ default_images[i] | asset_url }}" alt="{{ default_categories[i] }}" class="category-image">
+                {% endif %}
                 <div class="category-text">{{ default_categories[i] }}</div>
               </div>
             </a>
