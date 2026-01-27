@@ -297,11 +297,20 @@
               "text": "Drinkware",
               "link": "shopify://collections/drinkware"
             }
+          },
+          "category_jqh6x8": {
+            "type": "category",
+            "settings": {
+              "image": "shopify://shop_images/house.png",
+              "text": "Home",
+              "link": "shopify://collections/home"
+            }
           }
         },
         "block_order": [
           "category_hB4rWV",
-          "category_EdXjid"
+          "category_EdXjid",
+          "category_jqh6x8"
         ],
         "settings": {}
       },
