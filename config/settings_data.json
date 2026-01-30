@@ -285,7 +285,7 @@
           "category_hB4rWV": {
             "type": "category",
             "settings": {
-              "image": "shopify://shop_images/fitness.png",
+              "image": "shopify://shop_images/1.gif",
               "text": "Fitness",
               "link": "shopify://collections/fitness"
             }
@@ -293,7 +293,7 @@
           "category_EdXjid": {
             "type": "category",
             "settings": {
-              "image": "shopify://shop_images/drinkware.png",
+              "image": "shopify://shop_images/2.gif",
               "text": "Drinkware",
               "link": "shopify://collections/drinkware"
             }
@@ -301,7 +301,7 @@
           "category_jqh6x8": {
             "type": "category",
             "settings": {
-              "image": "shopify://shop_images/house.png",
+              "image": "shopify://shop_images/3.gif",
               "text": "Home",
               "link": "shopify://collections/home"
             }
@@ -309,7 +309,7 @@
           "category_6PDgpj": {
             "type": "category",
             "settings": {
-              "image": "shopify://shop_images/travel.png",
+              "image": "shopify://shop_images/4.gif",
               "text": "Travel",
               "link": "shopify://collections/travel"
             }
@@ -317,7 +317,7 @@
           "category_fGmicR": {
             "type": "category",
             "settings": {
-              "image": "shopify://shop_images/clothes.png",
+              "image": "shopify://shop_images/5.gif",
               "text": "Basics",
               "link": ""
             }
@@ -325,7 +325,7 @@
           "category_PHKyf6": {
             "type": "category",
             "settings": {
-              "image": "shopify://shop_images/digital.png",
+              "image": "shopify://shop_images/6.gif",
               "text": "Digital",
               "link": "shopify://collections/digital"
             }
@@ -333,7 +333,7 @@
           "category_KL9QhD": {
             "type": "category",
             "settings": {
-              "image": "shopify://shop_images/office.png",
+              "image": "shopify://shop_images/7.gif",
               "text": "Office",
               "link": "shopify://collections/office"
             }
